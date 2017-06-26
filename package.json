@@ -1,0 +1,30 @@
+{
+  "name": "cloudpayments",
+  "version": "0.1.0",
+  "description": "The CloudPayments client API library",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "tape -r source-map-support/register lib/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/izatop/cloudpayments.git"
+  },
+  "keywords": [
+    "cloudpayments"
+  ],
+  "author": "izatop@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/izatop/cloudpayments/issues"
+  },
+  "homepage": "https://github.com/izatop/cloudpayments#readme",
+  "dependencies": {
+    "@types/node": "^8.0.3",
+    "@types/qs": "^6.2.31",
+    "qs": "^6.4.0"
+  }
+}
