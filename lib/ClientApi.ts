@@ -1,5 +1,5 @@
-import {ClientAbstract} from "./ClientAbstract";
+import {ClientRequestAbstract} from "./ClientAbstract";
 
-export class ClientApi extends ClientAbstract {
+export class ClientApi extends ClientRequestAbstract {
 
 }

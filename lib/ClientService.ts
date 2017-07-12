@@ -1,16 +1,16 @@
 import {ClientAbstract} from "./ClientAbstract";
 import {ClientApi} from "./ClientApi";
-import {RegistrarApi} from "./ReceiptRecorderApi";
+import {ReceiptRecorderApi} from "./ReceiptRecorderApi";
 import {ClientOptions} from "./ClientOptions";
 
 export class ClientService extends ClientAbstract {
     protected client: ClientApi;
-    protected registrar: RegistrarApi;
+    protected registrar: ReceiptRecorderApi;
 
     constructor(options: ClientOptions) {
         super(options);
-        this.client = this.createClientApi(this.options);
-        this.registrar = this.createRegistrarApi(this.options);
+        this.client = ClientService.createClientApi(this.options);
+        this.registrar = ClientService.createRegistrarApi(this.options);
     }
 
     public getClientApi() {
@@ -21,11 +21,11 @@ export class ClientService extends ClientAbstract {
         return this.registrar;
     }
 
-    public createClientApi(options: ClientOptions) {
+    public static createClientApi(options: ClientOptions) {
         return new ClientApi(options);
     }
 
-    public createRegistrarApi(options: ClientOptions) {
-        return new RegistrarApi(options)
+    public static createRegistrarApi(options: ClientOptions) {
+        return new ReceiptRecorderApi(options)
     }
 }

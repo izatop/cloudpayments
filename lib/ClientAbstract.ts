@@ -1,12 +1,13 @@
+import fetch from 'node-fetch';
 import {ClientOptions} from "./ClientOptions";
 import {trace} from "./utils";
+import {join} from "path";
 
 export class ClientAbstract {
-    constructor(protected options: ClientOptions) {
-        if (false === ('endpoint' in this.options)) {
-            this.options.endpoint = 'https://api.cloudpayments.ru';
-        }
+    protected options: ClientOptions & {endpoint: string};
 
+    constructor(_options: ClientOptions) {
+        this.options = Object.assign({endpoint: 'https://api.cloudpayments.ru'}, _options);
         trace('create client', this.options);
     }
 
@@ -14,8 +15,21 @@ export class ClientAbstract {
         return this.options.publicId;
     }
 
-    public getEndpoint() {
+    public getEndpoint(): string {
         return this.options.endpoint;
+    }
+}
+
+export class ClientRequestAbstract extends ClientAbstract {
+    protected async call(url: string, data?: object) {
+        return await fetch(
+            this.getEndpoint().concat(join('/', url)),
+            {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: data ? JSON.stringify(data) : undefined
+            }
+        );
     }
 }
 

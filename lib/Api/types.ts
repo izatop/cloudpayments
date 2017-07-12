@@ -143,3 +143,29 @@ export interface ReceiptRequest<TReceipt> {
 }
 
 export type ReceiptResponseType = ResponseType<0>;
+
+export namespace ReceiptRecorder {
+    export interface CustomerReceipt {
+        taxationSystem: number,
+        email?: string,
+        phone?: string,
+        Item: CustomerReceiptItem[]
+    }
+
+    export interface CustomerReceiptItem {
+        label: string,
+        price: number,
+        quantity: number,
+        amount: number,
+        vat?: number,
+        ean13?: string
+    }
+
+    export interface CreateRequest {
+        Inn: string,
+        Type: string,
+        CustomerReceipt: CustomerReceipt,
+        InvoiceId?: string,
+        AccountId?: string
+    }
+}
