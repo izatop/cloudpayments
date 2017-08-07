@@ -1,10 +1,11 @@
+import {TaxationSystemType, VATType} from "../Api/constants";
+
 export interface ClientOptions {
     publicId: string,
     privateKey: string,
     endpoint?: string,
-    organization: {
+    org?: {
         inn: number,
-        vat: number,
-        taxationSystem: number
+        taxationSystem: TaxationSystemType
     }
 }

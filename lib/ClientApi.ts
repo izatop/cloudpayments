@@ -1,4 +1,4 @@
-import {ClientRequestAbstract} from "./ClientAbstract";
+import {ClientRequestAbstract} from "./Client/ClientAbstract";
 
 export class ClientApi extends ClientRequestAbstract {
 

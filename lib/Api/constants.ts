@@ -315,7 +315,42 @@ export enum TaxationSystem {
     PATENT                          = 5,	// Патентная система налогообложения
 }
 
-export type TaxationSystemType = 0 | 1 | 2 | 3 | 4 | 5;
+export type TaxationSystemType = TaxationSystem;
+
+/**
+ * Значения ставки НДС
+ *
+ * При указании ставки НДС будьте внимательны: "НДС 0%" и "НДС не облагается" — это не равнозначные варианты.
+ */
+export enum VAT {
+    VAT0 = 0,
+    VAT10 = 10,
+    VAT18 = 18,
+    VAT110 = 110,
+    VAT118 = 118
+}
+
+export type VATType = null | VAT;
+
+/**
+ * Validate VAT value
+ *
+ * @param value
+ * @returns {boolean}
+ */
+export function validateVAT(value: any) {
+    switch (value) {
+        case VAT.VAT0:
+        case VAT.VAT10:
+        case VAT.VAT18:
+        case VAT.VAT110:
+        case VAT.VAT118:
+        case null:
+            return true;
+        default:
+            return false;
+    }
+}
 
 /**
  * Response codes

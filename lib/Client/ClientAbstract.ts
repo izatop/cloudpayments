@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import {ClientOptions} from "./ClientOptions";
-import {trace} from "./utils";
+import {trace} from "../utils";
 import {join} from "path";
 
 export class ClientAbstract {
@@ -33,5 +33,5 @@ export class ClientRequestAbstract extends ClientAbstract {
     }
 }
 
-export * from './Api/constants';
-export * from './Api/types';
+export * from '../Api/constants';
+export * from '../Api/types';

@@ -1,4 +1,4 @@
-import {RecurrentStatusType, TransactionStatusType, ValidCurrency} from "./constants";
+import {RecurrentStatusType, TaxationSystemType, TransactionStatusType, ValidCurrency, VATType} from "./constants";
 
 export type ResponseType<T> = T;
 
@@ -146,7 +146,7 @@ export type ReceiptResponseType = ResponseType<0>;
 
 export namespace ReceiptRecorder {
     export interface CustomerReceipt {
-        taxationSystem: number,
+        taxationSystem: TaxationSystemType,
         email?: string,
         phone?: string,
         Item: CustomerReceiptItem[]
@@ -157,12 +157,12 @@ export namespace ReceiptRecorder {
         price: number,
         quantity: number,
         amount: number,
-        vat?: number,
-        ean13?: string
+        vat?: VATType,
+        ean13: string | null
     }
 
     export interface CreateRequest {
-        Inn: string,
+        Inn: number,
         Type: string,
         CustomerReceipt: CustomerReceipt,
         InvoiceId?: string,
