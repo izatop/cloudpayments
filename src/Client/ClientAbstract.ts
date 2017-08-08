@@ -21,17 +21,27 @@ export class ClientAbstract {
 }
 
 export class ClientRequestAbstract extends ClientAbstract {
-    protected async call(url: string, data?: object) {
-        return await fetch(
+    protected async call<R = any>(url: string, data?: object, requestId?: string): Promise<R> {
+        const headers: any = {
+            'Content-Type': 'application/json'
+        };
+
+        if (requestId) {
+            headers['X-Request-Id'] = requestId;
+        }
+
+        const response = await fetch(
             this.getEndpoint().concat(join('/', url)),
             {
+                headers,
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
                 body: data ? JSON.stringify(data) : undefined
             }
         );
+
+        return await response.json();
     }
 }
 
 export * from '../Api/constants';
-export * from '../Api/types';
+export * from '../Api/notification';

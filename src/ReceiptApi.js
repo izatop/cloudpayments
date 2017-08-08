@@ -8,8 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ClientAbstract_1 = require("./Client/ClientAbstract");
 const assert_1 = require("assert");
+const objectHash = require("object-hash");
+const ClientAbstract_1 = require("./Client/ClientAbstract");
 const constants_1 = require("./Api/constants");
 class ReceiptApi extends ClientAbstract_1.ClientRequestAbstract {
     getEndpoint() {
@@ -24,21 +25,20 @@ class ReceiptApi extends ClientAbstract_1.ClientRequestAbstract {
      */
     createIncomeReceipt(receipt, id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const _receipt = Object.assign({}, receipt, this.options.org || {});
-            assert_1.ok(_receipt.inn, 'You should fill "inn" field');
-            assert_1.ok(_receipt.taxationSystem, 'You should fill "inn" field');
-            assert_1.ok(_receipt.records && _receipt.records.length > 0, 'You should fill "records" field');
-            const { records } = _receipt;
+            const { inn, notify, records, taxationSystem, accountId, invoiceId } = Object.assign({}, receipt, this.options.org || {});
+            assert_1.ok(inn, 'You should fill "inn" field');
+            assert_1.ok(taxationSystem, 'You should fill "inn" field');
+            assert_1.ok(records && records.length > 0, 'You should fill "records" field');
             assert_1.ok(records.filter(x => false === constants_1.validateVAT(x.vat)).length > 0, 'You should fill VAT with valid values');
             const data = {
-                Inn: _receipt.inn,
-                InvoiceId: _receipt.invoiceId,
-                AccountId: _receipt.accountId,
+                Inn: inn,
+                InvoiceId: invoiceId,
+                AccountId: accountId,
                 Type: 'income',
                 CustomerReceipt: {
-                    taxationSystem: _receipt.taxationSystem,
-                    email: _receipt.notify ? _receipt.notify.email || '' : '',
-                    phone: _receipt.notify ? _receipt.notify.phone || '' : '',
+                    taxationSystem: taxationSystem,
+                    email: notify ? notify.email || '' : '',
+                    phone: notify ? notify.phone || '' : '',
                     Item: records.map(item => ({
                         label: item.label,
                         price: item.price,
@@ -49,7 +49,8 @@ class ReceiptApi extends ClientAbstract_1.ClientRequestAbstract {
                     }))
                 }
             };
-            return this.call('receipt', data);
+            const requestId = id || objectHash(receipt);
+            return this.call('receipt', data, requestId);
         });
     }
 }

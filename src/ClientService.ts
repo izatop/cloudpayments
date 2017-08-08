@@ -12,34 +12,31 @@ export class ClientService extends ClientAbstract {
     constructor(options: ClientOptions) {
         super(options);
         this.client = ClientService.createClientApi(this.options);
-        this.handlers = ClientService.createClientHandlers(this.options);
-
-        if ('registrar' in this.options) {
-            this.registrar = ClientService.createRegistrarApi(this.options);
-        }
+        this.handlers = ClientService.createHandlers(this.options);
+        this.receipt = ClientService.createReceiptApi(this.options);
     }
 
     public getClientApi() {
         return this.client;
     }
 
-    public getClientHandlers() {
+    public getHandlers() {
         return this.handlers;
     }
 
-    public getRegistrarApi() {
-        return this.registrar;
+    public getReceiptApi() {
+        return this.receipt;
     }
 
     public static createClientApi(options: ClientOptions) {
         return new ClientApi(options);
     }
 
-    public static createRegistrarApi(options: ClientOptions) {
+    public static createReceiptApi(options: ClientOptions) {
         return new ReceiptApi(options)
     }
 
-    public static createClientHandlers(options: ClientOptions) {
+    public static createHandlers(options: ClientOptions) {
         return new ClientHandlers(options);
     }
 }

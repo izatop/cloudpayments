@@ -5,6 +5,7 @@
     "noEmitOnError": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "declaration": true,
     "sourceMap": true,
     "newLine": "LF"
   },

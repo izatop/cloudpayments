@@ -1,5 +1,3 @@
 import {ClientRequestAbstract} from "./Client/ClientAbstract";
 
-export class ClientApi extends ClientRequestAbstract {
-
-}
+export class ClientApi extends ClientRequestAbstract {}

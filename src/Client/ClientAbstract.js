@@ -28,13 +28,20 @@ class ClientAbstract {
 }
 exports.ClientAbstract = ClientAbstract;
 class ClientRequestAbstract extends ClientAbstract {
-    call(url, data) {
+    call(url, data, requestId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield node_fetch_1.default(this.getEndpoint().concat(path_1.join('/', url)), {
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+            if (requestId) {
+                headers['X-Request-Id'] = requestId;
+            }
+            const response = yield node_fetch_1.default(this.getEndpoint().concat(path_1.join('/', url)), {
+                headers,
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
                 body: data ? JSON.stringify(data) : undefined
             });
+            return yield response.json();
         });
     }
 }

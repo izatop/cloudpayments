@@ -2,18 +2,19 @@ import {ClientAbstract} from "./Client/ClientAbstract";
 import {IncomingMessage} from "http";
 import * as qs from "qs";
 import {checkSignedString, trace} from "./utils";
-import * as ApiTypes from "./Api/types";
+import * as ApiTypes from "./Api/notification";
 import {parse} from "url";
 import {ok} from "assert";
+import {ResponseCodes} from "./Api/constants";
 
-export interface NotificationHandlerValidator<TRequest, TResponse> {
-    (request: TRequest): Promise<TResponse>;
+export interface NotificationHandlerValidator<TRequest> {
+    (request: TRequest): Promise<ResponseCodes>;
 }
 
 export class ClientHandlers extends ClientAbstract {
     protected async handle<TRequest, TResponse>(
         req: IncomingMessage,
-        validator?: NotificationHandlerValidator<TRequest, TResponse>
+        validator?: NotificationHandlerValidator<TRequest>
     ) {
         try {
             const request = await this.parseRequest<TRequest>(req);
@@ -33,42 +34,42 @@ export class ClientHandlers extends ClientAbstract {
 
     async handleCheckRequest(
         req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.CheckRequest, ApiTypes.CheckResponseType>
+        validator?: NotificationHandlerValidator<ApiTypes.CheckNotification>
     ) {
         return this.handle(req, validator);
     }
 
     async handlePayRequest(
         req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.PayRequest, ApiTypes.PayResponseType>
+        validator?: NotificationHandlerValidator<ApiTypes.PayNotification>
     ) {
         return this.handle(req, validator);
     }
 
     async handleFailRequest(
         req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.FailRequest, ApiTypes.FailResponseType>
+        validator?: NotificationHandlerValidator<ApiTypes.FailNotification>
     ) {
         return this.handle(req, validator);
     }
 
     async handleRefundRequest(
         req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.RefundRequest, ApiTypes.RefundResponseType>
+        validator?: NotificationHandlerValidator<ApiTypes.RefundNotification>
     ) {
         return this.handle(req, validator);
     }
 
     async handleRecurrentRequest(
         req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.RecurrentRequest, ApiTypes.RecurrentResponseType>
+        validator?: NotificationHandlerValidator<ApiTypes.RecurrentNotification>
     ) {
         return this.handle(req, validator);
     }
 
     async handleReceiptRequest(
         req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.ReceiptRequest<any>, ApiTypes.ReceiptResponseType>
+        validator?: NotificationHandlerValidator<ApiTypes.ReceiptNotification<any>>
     ) {
         return this.handle(req, validator);
     }
