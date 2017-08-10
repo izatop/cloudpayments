@@ -1,6 +1,6 @@
 {
   "name": "cloudpayments",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "CloudPayments API library",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,11 @@
     "@types/qs": "^6.2.31",
     "node-fetch": "^1.7.1",
     "object-hash": "^1.1.8",
-    "qs": "^6.4.0",
-    "typescript": "^2.4.2"
+    "qs": "^6.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^2.4.2",
+    "@types/tape": "^4.2.30",
+    "tape": "^4.8.0"
   }
 }

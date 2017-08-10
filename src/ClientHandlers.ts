@@ -1,7 +1,7 @@
 import {ClientAbstract} from "./Client/ClientAbstract";
 import {IncomingMessage} from "http";
 import * as qs from "qs";
-import {checkSignedString, trace} from "./utils";
+import {checkSignedString} from "./utils";
 import * as ApiTypes from "./Api/notification";
 import {parse} from "url";
 import {ok} from "assert";
@@ -18,8 +18,6 @@ export class ClientHandlers extends ClientAbstract {
     ) {
         try {
             const request = await this.parseRequest<TRequest>(req);
-            trace('handle', request);
-
             if (validator) {
                 const code = await validator(request);
                 return {request, response: {code}};
@@ -27,7 +25,6 @@ export class ClientHandlers extends ClientAbstract {
 
             return {request, response: {}};
         } catch (error) {
-            trace(error);
             throw error;
         }
     }
@@ -93,7 +90,6 @@ export class ClientHandlers extends ClientAbstract {
 
             const headers: any = req.headers || {};
 
-            trace('check signature %s', signature, body);
             ok(checkSignedString(signature, body), 'Invalid signature');
             if ('content-type' in headers && headers['content-type'].indexOf('json') !== -1) {
                 Object.assign(request, JSON.parse(body));

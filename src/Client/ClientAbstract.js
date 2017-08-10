@@ -12,12 +12,10 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = require("node-fetch");
-const utils_1 = require("../utils");
 const path_1 = require("path");
 class ClientAbstract {
     constructor(_options) {
         this.options = Object.assign({ endpoint: 'https://api.cloudpayments.ru' }, _options);
-        utils_1.trace('create client', this.options);
     }
     getPublicId() {
         return this.options.publicId;

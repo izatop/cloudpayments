@@ -14,7 +14,7 @@ const ClientAbstract_1 = require("./Client/ClientAbstract");
 const constants_1 = require("./Api/constants");
 class ReceiptApi extends ClientAbstract_1.ClientRequestAbstract {
     getEndpoint() {
-        return this.options.endpoint.concat('kkt');
+        return this.options.endpoint.replace(/\/$/, '').concat('/kkt');
     }
     /**
      * Create receipt

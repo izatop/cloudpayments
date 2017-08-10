@@ -5,7 +5,7 @@ export interface IncomeReceipt {
     taxationSystem?: TaxationSystemType,
     records: IncomeReceiptRecord[],
     invoiceId: string,
-    accountId: string,
+    accountId?: string,
     notify?: {
         email?: string,
         phone?: string

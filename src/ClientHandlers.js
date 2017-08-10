@@ -18,7 +18,6 @@ class ClientHandlers extends ClientAbstract_1.ClientAbstract {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const request = yield this.parseRequest(req);
-                utils_1.trace('handle', request);
                 if (validator) {
                     const code = yield validator(request);
                     return { request, response: { code } };
@@ -26,7 +25,6 @@ class ClientHandlers extends ClientAbstract_1.ClientAbstract {
                 return { request, response: {} };
             }
             catch (error) {
-                utils_1.trace(error);
                 throw error;
             }
         });
@@ -76,7 +74,6 @@ class ClientHandlers extends ClientAbstract_1.ClientAbstract {
                     req.on('error', reject);
                 });
                 const headers = req.headers || {};
-                utils_1.trace('check signature %s', signature, body);
                 assert_1.ok(utils_1.checkSignedString(signature, body), 'Invalid signature');
                 if ('content-type' in headers && headers['content-type'].indexOf('json') !== -1) {
                     Object.assign(request, JSON.parse(body));

@@ -1,6 +1,5 @@
 import fetch from 'node-fetch';
 import {ClientOptions} from "./ClientOptions";
-import {trace} from "../utils";
 import {join} from "path";
 
 export class ClientAbstract {
@@ -8,7 +7,6 @@ export class ClientAbstract {
 
     constructor(_options: ClientOptions) {
         this.options = Object.assign({endpoint: 'https://api.cloudpayments.ru'}, _options);
-        trace('create client', this.options);
     }
 
     public getPublicId() {
@@ -21,7 +19,7 @@ export class ClientAbstract {
 }
 
 export class ClientRequestAbstract extends ClientAbstract {
-    protected async call<R = any>(url: string, data?: object, requestId?: string): Promise<R> {
+    protected async call<R extends Response = any>(url: string, data?: object, requestId?: string): Promise<R> {
         const headers: any = {
             'Content-Type': 'application/json'
         };

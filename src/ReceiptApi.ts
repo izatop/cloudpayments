@@ -7,7 +7,7 @@ import {ReceiptRequest} from "./Api/request";
 
 export class ReceiptApi extends ClientRequestAbstract {
     public getEndpoint() {
-        return this.options.endpoint.concat('kkt');
+        return this.options.endpoint.replace(/\/$/, '').concat('/kkt');
     }
 
     /**
