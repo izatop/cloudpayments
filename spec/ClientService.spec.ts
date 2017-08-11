@@ -1,21 +1,11 @@
 import {asyncTest} from "./async-tape";
 import {ClientService} from '../';
-import {TaxationSystem} from "../src/Api/constants";
 import {ClientApi} from "../src/ClientApi";
 import {ReceiptApi} from "../src/ReceiptApi";
 import {ClientHandlers} from "../src/ClientHandlers";
+import {options} from "./helpers";
 
 asyncTest('ServiceClient', async t => {
-    const options = {
-        endpoint: 'https://fakeapi.com',
-        publicId: 'public id',
-        privateKey: 'private key',
-        org: {
-            inn: 12345678,
-            taxationSystem: TaxationSystem.GENERAL
-        }
-    };
-
     const service = new ClientService(options);
 
     t.equal(service.getEndpoint(), options.endpoint);

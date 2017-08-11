@@ -50,7 +50,7 @@ class ReceiptApi extends ClientAbstract_1.ClientRequestAbstract {
                 }
             };
             const requestId = id || objectHash(receipt);
-            return this.call('receipt', data, requestId);
+            return yield this.call('receipt', data, requestId);
         });
     }
 }

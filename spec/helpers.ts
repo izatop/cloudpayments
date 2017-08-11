@@ -1,0 +1,67 @@
+import {TaxationSystem} from "../src/Api/constants";
+import {IncomingHttpHeaders, IncomingMessage} from "http";
+import * as net from "net";
+import * as stream from "stream";
+import {signString} from "../src/utils";
+
+export const options = {
+    endpoint: 'https://fakeapi.com',
+    publicId: 'public id',
+    privateKey: 'private key',
+    org: {
+        inn: 12345678,
+        taxationSystem: TaxationSystem.GENERAL
+    }
+};
+
+export class ServiceRequestMock extends stream.Readable {
+    httpVersion: string = "1.1";
+    httpVersionMajor: number;
+    httpVersionMinor: number;
+    connection: net.Socket;
+    headers: IncomingHttpHeaders;
+    rawHeaders: string[];
+    trailers: { [key: string]: string };
+    rawTrailers: string[];
+
+    constructor(privateKey: string, raw: string) {
+        super();
+
+        this.headers = {
+            'content-hmac': signString(privateKey, raw)
+        };
+
+        this.method = 'POST';
+
+        setTimeout(() => {
+            this.emit('data', raw);
+            this.emit('end');
+        }, 10);
+    }
+
+    _read(size: number): void {}
+
+    setTimeout(msecs: number, callback: () => void): this {
+        return this;
+    }
+    /**
+     * Only valid for request obtained from http.Server.
+     */
+    method?: string;
+    /**
+     * Only valid for request obtained from http.Server.
+     */
+    url?: string;
+    /**
+     * Only valid for response obtained from http.ClientRequest.
+     */
+    statusCode?: number;
+    /**
+     * Only valid for response obtained from http.ClientRequest.
+     */
+    statusMessage?: string;
+    socket: net.Socket;
+    destroy(error?: Error): void {
+
+    }
+}

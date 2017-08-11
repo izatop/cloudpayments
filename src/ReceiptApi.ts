@@ -4,6 +4,7 @@ import {ClientRequestAbstract} from "./Client/ClientAbstract";
 import {TaxationSystemType, validateVAT} from "./Api/constants";
 import {IncomeReceipt} from "./ReceiptApi/IncomeReceipt";
 import {ReceiptRequest} from "./Api/request";
+import {Response, BaseResponse} from "./Response";
 
 export class ReceiptApi extends ClientRequestAbstract {
     public getEndpoint() {
@@ -17,7 +18,7 @@ export class ReceiptApi extends ClientRequestAbstract {
      * @param {string} id               Idempotent request id (calculated automatically if not provided)
      * @returns {Promise<Response>}
      */
-    async createIncomeReceipt(receipt: IncomeReceipt, id?: string) {
+    async createIncomeReceipt(receipt: IncomeReceipt, id?: string): Promise<Response<BaseResponse>> {
         const {inn, notify, records, taxationSystem, accountId, invoiceId} = Object.assign(
             {},
             receipt,
@@ -52,6 +53,6 @@ export class ReceiptApi extends ClientRequestAbstract {
 
         const requestId = id || objectHash(receipt);
 
-        return this.call('receipt', data, requestId);
+        return await this.call<BaseResponse>('receipt', data, requestId);
     }
 }

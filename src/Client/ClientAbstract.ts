@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import {ClientOptions} from "./ClientOptions";
 import {join} from "path";
+import {Response, BaseResponse} from "../Response";
 
 export class ClientAbstract {
     protected options: ClientOptions & {endpoint: string};
@@ -19,7 +20,7 @@ export class ClientAbstract {
 }
 
 export class ClientRequestAbstract extends ClientAbstract {
-    protected async call<R extends Response = any>(url: string, data?: object, requestId?: string): Promise<R> {
+    protected async call<R extends BaseResponse = BaseResponse>(url: string, data?: object, requestId?: string): Promise<Response<R>> {
         const headers: any = {
             'Content-Type': 'application/json'
         };

@@ -72,7 +72,7 @@ export class ClientHandlers extends ClientAbstract {
     }
 
     private async parseRequest<T extends {}>(req: IncomingMessage): Promise<T> {
-        ok('content-hmac' in req.headers, 'Request headers should contain Content-HMCA field.');
+        ok('content-hmac' in req.headers, 'Request headers should contain Content-HMAC field.');
 
         const signature: string = req.headers['content-hmac'] as string;
         const method = req.method || '';
@@ -90,14 +90,14 @@ export class ClientHandlers extends ClientAbstract {
 
             const headers: any = req.headers || {};
 
-            ok(checkSignedString(signature, body), 'Invalid signature');
+            ok(checkSignedString(this.options.privateKey, signature, body), 'Invalid signature');
             if ('content-type' in headers && headers['content-type'].indexOf('json') !== -1) {
                 Object.assign(request, JSON.parse(body));
             } else {
                 Object.assign(request, qs.parse(body));
             }
         } else if (method.toUpperCase() === 'GET') {
-            ok(checkSignedString(signature, parse(req.url || '').query), 'Invalid signature');
+            ok(checkSignedString(this.options.privateKey, signature, parse(req.url || '').query), 'Invalid signature');
             Object.assign(request, parse(req.url || '', true).query);
         }
 

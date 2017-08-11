@@ -61,7 +61,7 @@ class ClientHandlers extends ClientAbstract_1.ClientAbstract {
     }
     parseRequest(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            assert_1.ok('content-hmac' in req.headers, 'Request headers should contain Content-HMCA field.');
+            assert_1.ok('content-hmac' in req.headers, 'Request headers should contain Content-HMAC field.');
             const signature = req.headers['content-hmac'];
             const method = req.method || '';
             const request = {};
@@ -74,7 +74,7 @@ class ClientHandlers extends ClientAbstract_1.ClientAbstract {
                     req.on('error', reject);
                 });
                 const headers = req.headers || {};
-                assert_1.ok(utils_1.checkSignedString(signature, body), 'Invalid signature');
+                assert_1.ok(utils_1.checkSignedString(this.options.privateKey, signature, body), 'Invalid signature');
                 if ('content-type' in headers && headers['content-type'].indexOf('json') !== -1) {
                     Object.assign(request, JSON.parse(body));
                 }
@@ -83,7 +83,7 @@ class ClientHandlers extends ClientAbstract_1.ClientAbstract {
                 }
             }
             else if (method.toUpperCase() === 'GET') {
-                assert_1.ok(utils_1.checkSignedString(signature, url_1.parse(req.url || '').query), 'Invalid signature');
+                assert_1.ok(utils_1.checkSignedString(this.options.privateKey, signature, url_1.parse(req.url || '').query), 'Invalid signature');
                 Object.assign(request, url_1.parse(req.url || '', true).query);
             }
             return request;

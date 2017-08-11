@@ -9,14 +9,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const test = require("tape");
+const createShouldFailFunction = (t) => (expr, msg) => __awaiter(this, void 0, void 0, function* () {
+    let throwError;
+    try {
+        if (typeof expr === 'function') {
+            yield expr();
+        }
+        else {
+            yield expr;
+        }
+        return t.fail(msg || 'should fail');
+    }
+    catch (error) {
+        t.throws(() => {
+            throw new Error(error.message);
+        }, msg || 'should fail');
+    }
+});
 function asyncTest(testName, testCase) {
     test(testName, (assert) => __awaiter(this, void 0, void 0, function* () {
         try {
+            assert.shouldFail = createShouldFailFunction(assert).bind(assert);
             yield testCase(assert);
             assert.end();
         }
         catch (error) {
-            assert.fail(error);
+            assert.fail(error.stack);
         }
     }));
 }
