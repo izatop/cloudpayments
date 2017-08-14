@@ -1,6 +1,6 @@
 {
   "name": "cloudpayments",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "CloudPayments API library",
   "main": "index.js",
   "scripts": {
