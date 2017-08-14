@@ -7,7 +7,7 @@ const ClientService_1 = require("./src/ClientService");
 __export(require("./src/ClientApi"));
 __export(require("./src/ReceiptApi"));
 __export(require("./src/ClientService"));
-__export(require("./src/ClientHandlers"));
+__export(require("./src/NotificationHandlers"));
 __export(require("./src/Api/constants"));
 __export(require("./src/Response"));
 exports.default = ClientService_1.ClientService;

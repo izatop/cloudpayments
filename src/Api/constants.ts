@@ -262,43 +262,35 @@ export namespace RecurrentStatus {
  *
  * В таблице ниже представлены типы чеков и соответствующие им признаки расчета, которые используются для выдачи кассовых чеков.
  */
-export namespace ReceiptTypes {
+export enum ReceiptTypes {
     /**
      * Приход
      *
      * Выдается при получении средств от покупателя (клиента)
      */
-    export const Income = 'Income';
+    Income = 'Income',
 
     /**
      * Возврат прихода
      *
      * Выдается при возврате покупателю (клиенту) средств, полученных от него
      */
-    export const IncomeReturn = 'IncomeReturn';
+    IncomeReturn = 'IncomeReturn',
 
     /**
      * Расход
      *
      * Выдается при выдаче средств покупателю (клиенту)
      */
-    export const Expense = 'Expense';
+    Expense = 'Expense',
 
     /**
      * Вовзрат расхода
      *
      * Выдается при получениеи средств от покупателя (клиента), выданных ему
      */
-    export const ExpenseReturn = 'ExpenseReturn';
+    ExpenseReturn = 'ExpenseReturn'
 }
-
-export type ReceiptTypesType =
-    'Income'
-    | 'IncomeReturn'
-    | 'Expense'
-    | 'ExpenseReturn'
-    ;
-
 
 /**
  * Системы налогообложения
@@ -316,6 +308,20 @@ export enum TaxationSystem {
 }
 
 export type TaxationSystemType = TaxationSystem;
+
+export function validateTaxationSystem(value: any) {
+    switch (value) {
+        case TaxationSystem.GENERAL:
+        case TaxationSystem.SIMPLIFIED_INCOME:
+        case TaxationSystem.SIMPLIFIED_INCOME_CONSUMPTION:
+        case TaxationSystem.UNIFIED_AGRICULTURAL:
+        case TaxationSystem.UNIFIED_IMPUTED_INCOME:
+        case TaxationSystem.PATENT:
+            return true;
+        default:
+            return false;
+    }
+}
 
 /**
  * Значения ставки НДС

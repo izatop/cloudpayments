@@ -14,7 +14,7 @@ const helpers_1 = require("./helpers");
 const constants_1 = require("../src/Api/constants");
 async_tape_1.asyncTest('ServiceClient.ClientHandlers', (t) => __awaiter(this, void 0, void 0, function* () {
     const service = new _1.ClientService(helpers_1.options);
-    const clientHandlers = service.getHandlers();
+    const clientHandlers = service.getNotificationHandlers();
     const validReq = new helpers_1.ServiceRequestMock(helpers_1.options.privateKey, 'key=value');
     const invalidReq = new helpers_1.ServiceRequestMock('fake key', 'key=value');
     const validator = (req) => __awaiter(this, void 0, void 0, function* () {

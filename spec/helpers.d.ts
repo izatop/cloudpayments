@@ -3,6 +3,9 @@ import { TaxationSystem } from "../src/Api/constants";
 import { IncomingHttpHeaders } from "http";
 import * as net from "net";
 import * as stream from "stream";
+import { ClientRequestAbstract } from "../src/Client/ClientAbstract";
+import { Request, RequestInit } from "node-fetch";
+import { Test } from "./async-tape";
 export declare const options: {
     endpoint: string;
     publicId: string;
@@ -45,3 +48,4 @@ export declare class ServiceRequestMock extends stream.Readable {
     socket: net.Socket;
     destroy(error?: Error): void;
 }
+export declare function clientRequestTest(test: Test, client: ClientRequestAbstract, clientCall: () => Promise<any>, testCase: (test: Test, url: string | Request, init?: RequestInit) => void): Promise<void>;

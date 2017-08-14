@@ -2,17 +2,17 @@ import {ClientAbstract} from "./Client/ClientAbstract";
 import {ClientApi} from "./ClientApi";
 import {ReceiptApi} from "./ReceiptApi";
 import {ClientOptions} from "./Client/ClientOptions";
-import {ClientHandlers} from "./ClientHandlers";
+import {NotificationHandlers} from "./NotificationHandlers";
 
 export class ClientService extends ClientAbstract {
     protected client: ClientApi;
     protected receipt: ReceiptApi;
-    protected handlers: ClientHandlers;
+    protected handlers: NotificationHandlers;
 
     constructor(options: ClientOptions) {
         super(options);
         this.client = ClientService.createClientApi(this.options);
-        this.handlers = ClientService.createHandlers(this.options);
+        this.handlers = ClientService.createNotificationHandlers(this.options);
         this.receipt = ClientService.createReceiptApi(this.options);
     }
 
@@ -20,7 +20,7 @@ export class ClientService extends ClientAbstract {
         return this.client;
     }
 
-    public getHandlers() {
+    public getNotificationHandlers() {
         return this.handlers;
     }
 
@@ -36,7 +36,7 @@ export class ClientService extends ClientAbstract {
         return new ReceiptApi(options)
     }
 
-    public static createHandlers(options: ClientOptions) {
-        return new ClientHandlers(options);
+    public static createNotificationHandlers(options: ClientOptions) {
+        return new NotificationHandlers(options);
     }
 }

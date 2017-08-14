@@ -5,7 +5,7 @@ import {ResponseCodes} from "../src/Api/constants";
 
 asyncTest('ServiceClient.ClientHandlers', async t => {
     const service = new ClientService(options);
-    const clientHandlers = service.getHandlers();
+    const clientHandlers = service.getNotificationHandlers();
     const validReq = new ServiceRequestMock(options.privateKey, 'key=value');
     const invalidReq = new ServiceRequestMock('fake key', 'key=value');
     const validator = async (req: any) => {

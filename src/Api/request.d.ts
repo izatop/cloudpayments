@@ -1,4 +1,4 @@
-import { TaxationSystemType, VATType } from "./constants";
+import { ReceiptTypes, TaxationSystemType, VATType } from "./constants";
 /**
  * Параметры формирования кассовго чека
  *
@@ -6,7 +6,7 @@ import { TaxationSystemType, VATType } from "./constants";
  */
 export interface ReceiptRequest {
     Inn: number;
-    Type: string;
+    Type: ReceiptTypes;
     CustomerReceipt: CustomerReceipt;
     InvoiceId?: string;
     AccountId?: string;
@@ -15,7 +15,7 @@ export interface CustomerReceipt {
     taxationSystem: TaxationSystemType;
     email?: string;
     phone?: string;
-    Item: CustomerReceiptItem[];
+    Items: CustomerReceiptItem[];
 }
 export interface CustomerReceiptItem {
     label: string;

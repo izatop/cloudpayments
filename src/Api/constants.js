@@ -227,25 +227,25 @@ var ReceiptTypes;
      *
      * Выдается при получении средств от покупателя (клиента)
      */
-    ReceiptTypes.Income = 'Income';
+    ReceiptTypes["Income"] = "Income";
     /**
      * Возврат прихода
      *
      * Выдается при возврате покупателю (клиенту) средств, полученных от него
      */
-    ReceiptTypes.IncomeReturn = 'IncomeReturn';
+    ReceiptTypes["IncomeReturn"] = "IncomeReturn";
     /**
      * Расход
      *
      * Выдается при выдаче средств покупателю (клиенту)
      */
-    ReceiptTypes.Expense = 'Expense';
+    ReceiptTypes["Expense"] = "Expense";
     /**
      * Вовзрат расхода
      *
      * Выдается при получениеи средств от покупателя (клиента), выданных ему
      */
-    ReceiptTypes.ExpenseReturn = 'ExpenseReturn';
+    ReceiptTypes["ExpenseReturn"] = "ExpenseReturn";
 })(ReceiptTypes = exports.ReceiptTypes || (exports.ReceiptTypes = {}));
 /**
  * Системы налогообложения
@@ -262,6 +262,20 @@ var TaxationSystem;
     TaxationSystem[TaxationSystem["UNIFIED_AGRICULTURAL"] = 4] = "UNIFIED_AGRICULTURAL";
     TaxationSystem[TaxationSystem["PATENT"] = 5] = "PATENT";
 })(TaxationSystem = exports.TaxationSystem || (exports.TaxationSystem = {}));
+function validateTaxationSystem(value) {
+    switch (value) {
+        case TaxationSystem.GENERAL:
+        case TaxationSystem.SIMPLIFIED_INCOME:
+        case TaxationSystem.SIMPLIFIED_INCOME_CONSUMPTION:
+        case TaxationSystem.UNIFIED_AGRICULTURAL:
+        case TaxationSystem.UNIFIED_IMPUTED_INCOME:
+        case TaxationSystem.PATENT:
+            return true;
+        default:
+            return false;
+    }
+}
+exports.validateTaxationSystem = validateTaxationSystem;
 /**
  * Значения ставки НДС
  *

@@ -13,7 +13,7 @@ const qs = require("qs");
 const utils_1 = require("./utils");
 const url_1 = require("url");
 const assert_1 = require("assert");
-class ClientHandlers extends ClientAbstract_1.ClientAbstract {
+class NotificationHandlers extends ClientAbstract_1.ClientAbstract {
     handle(req, validator) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -90,5 +90,5 @@ class ClientHandlers extends ClientAbstract_1.ClientAbstract {
         });
     }
 }
-exports.ClientHandlers = ClientHandlers;
-//# sourceMappingURL=ClientHandlers.js.map
+exports.NotificationHandlers = NotificationHandlers;
+//# sourceMappingURL=NotificationHandlers.js.map

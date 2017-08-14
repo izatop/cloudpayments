@@ -6,7 +6,7 @@ import { ResponseCodes } from "./Api/constants";
 export interface NotificationHandlerValidator<TRequest> {
     (request: TRequest): Promise<ResponseCodes>;
 }
-export declare class ClientHandlers extends ClientAbstract {
+export declare class NotificationHandlers extends ClientAbstract {
     protected handle<TRequest, TResponse>(req: IncomingMessage, validator?: NotificationHandlerValidator<TRequest>): Promise<{
         request: TRequest;
         response: {};

@@ -1,9 +1,9 @@
 import {TaxationSystemType} from "../Api/constants";
 
-export interface IncomeReceipt {
+export interface Receipt {
     inn?: number,
     taxationSystem?: TaxationSystemType,
-    records: IncomeReceiptRecord[],
+    records: ReceiptRecords[],
     invoiceId: string,
     accountId?: string,
     notify?: {
@@ -12,7 +12,7 @@ export interface IncomeReceipt {
     }
 }
 
-export interface IncomeReceiptRecord {
+export interface ReceiptRecords {
     label: string,
     price: number,
     quantity: number,

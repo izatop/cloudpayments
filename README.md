@@ -35,10 +35,10 @@ const client = new ClientService({/* options */});
 |---|---|---|---|
 | `getClientApi` |  | `ClientApi` | Возвращает экземпляр класса `ClientApi` для работы со стандартным [API](https://cloudpayments.ru/Docs/Api) |
 | `getReceiptApi` | | `ReceiptApi` | Возвращает экземпляр класса `ReceiptApi` для работы с [API кассы](https://cloudpayments.ru/docs/api/kassa) |
-| `getHandlers` | | `ClientHandlers` | Возвращает экземпляр класса `ClientHandlers` для обработки [уведомлений](https://cloudpayments.ru/Docs/Notifications) |
+| `getNotificationHandlers` | | `NotificationHandlers` | Возвращает экземпляр класса `ClientHandlers` для обработки [уведомлений](https://cloudpayments.ru/Docs/Notifications) |
 | `createClientApi` | `ClientOptions` | `ClientApi` | Создает отдельный экземпляр класса `ClientApi` |
 | `createReceiptApi` | `ClientOptions` | `ReceiptApi` | Создает отдельный экземпляр класса `ReceiptApi` |
-| `createHandlers` | `ClientOptions` | `ClientHandlers` | Создает отдельный экземпляр класса `ClientHandlers` |
+| `createNotificationHandlers` | `ClientOptions` | `NotificationHandlers` | Создает отдельный экземпляр класса `NotificationHandlers` |
 
 ### ClientOptions
 
@@ -65,7 +65,7 @@ Coming soon
 
 ```typescript
 import {createServer} from 'http';
-import {ClientService, TaxationSystem, VAT, ResponseCodes} from './';
+import {ClientService, TaxationSystem, VAT, ResponseCodes, ReceiptTypes} from './';
 
 const client = new ClientService({
     privateKey: 'private key',
@@ -76,32 +76,26 @@ const client = new ClientService({
     }
 });
 
-const handlers = client.getHandlers();
+const handlers = client.getNotificationHandlers();
 const receiptApi = client.getReceiptApi();
 const server = createServer(async (req, res) => {
-    if (req.url == '/cloudpayments/fail') {
-        const response = await handlers.handlePayRequest(req, async (request) => {
-            // Проверям запрос, например на совпадение цены товара
-            if (request.Amount !== invoiceAmount) {
-                return ResponseCodes.INVALID_AMOUNT;
-            }
-            
-            // И другие проверки не забываем
-            
-            // В случае успешных проверок проводим платеж
-            await invoices.update({_id: request.InvoiceId}, {
-                $set: {status: PaymentStatus.PAID}
-            });
-            
-            // Отправляем печать чека
-            const response = await receiptApi.createIncomeReceipt({
+    const response = await handlers.handlePayRequest(req, async (request) => {
+        // Проверям запрос, например на совпадение цены заказа
+        if (request.Amount > 0) {
+            return ResponseCodes.INVALID_AMOUNT;
+        }
+        
+        // Отправляем запрос на создание чека
+        const response = await receiptApi.createReceipt(
+            ReceiptTypes.Income,
+            {
                 invoiceId: request.InvoiceId,
                 accountId: request.AccountId,
                 // если система налогооблажения не указана, 
                 // берется из настроек ClientOptions
                 taxationSystem: TaxationSystem.GENERAL,
                 inn: 123456789,
-                notify: {email: clientEmail, phone: clientPhone},
+                notify: {email: 'mail@example.com', phone: '+7123456789'},
                 records: [
                     {
                         label: 'Наименование товара или сервиса',
@@ -112,46 +106,47 @@ const server = createServer(async (req, res) => {
                         ean13: '1234456363'
                     }
                 ]
-            });
-            
-            // Проверяем, что запрос встал в очередь,
-            // иначе обрабатываем исключение
-            
-            // Если все прошло успешно, возвращаем 0
-            return ResponseCodes.SUCCESS;
-        });
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(response));
-    }
+            }
+        );
+        
+        // Проверяем, что запрос встал в очередь,
+        // иначе обрабатываем исключение
+        
+        // Если все прошло успешно, возвращаем 0
+        return ResponseCodes.SUCCESS;
+    });
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(response));
 });
 ```
 
 #### Methods
 
-| Method | Options | Return | Description |
+| Method | Arguments | Return | Description |
 |---|---|---|---|
-| `createIncomeReceipt` | `IncomeReceipt` | `Response<{}>` | Отправляет запрос на [создание чека](https://cloudpayments.ru/docs/api/kassa#receipt) |
+| `createIncomeReceipt` | `ReceiptTypes`, `Receipt` | `Response<{}>` | Отправляет запрос на [создание чека](https://cloudpayments.ru/docs/api/kassa#receipt) |
 
-#### IncomeReceipt
+#### Receipt
 
-Смотрите [IncomeReceipt](./src/ReceiptApi/IncomeReceipt.ts)
+Смотрите [Receipt](src/ReceiptApi/Receipt.d.ts)
 
 ## Handlers
 
 В библиотеку `cloudpayments` встроен механизм обработки 
-уведомлений по обработке платежей от сервиса. 
-Документация https://cloudpayments.ru/Docs/Notifications 
+уведомлений о платежах (смотрите [документацию](https://cloudpayments.ru/Docs/Notifications)). 
 
 Список доступных методов для обработки уведомлений:
 
-| Метод | Уведомление | Ссылка на описание |
+| Метод | Параметры запроса | Ссылка на описание |
 |---|---|---|
-| `handleCheckRequest` | `check` | https://cloudpayments.ru/Docs/Notifications#check |
-| `handlePayRequest` | `pay` | https://cloudpayments.ru/Docs/Notifications#pay |
-| `handleFailRequest` | `fail` | https://cloudpayments.ru/Docs/Notifications#fail |
-| `handleRecurrentRequest` | `recurrent` | https://cloudpayments.ru/Docs/Notifications#recurrent |
-| `handleRefundRequest` | `refund` | https://cloudpayments.ru/Docs/Notifications#refund |
-| `handleReceiptRequest` | `receipt` | https://cloudpayments.ru/Docs/Notifications#receipt |
+| `handleCheckRequest` | [CheckNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#check |
+| `handlePayRequest` | [PayNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#pay |
+| `handleFailRequest` | [FailNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#fail |
+| `handleRecurrentRequest` | [RecurrentNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#recurrent |
+| `handleRefundRequest` | [RefundNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#refund |
+| `handleReceiptRequest` | [ReceiptNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#receipt |
+
+Пример использования:
 
 ```typescript
 import {createServer} from 'http';
@@ -166,13 +161,14 @@ const client = new ClientService({
     }
 });
 
-const handlers = client.getHandlers();
+const handlers = client.getNotificationHandlers();
 const server = createServer(async (req, res) => {
     if (req.url == '/cloudpayments/fail') {
         const response = await handlers.handleFailRequest(req, async (request) => {
             // Делаем что-то с инфомацией о неудачном платеже
             return ResponseCodes.SUCCESS;
         });
+        
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(response));
     }

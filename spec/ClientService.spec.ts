@@ -2,7 +2,7 @@ import {asyncTest} from "./async-tape";
 import {ClientService} from '../';
 import {ClientApi} from "../src/ClientApi";
 import {ReceiptApi} from "../src/ReceiptApi";
-import {ClientHandlers} from "../src/ClientHandlers";
+import {NotificationHandlers} from "../src/NotificationHandlers";
 import {options} from "./helpers";
 
 asyncTest('ServiceClient', async t => {
@@ -19,11 +19,11 @@ asyncTest('ServiceClient', async t => {
     t.ok(ClientService.createReceiptApi(options) instanceof ReceiptApi);
     t.equal(service.getReceiptApi().getEndpoint(), options.endpoint.concat('/kkt'));
 
-    t.ok(service.getHandlers() instanceof ClientHandlers);
-    t.ok(ClientService.createHandlers(options) instanceof ClientHandlers);
-    t.equal(service.getHandlers().getEndpoint(), options.endpoint);
+    t.ok(service.getNotificationHandlers() instanceof NotificationHandlers);
+    t.ok(ClientService.createNotificationHandlers(options) instanceof NotificationHandlers);
+    t.equal(service.getNotificationHandlers().getEndpoint(), options.endpoint);
 
     t.equal(service.getClientApi(), service.getClientApi());
     t.equal(service.getReceiptApi(), service.getReceiptApi());
-    t.equal(service.getHandlers(), service.getHandlers());
+    t.equal(service.getNotificationHandlers(), service.getNotificationHandlers());
 });

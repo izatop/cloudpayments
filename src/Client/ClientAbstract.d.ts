@@ -1,3 +1,4 @@
+import fetch from 'node-fetch';
 import { ClientOptions } from "./ClientOptions";
 import { Response, BaseResponse } from "../Response";
 export declare class ClientAbstract {
@@ -9,6 +10,7 @@ export declare class ClientAbstract {
     getEndpoint(): string;
 }
 export declare class ClientRequestAbstract extends ClientAbstract {
+    protected readonly client: typeof fetch;
     protected call<R extends BaseResponse = BaseResponse>(url: string, data?: object, requestId?: string): Promise<Response<R>>;
 }
 export * from '../Api/constants';

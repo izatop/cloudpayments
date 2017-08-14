@@ -1,4 +1,4 @@
-import {TaxationSystemType, VATType} from "../Api/constants";
+import {TaxationSystemType} from "../Api/constants";
 
 export interface ClientOptions {
     publicId: string,

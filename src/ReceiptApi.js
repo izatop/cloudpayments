@@ -19,27 +19,28 @@ class ReceiptApi extends ClientAbstract_1.ClientRequestAbstract {
     /**
      * Create receipt
      *
-     * @param {IncomeReceipt} receipt   Income receipt data
+     * @param {ReceiptTypes} type   Receipt type
+     * @param {Receipt} receipt   Income receipt data
      * @param {string} id               Idempotent request id (calculated automatically if not provided)
      * @returns {Promise<Response>}
      */
-    createIncomeReceipt(receipt, id) {
+    createReceipt(type, receipt, id) {
         return __awaiter(this, void 0, void 0, function* () {
             const { inn, notify, records, taxationSystem, accountId, invoiceId } = Object.assign({}, receipt, this.options.org || {});
             assert_1.ok(inn, 'You should fill "inn" field');
-            assert_1.ok(taxationSystem, 'You should fill "inn" field');
+            assert_1.ok(constants_1.validateTaxationSystem(taxationSystem), 'You should fill "taxationSystem" field');
             assert_1.ok(records && records.length > 0, 'You should fill "records" field');
-            assert_1.ok(records.filter(x => false === constants_1.validateVAT(x.vat)).length > 0, 'You should fill VAT with valid values');
+            assert_1.ok(records.filter(x => false === constants_1.validateVAT(x.vat)).length === 0, 'You should fill VAT with valid values');
             const data = {
                 Inn: inn,
                 InvoiceId: invoiceId,
                 AccountId: accountId,
-                Type: 'income',
+                Type: type,
                 CustomerReceipt: {
                     taxationSystem: taxationSystem,
                     email: notify ? notify.email || '' : '',
                     phone: notify ? notify.phone || '' : '',
-                    Item: records.map(item => ({
+                    Items: records.map(item => ({
                         label: item.label,
                         price: item.price,
                         quantity: item.quantity,

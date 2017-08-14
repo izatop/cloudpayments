@@ -11,7 +11,7 @@ export interface NotificationHandlerValidator<TRequest> {
     (request: TRequest): Promise<ResponseCodes>;
 }
 
-export class ClientHandlers extends ClientAbstract {
+export class NotificationHandlers extends ClientAbstract {
     protected async handle<TRequest, TResponse>(
         req: IncomingMessage,
         validator?: NotificationHandlerValidator<TRequest>

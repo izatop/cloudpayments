@@ -12,7 +12,7 @@ const async_tape_1 = require("./async-tape");
 const _1 = require("../");
 const ClientApi_1 = require("../src/ClientApi");
 const ReceiptApi_1 = require("../src/ReceiptApi");
-const ClientHandlers_1 = require("../src/ClientHandlers");
+const NotificationHandlers_1 = require("../src/NotificationHandlers");
 const helpers_1 = require("./helpers");
 async_tape_1.asyncTest('ServiceClient', (t) => __awaiter(this, void 0, void 0, function* () {
     const service = new _1.ClientService(helpers_1.options);
@@ -24,11 +24,11 @@ async_tape_1.asyncTest('ServiceClient', (t) => __awaiter(this, void 0, void 0, f
     t.ok(service.getReceiptApi() instanceof ReceiptApi_1.ReceiptApi);
     t.ok(_1.ClientService.createReceiptApi(helpers_1.options) instanceof ReceiptApi_1.ReceiptApi);
     t.equal(service.getReceiptApi().getEndpoint(), helpers_1.options.endpoint.concat('/kkt'));
-    t.ok(service.getHandlers() instanceof ClientHandlers_1.ClientHandlers);
-    t.ok(_1.ClientService.createHandlers(helpers_1.options) instanceof ClientHandlers_1.ClientHandlers);
-    t.equal(service.getHandlers().getEndpoint(), helpers_1.options.endpoint);
+    t.ok(service.getNotificationHandlers() instanceof NotificationHandlers_1.NotificationHandlers);
+    t.ok(_1.ClientService.createNotificationHandlers(helpers_1.options) instanceof NotificationHandlers_1.NotificationHandlers);
+    t.equal(service.getNotificationHandlers().getEndpoint(), helpers_1.options.endpoint);
     t.equal(service.getClientApi(), service.getClientApi());
     t.equal(service.getReceiptApi(), service.getReceiptApi());
-    t.equal(service.getHandlers(), service.getHandlers());
+    t.equal(service.getNotificationHandlers(), service.getNotificationHandlers());
 }));
 //# sourceMappingURL=ClientService.spec.js.map

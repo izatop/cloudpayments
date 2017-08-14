@@ -20,16 +20,25 @@ export class ClientAbstract {
 }
 
 export class ClientRequestAbstract extends ClientAbstract {
-    protected async call<R extends BaseResponse = BaseResponse>(url: string, data?: object, requestId?: string): Promise<Response<R>> {
+    protected get client() {
+        return fetch;
+    }
+
+    protected async call<
+        R extends BaseResponse = BaseResponse
+    >(url: string, data?: object, requestId?: string): Promise<Response<R>> {
         const headers: any = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic '.concat(new Buffer("".concat(this.options.publicId, ":", this.options.privateKey))
+                .toString("base64")
+            )
         };
 
         if (requestId) {
             headers['X-Request-Id'] = requestId;
         }
 
-        const response = await fetch(
+        const response = await this.client(
             this.getEndpoint().concat(join('/', url)),
             {
                 headers,
