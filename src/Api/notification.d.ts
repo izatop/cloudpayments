@@ -1,4 +1,4 @@
-import { RecurrentStatusType, TransactionStatusType, ValidCurrency } from "./constants";
+import { ReceiptTypes, RecurrentStatusType, TransactionStatusType, ValidCurrency } from "./constants";
 export interface CustomDataNotification<TCustomData> {
     Data: TCustomData;
 }
@@ -109,7 +109,7 @@ export interface ReceiptNotification<TReceipt> {
     DeviceNumber: number;
     RegNumber: string;
     Inn: number;
-    Type: string;
+    Type: ReceiptTypes;
     Ofd: string;
     Url: string;
     QrCodeUrl: string;

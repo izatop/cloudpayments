@@ -1,14 +1,21 @@
 {
   "name": "cloudpayments",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "CloudPayments API library",
   "main": "index.js",
   "scripts": {
-    "test": "tape spec/**.spec.js"
+    "test": "tape spec/**.spec.js",
+    "build": "tsc",
+    "preversion": "npm run build && npm test",
+    "version": "git add -A",
+    "postversion": "git push"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/izatop/cloudpayments.git"
+  },
+  "publishConfig": {
+    "registry": "http://nexus.drhead.ru/repository/drhead"
   },
   "keywords": [
     "cloudpayments"
