@@ -2,7 +2,6 @@ import {ClientService} from "./src/ClientService";
 
 export * from './src/ClientApi';
 export * from './src/ReceiptApi';
-export * from './src/ReceiptApi/Receipt';
 export * from './src/ClientService';
 export * from './src/NotificationHandlers';
 export * from './src/Client/ClientOptions';
