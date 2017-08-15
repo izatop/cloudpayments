@@ -144,7 +144,7 @@ var TransactionStatus;
      * После перехода плательщика на сайт эмитента в ожидании результатов 3-D Secure
      *
      */
-    TransactionStatus.AwaitingAuthentication = 'AwaitingAuthentication';
+    TransactionStatus["AwaitingAuthentication"] = "AwaitingAuthentication";
     /**
      * Авторизована
      *
@@ -152,7 +152,7 @@ var TransactionStatus;
      *
      * Подтверждение, Отмена
      */
-    TransactionStatus.Authorized = 'Authorized';
+    TransactionStatus["Authorized"] = "Authorized";
     /**
      * Завершена
      *
@@ -160,19 +160,19 @@ var TransactionStatus;
      *
      * Возврат денег
      */
-    TransactionStatus.Completed = 'Completed';
+    TransactionStatus["Completed"] = "Completed";
     /**
      * Отменена
      *
      * В случае отмены операции
      */
-    TransactionStatus.Cancelled = 'Cancelled';
+    TransactionStatus["Cancelled"] = "Cancelled";
     /**
      * Отклонена
      *
      * В случае невозможности провести операцию (нет денег на счете карты и т.п.)
      */
-    TransactionStatus.Declined = 'Declined';
+    TransactionStatus["Declined"] = "Declined";
 })(TransactionStatus = exports.TransactionStatus || (exports.TransactionStatus = {}));
 /**
  * Статусы подписок (рекуррент)

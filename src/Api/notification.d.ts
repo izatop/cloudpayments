@@ -1,4 +1,4 @@
-import { ReceiptTypes, RecurrentStatusType, TransactionStatusType, ValidCurrency } from "./constants";
+import { ReceiptTypes, RecurrentStatusType, TransactionStatus, ValidCurrency } from "./constants";
 export interface CustomDataNotification<TCustomData> {
     Data: TCustomData;
 }
@@ -36,7 +36,7 @@ export interface TransactionNotification<TCustomData> extends AccountRequest, Cu
  * информацией об оплате, а сайт должен подтвердить или отклонить возможность принять платеж.
  */
 export interface CheckNotification<TCustomData = {}> extends TransactionNotification<TCustomData> {
-    Status: TransactionStatusType;
+    Status: TransactionStatus;
 }
 /**
  * Pay
@@ -45,7 +45,7 @@ export interface CheckNotification<TCustomData = {}> extends TransactionNotifica
  * на адрес ТСП с информацией об оплате, а сайт должен зафиксировать факт платежа.
  */
 export interface PayNotification<TCustomData = {}> extends TransactionNotification<TCustomData> {
-    Status: TransactionStatusType;
+    Status: TransactionStatus;
     Token?: string;
 }
 /**

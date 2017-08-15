@@ -20,6 +20,5 @@ async_tape_1.asyncTest('Ping API', (t) => __awaiter(this, void 0, void 0, functi
     const response = yield clientApi.ping(requestId);
     t.ok(/^([a-f0-9]-?)+$/.test(response.getMessage() || ''));
     t.equal(response.isSuccess(), true);
-    t.equal(response.getMessage(), (yield clientApi.ping(requestId)).getMessage());
 }));
 //# sourceMappingURL=ClientApiPing.spec.js.map

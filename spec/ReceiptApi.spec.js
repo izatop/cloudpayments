@@ -54,8 +54,8 @@ async_tape_1.asyncTest('ServiceClient.ReceiptApi', (t) => __awaiter(this, void 0
     yield helpers_1.clientRequestTest(t, receiptApi, () => receiptApi.createReceipt(constants_1.ReceiptTypes.Income, receipt), (t, url, init) => {
         const { headers, body } = init;
         t.equal(url, helpers_1.options.endpoint.concat('/kkt/receipt'));
-        t.ok(headers['X-Request-Id']);
-        t.equal(headers['X-Request-Id'], 'f9ae2de33458bd77a3d9921578a878818ac732cb');
+        t.ok(headers['X-Request-ID']);
+        t.equal(headers['X-Request-ID'], 'f9ae2de33458bd77a3d9921578a878818ac732cb');
         t.equal(headers['Content-Type'], 'application/json');
         t.equal(headers['Authorization'], 'Basic cHVibGljIGlkOnByaXZhdGUga2V5');
         t.equal(body, '{"Inn":12345678,"InvoiceId":"1","AccountId":"1","Type":"Income","CustomerReceipt":{"taxationSystem":0,"email":"mail@example.com","phone":"1234567890","Items":[{"label":"item","price":100,"quantity":1,"amount":100,"vat":18,"ean13":null}]}}');

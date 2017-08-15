@@ -32,15 +32,12 @@ export class ClientRequestAbstract extends ClientAbstract {
     /**
      *
      */
-    public async ping(id: string): Promise<Response<BaseResponse>> {
+    public async ping(): Promise<Response<BaseResponse>> {
         const response = await this.client(
             this.getEndpoint().concat(join('/test')),
             {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Request-ID': id
-                },
                 method: 'POST',
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({})
             }
         );

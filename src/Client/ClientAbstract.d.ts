@@ -19,7 +19,7 @@ export declare class ClientRequestAbstract extends ClientAbstract {
     /**
      *
      */
-    ping(id: string): Promise<Response<BaseResponse>>;
+    ping(): Promise<Response<BaseResponse>>;
     /**
      * Create request to an API endpoint.
      *

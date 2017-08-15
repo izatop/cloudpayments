@@ -38,14 +38,11 @@ class ClientRequestAbstract extends ClientAbstract {
     /**
      *
      */
-    ping(id) {
+    ping() {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.client(this.getEndpoint().concat(path_1.join('/test')), {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Request-ID': id
-                },
                 method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({})
             });
             return new response_1.Response(yield response.json());

@@ -113,14 +113,14 @@ export declare type TransactionStatusType = 'AwaitingAuthentication' | 'Authoriz
  * Статусы операций
  * В таблице ниже представлены статусы транзакций, условия применения и возможные действия.
  */
-export declare namespace TransactionStatus {
+export declare enum TransactionStatus {
     /**
      * Ожидает аутентификации
      *
      * После перехода плательщика на сайт эмитента в ожидании результатов 3-D Secure
      *
      */
-    const AwaitingAuthentication = "AwaitingAuthentication";
+    AwaitingAuthentication = "AwaitingAuthentication",
     /**
      * Авторизована
      *
@@ -128,7 +128,7 @@ export declare namespace TransactionStatus {
      *
      * Подтверждение, Отмена
      */
-    const Authorized = "Authorized";
+    Authorized = "Authorized",
     /**
      * Завершена
      *
@@ -136,19 +136,19 @@ export declare namespace TransactionStatus {
      *
      * Возврат денег
      */
-    const Completed = "Completed";
+    Completed = "Completed",
     /**
      * Отменена
      *
      * В случае отмены операции
      */
-    const Cancelled = "Cancelled";
+    Cancelled = "Cancelled",
     /**
      * Отклонена
      *
      * В случае невозможности провести операцию (нет денег на счете карты и т.п.)
      */
-    const Declined = "Declined";
+    Declined = "Declined",
 }
 export declare type RecurrentStatusType = 'Active' | 'PastDue' | 'Cancelled' | 'Rejected' | 'Expired';
 /**

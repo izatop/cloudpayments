@@ -77,7 +77,7 @@ export declare class ClientApi extends ClientRequestAbstract {
      */
     findPaymentByInvoiceId(data: BaseRequest & {
         InvoiceId: string;
-    }): Promise<Response<PaymentSuccessResponse | PaymentFailedResponse>>;
+    }): Promise<Response<PaymentFailedResponse | PaymentSuccessResponse>>;
     /**
      * Get a filtered payment list
      *
