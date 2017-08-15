@@ -9,6 +9,6 @@ __export(require("./src/ReceiptApi"));
 __export(require("./src/ClientService"));
 __export(require("./src/NotificationHandlers"));
 __export(require("./src/Api/constants"));
-__export(require("./src/Response"));
+__export(require("./src/Api/response"));
 exports.default = ClientService_1.ClientService;
 //# sourceMappingURL=index.js.map

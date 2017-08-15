@@ -1,10 +1,13 @@
-import { ReceiptTypes, TaxationSystemType, VATType } from "./constants";
+import { ReceiptTypes, TaxationSystemType, ValidCurrency, VATType } from "./constants";
+export interface BaseRequest {
+    CultureName?: 'ru-RU' | 'en-US' | 'lv' | 'az' | 'kk' | 'uk' | 'pl';
+}
 /**
  * Параметры формирования кассовго чека
  *
  * @see https://cloudpayments.ru/docs/api/kassa#receipt
  */
-export interface ReceiptRequest {
+export interface ReceiptRequest extends BaseRequest {
     Inn: number;
     Type: ReceiptTypes;
     CustomerReceipt: CustomerReceipt;
@@ -24,4 +27,44 @@ export interface CustomerReceiptItem {
     amount: number;
     vat?: VATType;
     ean13: string | null;
+}
+/**
+ * Payments
+ */
+export interface PaymentRequest extends BaseRequest {
+    Amount: number;
+    Currency: ValidCurrency;
+    IpAddress: string;
+    Name?: string;
+    InvoiceId?: string;
+    Description?: string;
+    Email?: string;
+    JsonData?: string;
+}
+export interface CryptogramPaymentRequest extends PaymentRequest {
+    AccountId?: string;
+    CardCryptogramPacket: string;
+}
+export interface TokenPaymentRequest extends PaymentRequest {
+    AccountId: string;
+    Token: string;
+}
+export interface Confirm3DSRequest extends BaseRequest {
+    TransactionId: string;
+    PaRes: string;
+}
+export interface ConfirmPaymentRequest extends BaseRequest {
+    TransactionId: number;
+    Amount: number;
+    JsonData: object;
+}
+export interface RefundPaymentRequest extends BaseRequest {
+    TransactionId: number;
+    Amount: number;
+    JsonData: object;
+}
+export interface VoidPaymentRequest extends BaseRequest {
+    TransactionId: number;
+    Amount: number;
+    JsonData: object;
 }

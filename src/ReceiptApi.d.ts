@@ -1,7 +1,7 @@
 import { ClientRequestAbstract } from "./Client/ClientAbstract";
 import { ReceiptTypes } from "./Api/constants";
 import { Receipt } from "./ReceiptApi/Receipt";
-import { Response, BaseResponse } from "./Response";
+import { Response, BaseResponse } from "./Api/response";
 export declare class ReceiptApi extends ClientRequestAbstract {
     getEndpoint(): string;
     /**

@@ -320,6 +320,29 @@ var ResponseCodes;
     ResponseCodes[ResponseCodes["REJECTED"] = 13] = "REJECTED";
     ResponseCodes[ResponseCodes["EXPIRED"] = 20] = "EXPIRED";
 })(ResponseCodes = exports.ResponseCodes || (exports.ResponseCodes = {}));
+function validateCurrency(value) {
+    switch (value) {
+        case 'RUB':
+        case 'EUR':
+        case 'USD':
+        case 'GBP':
+        case 'UAH':
+        case 'BYR':
+        case 'BYN':
+        case 'AZN':
+        case 'CHF':
+        case 'CZK':
+        case 'CAD':
+        case 'PLN':
+        case 'SEK':
+        case 'TRY':
+        case 'CNY':
+            return true;
+        default:
+            return false;
+    }
+}
+exports.validateCurrency = validateCurrency;
 exports.CurrencyList = Object.freeze({
     RUB: 'RUB',
     EUR: 'EUR',

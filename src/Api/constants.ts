@@ -163,14 +163,14 @@ export type TransactionStatusType = 'AwaitingAuthentication'
  * Статусы операций
  * В таблице ниже представлены статусы транзакций, условия применения и возможные действия.
  */
-export namespace TransactionStatus {
+export enum TransactionStatus {
     /**
      * Ожидает аутентификации
      *
      * После перехода плательщика на сайт эмитента в ожидании результатов 3-D Secure
      *
      */
-    export const AwaitingAuthentication = 'AwaitingAuthentication';
+    AwaitingAuthentication = 'AwaitingAuthentication',
 
     /**
      * Авторизована
@@ -179,7 +179,7 @@ export namespace TransactionStatus {
      *
      * Подтверждение, Отмена
      */
-    export const Authorized = 'Authorized';
+    Authorized = 'Authorized',
 
     /**
      * Завершена
@@ -188,21 +188,21 @@ export namespace TransactionStatus {
      *
      * Возврат денег
      */
-    export const Completed = 'Completed';
+    Completed = 'Completed',
 
     /**
      * Отменена
      *
      * В случае отмены операции
      */
-    export const Cancelled = 'Cancelled';
+    Cancelled = 'Cancelled',
 
     /**
      * Отклонена
      *
      * В случае невозможности провести операцию (нет денег на счете карты и т.п.)
      */
-    export const Declined = 'Declined';
+   Declined = 'Declined'
 }
 
 export type RecurrentStatusType = 'Active'
@@ -389,6 +389,30 @@ export type ValidCurrency = 'RUB'
     | 'CNY'
     | 'INR'
 ;
+
+export function validateCurrency(value: any) {
+    switch (value) {
+        case 'RUB':
+        case 'EUR':
+        case 'USD':
+        case 'GBP':
+        case 'UAH':
+        case 'BYR':
+        case 'BYN':
+        case 'AZN':
+        case 'CHF':
+        case 'CZK':
+        case 'CAD':
+        case 'PLN':
+        case 'SEK':
+        case 'TRY':
+        case 'CNY':
+            return true;
+
+        default:
+            return false;
+    }
+}
 
 export const CurrencyList = Object.freeze({
     RUB: 'RUB',

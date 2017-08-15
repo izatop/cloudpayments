@@ -13,6 +13,7 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = require("node-fetch");
 const path_1 = require("path");
+const response_1 = require("../Api/response");
 class ClientAbstract {
     constructor(_options) {
         this.options = Object.assign({ endpoint: 'https://api.cloudpayments.ru' }, _options);
@@ -26,9 +27,38 @@ class ClientAbstract {
 }
 exports.ClientAbstract = ClientAbstract;
 class ClientRequestAbstract extends ClientAbstract {
+    /**
+     * HTTP Client
+     *
+     * @returns {(url: (string | Request), init?: RequestInit) => Promise<Response>}
+     */
     get client() {
         return node_fetch_1.default;
     }
+    /**
+     *
+     */
+    ping(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.client(this.getEndpoint().concat(path_1.join('/test')), {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Request-ID': id
+                },
+                method: 'POST',
+                body: JSON.stringify({})
+            });
+            return new response_1.Response(yield response.json());
+        });
+    }
+    /**
+     * Create request to an API endpoint.
+     *
+     * @param {string} url
+     * @param {Object} data
+     * @param {string} requestId
+     * @returns {Promise<Response<R extends BaseResponse>>}
+     */
     call(url, data, requestId) {
         return __awaiter(this, void 0, void 0, function* () {
             const headers = {
@@ -37,14 +67,16 @@ class ClientRequestAbstract extends ClientAbstract {
                     .toString("base64"))
             };
             if (requestId) {
-                headers['X-Request-Id'] = requestId;
+                headers['X-Request-ID'] = requestId;
             }
             const response = yield this.client(this.getEndpoint().concat(path_1.join('/', url)), {
                 headers,
                 method: 'POST',
                 body: data ? JSON.stringify(data) : undefined
             });
-            return yield response.json();
+            const result = yield response.json();
+            console.log('result', result);
+            return new response_1.Response(result);
         });
     }
 }

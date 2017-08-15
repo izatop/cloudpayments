@@ -15,4 +15,4 @@ class Response {
     }
 }
 exports.Response = Response;
-//# sourceMappingURL=Response.js.map
+//# sourceMappingURL=response.js.map

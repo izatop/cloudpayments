@@ -4,7 +4,7 @@ import {ClientRequestAbstract} from "./Client/ClientAbstract";
 import {ReceiptTypes, TaxationSystemType, validateTaxationSystem, validateVAT} from "./Api/constants";
 import {Receipt} from "./ReceiptApi/Receipt";
 import {ReceiptRequest} from "./Api/request";
-import {Response, BaseResponse} from "./Response";
+import {Response, BaseResponse} from "./Api/response";
 
 export class ReceiptApi extends ClientRequestAbstract {
     public getEndpoint() {

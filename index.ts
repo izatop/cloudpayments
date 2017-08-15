@@ -9,6 +9,6 @@ export * from './src/Client/ClientOptions';
 export * from './src/Api/notification';
 export * from './src/Api/constants';
 export * from './src/Api/request';
-export * from './src/Response';
+export * from './src/Api/response';
 
 export default ClientService;

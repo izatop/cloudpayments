@@ -272,6 +272,7 @@ export declare enum ResponseCodes {
  * Currencies
  */
 export declare type ValidCurrency = 'RUB' | 'EUR' | 'USD' | 'GBP' | 'UAH' | 'BYR' | 'BYN' | 'AZN' | 'CHF' | 'CZK' | 'CAD' | 'PLN' | 'SEK' | 'TRY' | 'CNY' | 'INR';
+export declare function validateCurrency(value: any): boolean;
 export declare const CurrencyList: Readonly<{
     RUB: string;
     EUR: string;
