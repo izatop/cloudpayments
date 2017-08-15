@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import {ClientOptions} from "./ClientOptions";
+import {ClientOptions, ClientOptionsOrg} from "./ClientOptions";
 import {join} from "path";
 import {Response, BaseResponse} from "../Api/response";
 
@@ -16,6 +16,14 @@ export class ClientAbstract {
 
     public getEndpoint(): string {
         return this.options.endpoint;
+    }
+
+    public getOrgOptions(): ClientOptionsOrg | null {
+        if (this.options.org) {
+            return this.options.org;
+        }
+
+        return null;
     }
 }
 
@@ -77,7 +85,6 @@ export class ClientRequestAbstract extends ClientAbstract {
         );
 
         const result = await response.json();
-        console.log('result', result);
         return new Response(result);
     }
 }

@@ -1,16 +1,15 @@
 import { ClientRequestAbstract } from "./Client/ClientAbstract";
-import { ReceiptTypes } from "./Api/constants";
-import { Receipt } from "./ReceiptApi/Receipt";
+import { CustomerReceipt, ReceiptRequest } from "./Api/request";
 import { Response, BaseResponse } from "./Api/response";
 export declare class ReceiptApi extends ClientRequestAbstract {
     getEndpoint(): string;
     /**
      * Create receipt
      *
-     * @param {ReceiptTypes} type   Receipt type
-     * @param {Receipt} receipt   Income receipt data
-     * @param {string} id               Idempotent request id (calculated automatically if not provided)
+     * @param {Receipt} request     Common request fields
+     * @param {Receipt} receipt     Receipt fields
+     * @param {string} requestId    Idempotent request id (calculated automatically if not provided)
      * @returns {Promise<Response>}
      */
-    createReceipt(type: ReceiptTypes, receipt: Receipt, id?: string): Promise<Response<BaseResponse>>;
+    createReceipt(request: ReceiptRequest, receipt: CustomerReceipt, requestId?: string): Promise<Response<BaseResponse>>;
 }

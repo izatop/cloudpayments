@@ -10,15 +10,14 @@ export interface BaseRequest {
  * @see https://cloudpayments.ru/docs/api/kassa#receipt
  */
 export interface ReceiptRequest extends BaseRequest {
-    Inn: number,
+    Inn?: number,
     Type: ReceiptTypes,
-    CustomerReceipt: CustomerReceipt,
     InvoiceId?: string,
     AccountId?: string
 }
 
 export interface CustomerReceipt {
-    taxationSystem: TaxationSystemType,
+    taxationSystem?: TaxationSystemType,
     email?: string,
     phone?: string,
     Items: CustomerReceiptItem[]
@@ -30,7 +29,11 @@ export interface CustomerReceiptItem {
     quantity: number,
     amount: number,
     vat?: VATType,
-    ean13: string | null
+    ean13?: string
+}
+
+export interface ReceiptApiRequest extends ReceiptRequest {
+    CustomerReceipt: CustomerReceipt
 }
 
 /**

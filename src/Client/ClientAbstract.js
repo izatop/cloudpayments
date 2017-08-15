@@ -24,6 +24,12 @@ class ClientAbstract {
     getEndpoint() {
         return this.options.endpoint;
     }
+    getOrgOptions() {
+        if (this.options.org) {
+            return this.options.org;
+        }
+        return null;
+    }
 }
 exports.ClientAbstract = ClientAbstract;
 class ClientRequestAbstract extends ClientAbstract {
@@ -72,7 +78,6 @@ class ClientRequestAbstract extends ClientAbstract {
                 body: data ? JSON.stringify(data) : undefined
             });
             const result = yield response.json();
-            console.log('result', result);
             return new response_1.Response(result);
         });
     }

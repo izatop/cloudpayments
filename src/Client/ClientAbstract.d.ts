@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { ClientOptions } from "./ClientOptions";
+import { ClientOptions, ClientOptionsOrg } from "./ClientOptions";
 import { Response, BaseResponse } from "../Api/response";
 export declare class ClientAbstract {
     protected options: ClientOptions & {
@@ -8,6 +8,7 @@ export declare class ClientAbstract {
     constructor(_options: ClientOptions);
     getPublicId(): string;
     getEndpoint(): string;
+    getOrgOptions(): ClientOptionsOrg | null;
 }
 export declare class ClientRequestAbstract extends ClientAbstract {
     /**

@@ -7,6 +7,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const assert_1 = require("assert");
 const objectHash = require("object-hash");
@@ -19,39 +28,30 @@ class ReceiptApi extends ClientAbstract_1.ClientRequestAbstract {
     /**
      * Create receipt
      *
-     * @param {ReceiptTypes} type   Receipt type
-     * @param {Receipt} receipt   Income receipt data
-     * @param {string} id               Idempotent request id (calculated automatically if not provided)
+     * @param {Receipt} request     Common request fields
+     * @param {Receipt} receipt     Receipt fields
+     * @param {string} requestId    Idempotent request id (calculated automatically if not provided)
      * @returns {Promise<Response>}
      */
-    createReceipt(type, receipt, id) {
+    createReceipt(request, receipt, requestId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { inn, notify, records, taxationSystem, accountId, invoiceId } = Object.assign({}, receipt, this.options.org || {});
-            assert_1.ok(inn, 'You should fill "inn" field');
-            assert_1.ok(constants_1.validateTaxationSystem(taxationSystem), 'You should fill "taxationSystem" field');
-            assert_1.ok(records && records.length > 0, 'You should fill "records" field');
-            assert_1.ok(records.filter(x => false === constants_1.validateVAT(x.vat)).length === 0, 'You should fill VAT with valid values');
-            const data = {
-                Inn: inn,
-                InvoiceId: invoiceId,
-                AccountId: accountId,
-                Type: type,
-                CustomerReceipt: {
-                    taxationSystem: taxationSystem,
-                    email: notify ? notify.email || '' : '',
-                    phone: notify ? notify.phone || '' : '',
-                    Items: records.map(item => ({
-                        label: item.label,
-                        price: item.price,
-                        quantity: item.quantity,
-                        amount: item.amount,
-                        vat: item.vat,
-                        ean13: item.ean13 || null
-                    }))
+            const _request = __rest(request, []);
+            const _receipt = __rest(receipt, []);
+            if (this.options.org) {
+                if (!_request.Inn && this.options.org.inn) {
+                    _request.Inn = this.options.org.inn;
                 }
-            };
-            const requestId = id || objectHash(receipt);
-            return yield this.call('receipt', data, requestId);
+                if (!_receipt.taxationSystem && constants_1.validateTaxationSystem(this.options.org.taxationSystem)) {
+                    _receipt.taxationSystem = this.options.org.taxationSystem;
+                }
+            }
+            assert_1.ok(_request.Type, 'Type is required');
+            assert_1.ok(_request.Inn, 'Inn is required');
+            assert_1.ok(constants_1.validateTaxationSystem(_receipt.taxationSystem), 'A receipt field taxationSystem should be valid');
+            assert_1.ok(_receipt.Items && _receipt.Items.length > 0, 'A receipt field Items should be filled');
+            assert_1.ok(_receipt.Items.filter(x => false === constants_1.validateVAT(x.vat)).length === 0, 'You should fill VAT with valid values');
+            const data = Object.assign({}, _request, { CustomerReceipt: _receipt });
+            return yield this.call('receipt', data, requestId || objectHash(receipt));
         });
     }
 }

@@ -4,8 +4,10 @@ export interface ClientOptions {
     publicId: string,
     privateKey: string,
     endpoint?: string,
-    org?: {
-        inn: number,
-        taxationSystem: TaxationSystemType
-    }
+    org?: ClientOptionsOrg
+}
+
+export interface ClientOptionsOrg {
+    inn: number,
+    taxationSystem: TaxationSystemType
 }
