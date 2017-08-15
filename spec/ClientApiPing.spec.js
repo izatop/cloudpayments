@@ -15,9 +15,8 @@ async_tape_1.asyncTest('Ping API', (t) => __awaiter(this, void 0, void 0, functi
         publicId: 'empty',
         privateKey: 'empty'
     });
-    const requestId = Math.random().toString();
     const clientApi = service.getClientApi();
-    const response = yield clientApi.ping(requestId);
+    const response = yield clientApi.ping();
     t.ok(/^([a-f0-9]-?)+$/.test(response.getMessage() || ''));
     t.equal(response.isSuccess(), true);
 }));
