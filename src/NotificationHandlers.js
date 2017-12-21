@@ -39,6 +39,11 @@ class NotificationHandlers extends ClientAbstract_1.ClientAbstract {
             return this.handle(req, validator);
         });
     }
+    handleConfirmRequest(req, validator) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.handle(req, validator);
+        });
+    }
     handleFailRequest(req, validator) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.handle(req, validator);

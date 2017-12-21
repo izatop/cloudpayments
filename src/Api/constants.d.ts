@@ -106,7 +106,28 @@ export declare enum ErrorCodes {
     AntiFraud = 5300,
 }
 export declare const ErrorCodesTranscript: {
-    [x: number]: string;
+    [ErrorCodes.ReferToCardIssuer]: string;
+    [ErrorCodes.DoNotHonor]: string;
+    [ErrorCodes.Error]: string;
+    [ErrorCodes.InvalidTransaction]: string;
+    [ErrorCodes.AmountError]: string;
+    [ErrorCodes.FormatError]: string;
+    [ErrorCodes.BankNotSupportedBySwitch]: string;
+    [ErrorCodes.SuspectedFraud]: string;
+    [ErrorCodes.LostCard]: string;
+    [ErrorCodes.StolenCard]: string;
+    [ErrorCodes.InsufficientFunds]: string;
+    [ErrorCodes.ExpiredCard]: string;
+    [ErrorCodes.TransactionNotPermitted]: string;
+    [ErrorCodes.ExceedWithdrawalFrequency]: string;
+    [ErrorCodes.IncorrectCVV]: string;
+    [ErrorCodes.Timeout]: string;
+    [ErrorCodes.CannotReachNetwork]: string;
+    [ErrorCodes.SystemError]: string;
+    [ErrorCodes.UnableToProcess]: string;
+    [ErrorCodes.AuthenticationFailed]: string;
+    [ErrorCodes.AuthenticationUnavailable]: string;
+    [ErrorCodes.AntiFraud]: string;
 };
 export declare type TransactionStatusType = 'AwaitingAuthentication' | 'Authorized' | 'Completed' | 'Cancelled' | 'Declined';
 /**

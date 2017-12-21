@@ -50,7 +50,18 @@ export interface CheckNotification<TCustomData = {}> extends TransactionNotifica
  * на адрес ТСП с информацией об оплате, а сайт должен зафиксировать факт платежа.
  */
 export interface PayNotification<TCustomData = {}> extends TransactionNotification<TCustomData> {
-    Status: TransactionStatus,
+    Status: TransactionStatus.Authorized | TransactionStatus.Completed,
+    Token?: string
+}
+
+/**
+ * Pay
+ * Выполняется после того, как оплата была успешно проведена — получена авторизация эмитента.
+ * Служит для информирования о проведенном платеже: система отправляет запрос
+ * на адрес ТСП с информацией об оплате, а сайт должен зафиксировать факт платежа.
+ */
+export interface ConfirmNotification<TCustomData = {}> extends TransactionNotification<TCustomData> {
+    Status: TransactionStatus.Completed,
     Token?: string
 }
 

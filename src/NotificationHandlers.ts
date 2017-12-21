@@ -43,6 +43,13 @@ export class NotificationHandlers extends ClientAbstract {
         return this.handle(req, validator);
     }
 
+    async handleConfirmRequest(
+        req: IncomingMessage,
+        validator?: NotificationHandlerValidator<ApiTypes.ConfirmNotification>
+    ) {
+        return this.handle(req, validator);
+    }
+
     async handleFailRequest(
         req: IncomingMessage,
         validator?: NotificationHandlerValidator<ApiTypes.FailNotification>
@@ -97,7 +104,7 @@ export class NotificationHandlers extends ClientAbstract {
                 Object.assign(request, qs.parse(body));
             }
         } else if (method.toUpperCase() === 'GET') {
-            ok(checkSignedString(this.options.privateKey, signature, parse(req.url || '').query), 'Invalid signature');
+            ok(checkSignedString(this.options.privateKey, signature, parse(req.url || '').query as string), 'Invalid signature');
             Object.assign(request, parse(req.url || '', true).query);
         }
 
