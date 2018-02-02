@@ -8,7 +8,8 @@
     "declaration": true,
     "sourceMap": true,
     "lib": ["es2016"],
-    "newLine": "LF"
+    "newLine": "LF",
+    "types": []
   },
   "exclude": [
     "node_modules"

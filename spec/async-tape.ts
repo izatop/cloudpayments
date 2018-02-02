@@ -1,4 +1,4 @@
-import * as test from 'tape';
+import * as test from "tape";
 
 export interface ShouldFail {
     (expr: any, msg?: string): void;

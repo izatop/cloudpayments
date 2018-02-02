@@ -1,5 +1,5 @@
 import {asyncTest} from "./async-tape";
-import {ClientService} from '../';
+import {ClientService} from "../src/ClientService";
 import {clientRequestTest, options} from "./helpers";
 import {ReceiptTypes, VAT} from "../src/Api/constants";
 

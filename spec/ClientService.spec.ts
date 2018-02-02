@@ -1,5 +1,5 @@
 import {asyncTest} from "./async-tape";
-import {ClientService} from '../';
+import {ClientService} from "../src/ClientService";
 import {ClientApi} from "../src/ClientApi";
 import {ReceiptApi} from "../src/ReceiptApi";
 import {NotificationHandlers} from "../src/NotificationHandlers";

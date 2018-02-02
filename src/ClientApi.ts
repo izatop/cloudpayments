@@ -19,7 +19,7 @@ import {
     PaymentSuccessResponse,
     Response
 } from "./Api/response";
-import {RefundPaymentRequest} from "../index";
+import {RefundPaymentRequest} from "./index";
 
 export class ClientApi extends ClientRequestAbstract {
     protected static async validatePaymentRequest(data: PaymentRequest) {
