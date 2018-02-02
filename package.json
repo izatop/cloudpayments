@@ -7,7 +7,7 @@
   "scripts": {
     "test": "rimraf test/* && tsc -p spec && tape test/spec/**.spec.js",
     "build": "rimraf dist/* && tsc -p src",
-    "preversion": "npm test && npm build",
+    "preversion": "npm test && npm run build",
     "version": "git add -A",
     "postversion": "git push && sh publish.sh"
   },
