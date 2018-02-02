@@ -11,6 +11,9 @@
     "version": "git add -A",
     "postversion": "git push && sh publish.sh"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/izatop/cloudpayments.git"

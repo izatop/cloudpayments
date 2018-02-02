@@ -17,7 +17,7 @@
 Подключение библиотеки
 
 ```typescript
-import {ClientService} from './';
+import {ClientService} from 'cloudpayments';
 
 const client = new ClientService({/* options */});
 
@@ -80,7 +80,7 @@ const client = new ClientService({/* options */});
 
 ```typescript
 import {createServer} from 'http';
-import {ClientService, TaxationSystem, VAT, ResponseCodes, ReceiptTypes} from './';
+import {ClientService, TaxationSystem, VAT, ResponseCodes, ReceiptTypes} from 'cloudpayments';
 
 const client = new ClientService({
     privateKey: 'private key',
@@ -166,7 +166,7 @@ const server = createServer(async (req, res) => {
 
 ```typescript
 import {createServer} from 'http';
-import {ClientService, TaxationSystem, ResponseCodes} from './';
+import {ClientService, TaxationSystem, ResponseCodes} from 'cloudpayments';
 
 const client = new ClientService({
     privateKey: 'private key',
