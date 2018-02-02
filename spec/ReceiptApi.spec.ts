@@ -1,6 +1,6 @@
 import {asyncTest} from "./async-tape";
 import {ClientService} from '../';
-import {options, clientRequestTest} from "./helpers";
+import {clientRequestTest, options} from "./helpers";
 import {ReceiptTypes, VAT} from "../src/Api/constants";
 
 asyncTest('ServiceClient.ReceiptApi', async t => {
@@ -36,12 +36,15 @@ asyncTest('ServiceClient.ReceiptApi', async t => {
 
     await t.shouldFail(receiptApi.createReceipt(
         request,
-        {...receipt, Items: [{
-            price: 100,
-            quantity: 1,
-            amount: 100,
-            label: 'item'}
-        ]}
+        {
+            ...receipt, Items: [{
+                price: 100,
+                quantity: 1,
+                amount: 100,
+                label: 'item'
+            }
+            ]
+        }
     ));
 
     const clientWithoutOrgOptions = ClientService.createReceiptApi({

@@ -1,10 +1,10 @@
 import fetch from 'node-fetch';
 import {ClientOptions, ClientOptionsOrg} from "./ClientOptions";
 import {join} from "path";
-import {Response, BaseResponse} from "../Api/response";
+import {BaseResponse, Response} from "../Api/response";
 
 export class ClientAbstract {
-    protected options: ClientOptions & {endpoint: string};
+    protected options: ClientOptions & { endpoint: string };
 
     constructor(_options: ClientOptions) {
         this.options = Object.assign({endpoint: 'https://api.cloudpayments.ru'}, _options);
@@ -61,9 +61,7 @@ export class ClientRequestAbstract extends ClientAbstract {
      * @param {string} requestId
      * @returns {Promise<Response<R extends BaseResponse>>}
      */
-    protected async call<
-        R extends BaseResponse = BaseResponse
-    >(url: string, data?: object, requestId?: string): Promise<Response<R>> {
+    protected async call<R extends BaseResponse = BaseResponse>(url: string, data?: object, requestId?: string): Promise<Response<R>> {
         const headers: any = {
             'Content-Type': 'application/json',
             'Authorization': 'Basic '.concat(new Buffer("".concat(this.options.publicId, ":", this.options.privateKey))

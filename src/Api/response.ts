@@ -6,7 +6,8 @@ export interface BaseResponse {
 }
 
 export class Response<T extends BaseResponse> {
-    constructor(protected response: T) {}
+    constructor(protected response: T) {
+    }
 
     getResponse() {
         return this.response;

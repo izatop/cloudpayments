@@ -1,11 +1,10 @@
-import {TaxationSystem} from "../src/Api/constants";
 import {IncomingHttpHeaders} from "http";
 import * as net from "net";
-import * as stream from "stream";
-import {signString} from "../src/utils";
-import {ClientOptions} from "../src/Client/ClientOptions";
-import {ClientRequestAbstract} from "../src/Client/ClientAbstract";
 import {Request, RequestInit} from "node-fetch";
+import * as stream from "stream";
+import {TaxationSystem} from "../src/Api/constants";
+import {ClientRequestAbstract} from "../src/Client/ClientAbstract";
+import {signString} from "../src/utils";
 import {Test} from "./async-tape";
 
 export const options = {
@@ -27,27 +26,6 @@ export class ServiceRequestMock extends stream.Readable {
     rawHeaders: string[];
     trailers: { [key: string]: string };
     rawTrailers: string[];
-
-    constructor(privateKey: string, raw: string) {
-        super();
-
-        this.headers = {
-            'content-hmac': signString(privateKey, raw)
-        };
-
-        this.method = 'POST';
-
-        setTimeout(() => {
-            this.emit('data', raw);
-            this.emit('end');
-        }, 10);
-    }
-
-    _read(size: number): void {}
-
-    setTimeout(msecs: number, callback: () => void): this {
-        return this;
-    }
     /**
      * Only valid for request obtained from http.Server.
      */
@@ -65,21 +43,45 @@ export class ServiceRequestMock extends stream.Readable {
      */
     statusMessage?: string;
     socket: net.Socket;
+
+    constructor(privateKey: string, raw: string) {
+        super();
+
+        this.headers = {
+            'content-hmac': signString(privateKey, raw)
+        };
+
+        this.method = 'POST';
+
+        setTimeout(() => {
+            this.emit('data', raw);
+            this.emit('end');
+        }, 10);
+    }
+
+    _read(size: number): void {
+    }
+
+    setTimeout(msecs: number, callback: () => void): this {
+        return this;
+    }
+
     destroy(error?: Error): void {
 
     }
 }
 
-export async function clientRequestTest(
-    test: Test,
-    client: ClientRequestAbstract,
-    clientCall: () => Promise<any>,
-    testCase: (test: Test, url: string | Request, init?: RequestInit) => void
-) {
+export async function clientRequestTest(test: Test,
+                                        client: ClientRequestAbstract,
+                                        clientCall: () => Promise<any>,
+                                        testCase: (test: Test, url: string | Request, init?: RequestInit) => void) {
     Object.defineProperty(client, 'client', {
         get: () => (url: string | Request, init?: RequestInit) => {
             testCase(test, url, init);
-            return {json() {}}
+            return {
+                json() {
+                }
+            }
         }
     });
 

@@ -1,13 +1,23 @@
 import {ClientRequestAbstract} from "./Client/ClientAbstract";
 import {
-    PaymentRequest, CryptogramPaymentRequest, TokenPaymentRequest, Confirm3DSRequest,
-    ConfirmPaymentRequest, VoidPaymentRequest, BaseRequest
+    BaseRequest,
+    Confirm3DSRequest,
+    ConfirmPaymentRequest,
+    CryptogramPaymentRequest,
+    PaymentRequest,
+    TokenPaymentRequest,
+    VoidPaymentRequest
 } from "./Api/request";
 import {validateCurrency} from "./Api/constants";
 import {ok} from "assert";
 import {
-    BaseResponse, PaymentHistoryResponse, PaymentFailedResponse, PaymentResponse, PaymentSuccessResponse,
-    Response, PaymentGetResponse
+    BaseResponse,
+    PaymentFailedResponse,
+    PaymentGetResponse,
+    PaymentHistoryResponse,
+    PaymentResponse,
+    PaymentSuccessResponse,
+    Response
 } from "./Api/response";
 import {RefundPaymentRequest} from "../index";
 
@@ -129,7 +139,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @param {{TransactionId: number}} data
      * @returns {Promise<Response<PaymentGetResponse>>}
      */
-    public async getPayment(data: BaseRequest & {TransactionId: number}) {
+    public async getPayment(data: BaseRequest & { TransactionId: number }) {
         ok(data.TransactionId, 'TransactionId is required');
 
         return this.call<PaymentGetResponse>('/payments/get', data);
@@ -141,7 +151,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @param {{InvoiceId: string}} data
      * @returns {Promise<Response<PaymentSuccessResponse | PaymentFailedResponse>>}
      */
-    public async findPaymentByInvoiceId(data: BaseRequest & {InvoiceId: string}) {
+    public async findPaymentByInvoiceId(data: BaseRequest & { InvoiceId: string }) {
         ok(data.InvoiceId, 'InvoiceId is required');
 
         return this.call<PaymentSuccessResponse | PaymentFailedResponse>('/payments/find', data)
@@ -153,7 +163,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @param {{Date: number, TimeZone: string}} data
      * @returns {Promise<Response<PaymentHistoryResponse>>}
      */
-    public async getPaymentList(data: BaseRequest & {Date: number, TimeZone?: string}) {
+    public async getPaymentList(data: BaseRequest & { Date: number, TimeZone?: string }) {
         ok(data.Date, 'Date is required');
 
         return this.call<PaymentHistoryResponse>('/payments/get', data);

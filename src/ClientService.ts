@@ -16,18 +16,6 @@ export class ClientService extends ClientAbstract {
         this.receipt = ClientService.createReceiptApi(this.options);
     }
 
-    public getClientApi() {
-        return this.client;
-    }
-
-    public getNotificationHandlers() {
-        return this.handlers;
-    }
-
-    public getReceiptApi() {
-        return this.receipt;
-    }
-
     public static createClientApi(options: ClientOptions) {
         return new ClientApi(options);
     }
@@ -38,5 +26,17 @@ export class ClientService extends ClientAbstract {
 
     public static createNotificationHandlers(options: ClientOptions) {
         return new NotificationHandlers(options);
+    }
+
+    public getClientApi() {
+        return this.client;
+    }
+
+    public getNotificationHandlers() {
+        return this.handlers;
+    }
+
+    public getReceiptApi() {
+        return this.receipt;
     }
 }

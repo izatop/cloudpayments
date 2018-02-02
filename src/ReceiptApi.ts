@@ -3,7 +3,7 @@ import * as objectHash from 'object-hash';
 import {ClientRequestAbstract} from "./Client/ClientAbstract";
 import {validateTaxationSystem, validateVAT} from "./Api/constants";
 import {CustomerReceipt, ReceiptApiRequest, ReceiptRequest} from "./Api/request";
-import {Response, BaseResponse} from "./Api/response";
+import {BaseResponse, Response} from "./Api/response";
 
 export class ReceiptApi extends ClientRequestAbstract {
     public getEndpoint() {

@@ -1,6 +1,6 @@
 import { ClientRequestAbstract } from "./Client/ClientAbstract";
-import { PaymentRequest, CryptogramPaymentRequest, TokenPaymentRequest, Confirm3DSRequest, ConfirmPaymentRequest, VoidPaymentRequest, BaseRequest } from "./Api/request";
-import { BaseResponse, PaymentHistoryResponse, PaymentFailedResponse, PaymentResponse, PaymentSuccessResponse, Response, PaymentGetResponse } from "./Api/response";
+import { BaseRequest, Confirm3DSRequest, ConfirmPaymentRequest, CryptogramPaymentRequest, PaymentRequest, TokenPaymentRequest, VoidPaymentRequest } from "./Api/request";
+import { BaseResponse, PaymentFailedResponse, PaymentGetResponse, PaymentHistoryResponse, PaymentResponse, PaymentSuccessResponse, Response } from "./Api/response";
 import { RefundPaymentRequest } from "../index";
 export declare class ClientApi extends ClientRequestAbstract {
     protected static validatePaymentRequest(data: PaymentRequest): Promise<void>;
@@ -77,7 +77,7 @@ export declare class ClientApi extends ClientRequestAbstract {
      */
     findPaymentByInvoiceId(data: BaseRequest & {
         InvoiceId: string;
-    }): Promise<Response<PaymentFailedResponse | PaymentSuccessResponse>>;
+    }): Promise<Response<PaymentSuccessResponse | PaymentFailedResponse>>;
     /**
      * Get a filtered payment list
      *

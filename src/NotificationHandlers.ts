@@ -12,10 +12,43 @@ export interface NotificationHandlerValidator<TRequest> {
 }
 
 export class NotificationHandlers extends ClientAbstract {
-    protected async handle<TRequest, TResponse>(
-        req: IncomingMessage,
-        validator?: NotificationHandlerValidator<TRequest>
-    ) {
+    async handleCheckRequest(req: IncomingMessage,
+                             validator?: NotificationHandlerValidator<ApiTypes.CheckNotification>) {
+        return this.handle(req, validator);
+    }
+
+    async handlePayRequest(req: IncomingMessage,
+                           validator?: NotificationHandlerValidator<ApiTypes.PayNotification>) {
+        return this.handle(req, validator);
+    }
+
+    async handleConfirmRequest(req: IncomingMessage,
+                               validator?: NotificationHandlerValidator<ApiTypes.ConfirmNotification>) {
+        return this.handle(req, validator);
+    }
+
+    async handleFailRequest(req: IncomingMessage,
+                            validator?: NotificationHandlerValidator<ApiTypes.FailNotification>) {
+        return this.handle(req, validator);
+    }
+
+    async handleRefundRequest(req: IncomingMessage,
+                              validator?: NotificationHandlerValidator<ApiTypes.RefundNotification>) {
+        return this.handle(req, validator);
+    }
+
+    async handleRecurrentRequest(req: IncomingMessage,
+                                 validator?: NotificationHandlerValidator<ApiTypes.RecurrentNotification>) {
+        return this.handle(req, validator);
+    }
+
+    async handleReceiptRequest(req: IncomingMessage,
+                               validator?: NotificationHandlerValidator<ApiTypes.ReceiptNotification<any>>) {
+        return this.handle(req, validator);
+    }
+
+    protected async handle<TRequest, TResponse>(req: IncomingMessage,
+                                                validator?: NotificationHandlerValidator<TRequest>) {
         try {
             const request = await this.parseRequest<TRequest>(req);
             if (validator) {
@@ -27,55 +60,6 @@ export class NotificationHandlers extends ClientAbstract {
         } catch (error) {
             throw error;
         }
-    }
-
-    async handleCheckRequest(
-        req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.CheckNotification>
-    ) {
-        return this.handle(req, validator);
-    }
-
-    async handlePayRequest(
-        req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.PayNotification>
-    ) {
-        return this.handle(req, validator);
-    }
-
-    async handleConfirmRequest(
-        req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.ConfirmNotification>
-    ) {
-        return this.handle(req, validator);
-    }
-
-    async handleFailRequest(
-        req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.FailNotification>
-    ) {
-        return this.handle(req, validator);
-    }
-
-    async handleRefundRequest(
-        req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.RefundNotification>
-    ) {
-        return this.handle(req, validator);
-    }
-
-    async handleRecurrentRequest(
-        req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.RecurrentNotification>
-    ) {
-        return this.handle(req, validator);
-    }
-
-    async handleReceiptRequest(
-        req: IncomingMessage,
-        validator?: NotificationHandlerValidator<ApiTypes.ReceiptNotification<any>>
-    ) {
-        return this.handle(req, validator);
     }
 
     private async parseRequest<T extends {}>(req: IncomingMessage): Promise<T> {

@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/izatop/cloudpayments#readme",
   "dependencies": {
-    "@types/node": "^8.5.2",
+    "@types/node": "^8.5.9",
     "@types/node-fetch": "^1.6.7",
     "@types/object-hash": "^0.5.29",
     "@types/qs": "^6.5.1",
@@ -36,9 +36,9 @@
     "qs": "^6.5.1"
   },
   "devDependencies": {
-    "@types/tape": "^4.2.30",
-    "source-map-support": "^0.4.15",
+    "@types/tape": "^4.2.31",
+    "source-map-support": "^0.4.18",
     "tape": "^4.8.0",
-    "typescript": "^2.6.2"
+    "typescript": "^2.7.1"
   }
 }

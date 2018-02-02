@@ -202,7 +202,7 @@ export enum TransactionStatus {
      *
      * В случае невозможности провести операцию (нет денег на счете карты и т.п.)
      */
-   Declined = 'Declined'
+    Declined = 'Declined'
 }
 
 export type RecurrentStatusType = 'Active'
@@ -299,12 +299,12 @@ export enum ReceiptTypes {
  * которые используются при формировании кассовых чеков.
  */
 export enum TaxationSystem {
-    GENERAL                         = 0,	// Общая система налогообложения
-    SIMPLIFIED_INCOME               = 1,	// Упрощенная система налогообложения (Доход)
-    SIMPLIFIED_INCOME_CONSUMPTION   = 2,	// Упрощенная система налогообложения (Доход минус Расход)
-    UNIFIED_IMPUTED_INCOME          = 3,	// Единый налог на вмененный доход
-    UNIFIED_AGRICULTURAL            = 4,	// Единый сельскохозяйственный налог
-    PATENT                          = 5,	// Патентная система налогообложения
+    GENERAL = 0,	// Общая система налогообложения
+    SIMPLIFIED_INCOME = 1,	// Упрощенная система налогообложения (Доход)
+    SIMPLIFIED_INCOME_CONSUMPTION = 2,	// Упрощенная система налогообложения (Доход минус Расход)
+    UNIFIED_IMPUTED_INCOME = 3,	// Единый налог на вмененный доход
+    UNIFIED_AGRICULTURAL = 4,	// Единый сельскохозяйственный налог
+    PATENT = 5,	// Патентная система налогообложения
 }
 
 export type TaxationSystemType = TaxationSystem;
@@ -388,7 +388,7 @@ export type ValidCurrency = 'RUB'
     | 'TRY'
     | 'CNY'
     | 'INR'
-;
+    ;
 
 export function validateCurrency(value: any) {
     switch (value) {
@@ -420,7 +420,7 @@ export const CurrencyList = Object.freeze({
     USD: 'USD',
     GBP: 'GBP',
     UAH: 'UAH',
-    BYR :'BYR',
+    BYR: 'BYR',
     BYN: 'BYN',
     AZN: 'AZN',
     CHF: 'CHF',

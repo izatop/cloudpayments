@@ -1,1 +1,0 @@
-{"version":3,"file":"ClientApi.spec.js","sourceRoot":"","sources":["ClientApi.spec.ts"],"names":[],"mappings":";;;;;;;;;;AAAA,6CAAuC;AACvC,0BAAkC;AAClC,uCAAkC;AAElC,sBAAS,CAAC,yBAAyB,EAAE,CAAM,CAAC,EAAC,EAAE;IAC3C,MAAM,OAAO,GAAG,IAAI,gBAAa,CAAC,iBAAO,CAAC,CAAC;IAC3C,MAAM,SAAS,GAAG,OAAO,CAAC,YAAY,EAAE,CAAC;AAC7C,CAAC,CAAA,CAAC,CAAC"}

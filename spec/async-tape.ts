@@ -22,10 +22,10 @@ const createShouldFailFunction = (t: test.Test): ShouldFail => async (expr: any,
     }
 };
 
-export type Test = test.Test & {shouldFail: ShouldFail};
+export type Test = test.Test & { shouldFail: ShouldFail };
 
-export function asyncTest (testName: string, testCase: (assert: Test) => Promise<any>) {
-    test(testName, async(assert: Test) => {
+export function asyncTest(testName: string, testCase: (assert: Test) => Promise<any>) {
+    test(testName, async (assert: Test) => {
         try {
             assert.shouldFail = createShouldFailFunction(assert).bind(assert);
             await testCase(assert);

@@ -3,7 +3,7 @@
 Библиотека для работы с API и обработки уведомлений от платежного
 сервиса [CloudPayments](https://cloudpayments.ru/Docs/Api).
 
-Все примеры приведены на JS ECMA2016. Версия поддерживаемой
+Все примеры приведены по стандарту es7. Версия поддерживаемой
 платформы Node.js 6 и выше.
 
 ## Install
@@ -55,7 +55,22 @@ const client = new ClientService({/* options */});
 
 ## ClientApi
 
-Coming soon
+Доступные методы клиентского API:
+
+| Метод | Описание | Документация |
+|-------|----------|--------------|
+| chargeCryptogramPayment | Оплата по криптограмме | https://cloudpayments.ru/Docs/Api#payWithCrypto |
+| authorizeCryptogramPayment | Оплата по криптограмме (преавторизация) | https://cloudpayments.ru/Docs/Api#payWithCrypto |
+| chargeTokenPayment | Оплата по токену | https://cloudpayments.ru/Docs/Api#payWithToken |
+| authorizeTokenPayment | Оплата по токену (преавторизация) | https://cloudpayments.ru/Docs/Api#payWithToken |
+| confirm3DSPayment | Обработка 3-D Secure | https://cloudpayments.ru/Docs/Api#3ds |
+| confirmPayment | Подтверждение оплаты | https://cloudpayments.ru/Docs/Api#confirm |
+| refundPayment | Возврат денег | https://cloudpayments.ru/Docs/Api#refund |
+| voidPayment | Отмена оплаты | https://cloudpayments.ru/Docs/Api#void |
+| getPayment | Просмотр информации об операции | https://cloudpayments.ru/Docs/Api#get |
+| findPaymentByInvoiceId | Проверка статуса платежа | https://cloudpayments.ru/Docs/Api#find |
+| getPaymentList | Выгрузка списка транзакций | https://cloudpayments.ru/Docs/Api#list |
+ 
 
 ## ReceiptApi
 
@@ -145,6 +160,7 @@ const server = createServer(async (req, res) => {
 | `handleRecurrentRequest` | [RecurrentNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#recurrent |
 | `handleRefundRequest` | [RefundNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#refund |
 | `handleReceiptRequest` | [ReceiptNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#receipt |
+| `handleConfirmRequest` | [ConfirmNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#confirm |
 
 Пример использования:
 
