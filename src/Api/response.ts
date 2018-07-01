@@ -107,3 +107,9 @@ export type PaymentHistoryResponse = {
     Message: never,
     Model: HistoryPaymentModel[]
 }
+
+export type LinkPaymentModel = {
+    Success: true;
+    Message: never;
+    Model: HistoryPaymentModel[];
+  }
