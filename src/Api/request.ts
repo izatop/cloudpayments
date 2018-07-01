@@ -82,3 +82,12 @@ export interface VoidPaymentRequest extends BaseRequest {
     Amount: number,
     JsonData: object
 }
+
+export interface LinkPaymentRequest extends BaseRequest {
+    Amount: number;
+    Currency: ValidCurrency;
+    JsonData: object;
+    Description: string;
+    email?: string;
+    phone?: string;
+}

@@ -6,7 +6,8 @@ import {
     CryptogramPaymentRequest,
     PaymentRequest,
     TokenPaymentRequest,
-    VoidPaymentRequest
+    VoidPaymentRequest,
+    LinkPaymentRequest
 } from "./Api/request";
 import {validateCurrency} from "./Api/constants";
 import {ok} from "assert";
@@ -168,4 +169,17 @@ export class ClientApi extends ClientRequestAbstract {
 
         return this.call<PaymentHistoryResponse>('/payments/get', data);
     }
+
+    /**
+     * Get a filtered payment list
+     *
+     * @param {LinkPaymentRequest} data
+     * @returns {Promise<Response<LinkPaymentModel>>}
+     */
+    public async createOrder(data: LinkPaymentRequest) {
+            ok(data.Description, 'Description is required');
+            ok(typeof data.Amount == 'number' && data.Amount > 0, 'Payment.Amount should be valid');
+            ok(validateCurrency(data.Currency), 'Payment.Currency should be valid');
+            return this.call('/orders/create', data);
+      }
 }
