@@ -333,7 +333,9 @@ export enum VAT {
     VAT10 = 10,
     VAT18 = 18,
     VAT110 = 110,
-    VAT118 = 118
+    VAT118 = 118,
+    VAT20 = 20,
+    VAT120 = 120,
 }
 
 export type VATType = null | VAT;
@@ -351,6 +353,8 @@ export function validateVAT(value: any) {
         case VAT.VAT18:
         case VAT.VAT110:
         case VAT.VAT118:
+        case VAT.VAT20:
+        case VAT.VAT120:
         case null:
             return true;
         default:

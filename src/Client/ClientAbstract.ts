@@ -62,11 +62,12 @@ export class ClientRequestAbstract extends ClientAbstract {
      * @returns {Promise<Response<R extends BaseResponse>>}
      */
     protected async call<R extends BaseResponse = BaseResponse>(url: string, data?: object, requestId?: string): Promise<Response<R>> {
+        const authorization = Buffer.from(`${this.options.publicId}:${this.options.privateKey}`, "utf-8")
+            .toString("base64");
+
         const headers: any = {
             'Content-Type': 'application/json',
-            'Authorization': 'Basic '.concat(new Buffer("".concat(this.options.publicId, ":", this.options.privateKey))
-                .toString("base64")
-            )
+            'Authorization': `Basic ${authorization}`
         };
 
         if (requestId) {
