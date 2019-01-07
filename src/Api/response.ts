@@ -112,4 +112,4 @@ export type LinkPaymentModel = {
     Success: true;
     Message: never;
     Model: HistoryPaymentModel[];
-  }
+}

@@ -3,7 +3,9 @@
   "compilerOptions": {
     "declaration": false,
     "sourceMap": false,
-    "lib": ["es2016"],
+    "lib": [
+      "es2016"
+    ],
     "outDir": "../test",
     "rootDir": "../",
     "newLine": "LF"

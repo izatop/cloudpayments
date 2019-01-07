@@ -4,10 +4,10 @@ import {
     Confirm3DSRequest,
     ConfirmPaymentRequest,
     CryptogramPaymentRequest,
+    LinkPaymentRequest,
     PaymentRequest,
     TokenPaymentRequest,
-    VoidPaymentRequest,
-    LinkPaymentRequest
+    VoidPaymentRequest
 } from "./Api/request";
 import {validateCurrency} from "./Api/constants";
 import {ok} from "assert";
@@ -177,9 +177,9 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<LinkPaymentModel>>}
      */
     public async createOrder(data: LinkPaymentRequest) {
-            ok(data.Description, 'Description is required');
-            ok(typeof data.Amount == 'number' && data.Amount > 0, 'Payment.Amount should be valid');
-            ok(validateCurrency(data.Currency), 'Payment.Currency should be valid');
-            return this.call('/orders/create', data);
-      }
+        ok(data.Description, 'Description is required');
+        ok(typeof data.Amount == 'number' && data.Amount > 0, 'Payment.Amount should be valid');
+        ok(validateCurrency(data.Currency), 'Payment.Currency should be valid');
+        return this.call('/orders/create', data);
+    }
 }

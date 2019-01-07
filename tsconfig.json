@@ -7,7 +7,9 @@
     "strictNullChecks": true,
     "declaration": true,
     "sourceMap": true,
-    "lib": ["es2016"],
+    "lib": [
+      "es2016"
+    ],
     "newLine": "LF",
     "types": []
   },
