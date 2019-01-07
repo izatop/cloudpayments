@@ -121,7 +121,7 @@ export interface SubscriptionUpdateRequest extends Partial<SubscriptionBase>{
 }
 
 export interface SubscriptionModel extends SubscriptionBase {
-    Id: number,
+    Id: string,
     CurrencyCode: number,
     StartDateIso: string,
     IntervalCode: number,
