@@ -2,7 +2,7 @@
   "name": "cloudpayments",
   "version": "1.0.0",
   "description": "CloudPayments Node.JS client API",
-  "main": "index.js",
+  "main": "dist/index.js",
   "types": "index.d.ts",
   "scripts": {
     "test": "rimraf test/* && tsc -p spec && tape test/spec/**.spec.js",
