@@ -50,6 +50,11 @@ export class NotificationHandlers extends ClientAbstract {
         return this.handle(req, validator);
     }
 
+    async handleSubscriptionRequest(req: NotificationPayload,
+                                 validator?: NotificationHandlerValidator<ApiTypes.SubscriptionModel>) {
+        return this.handle(req, validator);
+    }
+
     async handleReceiptRequest(req: NotificationPayload,
                                validator?: NotificationHandlerValidator<ApiTypes.ReceiptNotification<any>>) {
         return this.handle(req, validator);
