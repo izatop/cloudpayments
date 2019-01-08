@@ -1,4 +1,5 @@
-import {ErrorCodes, TransactionStatus, ValidCurrency} from "./constants";
+import {ErrorCodes, TransactionStatus, ValidCurrency} from './constants';
+import {SubscriptionModel} from './notification';
 
 export interface BaseResponse {
     Message: string | null,
@@ -112,4 +113,12 @@ export type LinkPaymentModel = {
     Success: true;
     Message: never;
     Model: HistoryPaymentModel[];
-  }
+}
+
+export interface SubscriptionResponse extends BaseResponse {
+    Model: SubscriptionModel;
+}
+
+export interface SubscriptionsListGetResponse extends BaseResponse {
+    Model: SubscriptionModel[];
+}

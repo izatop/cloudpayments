@@ -1,16 +1,16 @@
-import {ClientRequestAbstract} from "./Client/ClientAbstract";
+import {ClientRequestAbstract, SubscriptionCreateRequest, SubscriptionUpdateRequest} from './Client/ClientAbstract';
 import {
     BaseRequest,
     Confirm3DSRequest,
     ConfirmPaymentRequest,
     CryptogramPaymentRequest,
+    LinkPaymentRequest,
     PaymentRequest,
     TokenPaymentRequest,
-    VoidPaymentRequest,
-    LinkPaymentRequest
-} from "./Api/request";
-import {validateCurrency} from "./Api/constants";
-import {ok} from "assert";
+    VoidPaymentRequest
+} from './Api/request';
+import {validateCurrency} from './Api/constants';
+import {ok} from 'assert';
 import {
     BaseResponse,
     PaymentFailedResponse,
@@ -18,14 +18,14 @@ import {
     PaymentHistoryResponse,
     PaymentResponse,
     PaymentSuccessResponse,
-    Response
-} from "./Api/response";
-import {RefundPaymentRequest} from "./index";
+    Response, SubscriptionResponse, SubscriptionsListGetResponse
+} from './Api/response';
+import {RefundPaymentRequest} from './index';
 
 export class ClientApi extends ClientRequestAbstract {
     protected static async validatePaymentRequest(data: PaymentRequest) {
-        ok(typeof data == 'object' && data, 'Invalid payment argument');
-        ok(typeof data.Amount == 'number' && data.Amount > 0, 'Payment.Amount should be valid');
+        ok(typeof data === 'object' && data, 'Invalid payment argument');
+        ok(typeof data.Amount === 'number' && data.Amount > 0, 'Payment.Amount should be valid');
         ok(validateCurrency(data.Currency), 'Payment.Currency should be valid');
         ok(data.IpAddress, 'Payment.IpAddress is required');
     }
@@ -155,7 +155,7 @@ export class ClientApi extends ClientRequestAbstract {
     public async findPaymentByInvoiceId(data: BaseRequest & { InvoiceId: string }) {
         ok(data.InvoiceId, 'InvoiceId is required');
 
-        return this.call<PaymentSuccessResponse | PaymentFailedResponse>('/payments/find', data)
+        return this.call<PaymentSuccessResponse | PaymentFailedResponse>('/payments/find', data);
     }
 
     /**
@@ -177,9 +177,31 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<LinkPaymentModel>>}
      */
     public async createOrder(data: LinkPaymentRequest) {
-            ok(data.Description, 'Description is required');
-            ok(typeof data.Amount == 'number' && data.Amount > 0, 'Payment.Amount should be valid');
-            ok(validateCurrency(data.Currency), 'Payment.Currency should be valid');
-            return this.call('/orders/create', data);
-      }
+        ok(data.Description, 'Description is required');
+        ok(typeof data.Amount == 'number' && data.Amount > 0, 'Payment.Amount should be valid');
+        ok(validateCurrency(data.Currency), 'Payment.Currency should be valid');
+        return this.call('/orders/create', data);
+    }
+
+    public async createSubscription(data: BaseRequest & SubscriptionCreateRequest): Promise<Response<SubscriptionResponse>> {
+        return this.call<SubscriptionResponse>('/subscriptions/create', data);
+    }
+
+    public async updateSubscription(data: BaseRequest & SubscriptionUpdateRequest): Promise<Response<SubscriptionResponse>> {
+        return this.call<SubscriptionResponse>('/subscriptions/update', data);
+    }
+
+    public async cancelSubscription(data: BaseRequest & SubscriptionUpdateRequest): Promise<Response<BaseResponse>> {
+        return this.call<BaseResponse>('/subscriptions/cancel', data);
+    }
+
+    public async getSubscription(data: BaseRequest & { Id: string }): Promise<Response<SubscriptionResponse>> {
+        ok(data.Id, 'Id is required');
+        return this.call<SubscriptionResponse>('/subscriptions/get', data);
+    }
+
+    public async getSubscriptionsList(data: BaseRequest & { accountId: string }): Promise<Response<SubscriptionsListGetResponse>> {
+        ok(data.accountId, 'accountId is required');
+        return this.call<SubscriptionsListGetResponse>('/subscriptions/find', data);
+    }
 }
