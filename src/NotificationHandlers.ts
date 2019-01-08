@@ -79,8 +79,8 @@ export class NotificationHandlers extends ClientAbstract {
     private async checkPayload<T extends {}>(req: NotificationCustomPayload) {
         let signature = "";
         if (req.headers && !req.signature) {
-            ok('content-hmac' in req.headers, 'Request headers should contain Content-HMAC field.');
-            signature = req.headers['content-hmac'] as string;
+            ok("content-hmac" in req.headers, "Request headers should contain Content-HMAC field.");
+            signature = req.headers["content-hmac"] as string;
         }
 
         if (req.signature) {
@@ -88,43 +88,43 @@ export class NotificationHandlers extends ClientAbstract {
         }
 
         const payload = typeof req.payload === "string" ? req.payload : JSON.stringify(req.payload);
-        ok(signature, 'Custom payload should provide signature or header key.');
+        ok(signature, "Custom payload should provide signature or header key.");
         ok(
             checkSignedString(this.options.privateKey, signature, payload),
-            'Invalid signature'
+            "Invalid signature"
         );
 
         return req.payload as T;
     }
 
     private async parseRequest<T extends {}>(req: IncomingMessage): Promise<T> {
-        ok('content-hmac' in req.headers, 'Request headers should contain Content-HMAC field.');
+        ok("content-hmac" in req.headers, "Request headers should contain Content-HMAC field.");
 
-        const signature: string = req.headers['content-hmac'] as string;
-        const method = req.method || '';
+        const signature: string = req.headers["content-hmac"] as string;
+        const method = req.method || "";
         const request = {} as T;
 
-        ok(!!method, 'Request method should not be empty');
+        ok(!!method, "Request method should not be empty");
 
-        if (method.toUpperCase() === 'POST') {
+        if (method.toUpperCase() === "POST") {
             const chunks: string[] = [];
             const body = await new Promise<string>((resolve, reject) => {
-                req.on('data', (chunk: Buffer) => chunks.push(chunk.toString()));
-                req.on('end', () => resolve(chunks.join()));
-                req.on('error', reject);
+                req.on("data", (chunk: Buffer) => chunks.push(chunk.toString()));
+                req.on("end", () => resolve(chunks.join()));
+                req.on("error", reject);
             });
 
             const headers: any = req.headers || {};
 
-            ok(checkSignedString(this.options.privateKey, signature, body), 'Invalid signature');
-            if ('content-type' in headers && headers['content-type'].indexOf('json') !== -1) {
+            ok(checkSignedString(this.options.privateKey, signature, body), "Invalid signature");
+            if ("content-type" in headers && headers["content-type"].indexOf("json") !== -1) {
                 Object.assign(request, JSON.parse(body));
             } else {
                 Object.assign(request, qs.parse(body));
             }
-        } else if (method.toUpperCase() === 'GET') {
-            ok(checkSignedString(this.options.privateKey, signature, parse(req.url || '').query as string), 'Invalid signature');
-            Object.assign(request, parse(req.url || '', true).query);
+        } else if (method.toUpperCase() === "GET") {
+            ok(checkSignedString(this.options.privateKey, signature, parse(req.url || "").query as string), "Invalid signature");
+            Object.assign(request, parse(req.url || "", true).query);
         }
 
         return request;

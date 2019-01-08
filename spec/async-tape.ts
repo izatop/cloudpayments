@@ -8,17 +8,17 @@ const createShouldFailFunction = (t: test.Test): ShouldFail => async (expr: any,
     let throwError: Error;
 
     try {
-        if (typeof expr === 'function') {
+        if (typeof expr === "function") {
             await expr();
         } else {
             await expr;
         }
 
-        return t.fail(msg || 'should fail');
+        return t.fail(msg || "should fail");
     } catch (error) {
         t.throws(() => {
             throw new Error(error.message);
-        }, msg || 'should fail');
+        }, msg || "should fail");
     }
 };
 

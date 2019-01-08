@@ -128,35 +128,35 @@ export enum ErrorCodes {
 }
 
 export const ErrorCodesTranscript = {
-    [ErrorCodes.ReferToCardIssuer]: 'Свяжитесь с вашим банком или воспользуйтесь другой картой',
-    [ErrorCodes.DoNotHonor]: 'Свяжитесь с вашим банком или воспользуйтесь другой картой',
-    [ErrorCodes.Error]: 'Проверьте правильность введенных данных карты или воспользуйтесь другой картой',
-    [ErrorCodes.InvalidTransaction]: 'Воспользуйтесь другой картой или свяжитесь с банком, выпустившим карту',
-    [ErrorCodes.AmountError]: 'Проверьте корректность суммы',
-    [ErrorCodes.FormatError]: 'Повторите попытку позже',
-    [ErrorCodes.BankNotSupportedBySwitch]: 'Воспользуйтесь другой картой',
-    [ErrorCodes.SuspectedFraud]: 'Свяжитесь с вашим банком или воспользуйтесь другой картой',
-    [ErrorCodes.LostCard]: 'Свяжитесь с вашим банком или воспользуйтесь другой картой',
-    [ErrorCodes.StolenCard]: 'Свяжитесь с вашим банком или воспользуйтесь другой картой',
-    [ErrorCodes.InsufficientFunds]: 'Недостаточно средств на карте',
-    [ErrorCodes.ExpiredCard]: 'Проверьте правильность введенных данных карты или воспользуйтесь другой картой',
-    [ErrorCodes.TransactionNotPermitted]: 'Свяжитесь с вашим банком или воспользуйтесь другой картой',
-    [ErrorCodes.ExceedWithdrawalFrequency]: 'Свяжитесь с вашим банком или воспользуйтесь другой картой',
-    [ErrorCodes.IncorrectCVV]: 'Неверно указан код CVV',
-    [ErrorCodes.Timeout]: 'Повторите попытку позже или воспользуйтесь другой картой',
-    [ErrorCodes.CannotReachNetwork]: 'Повторите попытку позже или воспользуйтесь другой картой',
-    [ErrorCodes.SystemError]: 'Повторите попытку позже',
-    [ErrorCodes.UnableToProcess]: 'Свяжитесь с вашим банком или воспользуйтесь другой картой',
-    [ErrorCodes.AuthenticationFailed]: 'Свяжитесь с вашим банком или воспользуйтесь другой картой',
-    [ErrorCodes.AuthenticationUnavailable]: 'Свяжитесь с вашим банком или воспользуйтесь другой картой',
-    [ErrorCodes.AntiFraud]: 'Воспользуйтесь другой картой'
+    [ErrorCodes.ReferToCardIssuer]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
+    [ErrorCodes.DoNotHonor]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
+    [ErrorCodes.Error]: "Проверьте правильность введенных данных карты или воспользуйтесь другой картой",
+    [ErrorCodes.InvalidTransaction]: "Воспользуйтесь другой картой или свяжитесь с банком, выпустившим карту",
+    [ErrorCodes.AmountError]: "Проверьте корректность суммы",
+    [ErrorCodes.FormatError]: "Повторите попытку позже",
+    [ErrorCodes.BankNotSupportedBySwitch]: "Воспользуйтесь другой картой",
+    [ErrorCodes.SuspectedFraud]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
+    [ErrorCodes.LostCard]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
+    [ErrorCodes.StolenCard]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
+    [ErrorCodes.InsufficientFunds]: "Недостаточно средств на карте",
+    [ErrorCodes.ExpiredCard]: "Проверьте правильность введенных данных карты или воспользуйтесь другой картой",
+    [ErrorCodes.TransactionNotPermitted]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
+    [ErrorCodes.ExceedWithdrawalFrequency]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
+    [ErrorCodes.IncorrectCVV]: "Неверно указан код CVV",
+    [ErrorCodes.Timeout]: "Повторите попытку позже или воспользуйтесь другой картой",
+    [ErrorCodes.CannotReachNetwork]: "Повторите попытку позже или воспользуйтесь другой картой",
+    [ErrorCodes.SystemError]: "Повторите попытку позже",
+    [ErrorCodes.UnableToProcess]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
+    [ErrorCodes.AuthenticationFailed]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
+    [ErrorCodes.AuthenticationUnavailable]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
+    [ErrorCodes.AntiFraud]: "Воспользуйтесь другой картой"
 };
 
-export type TransactionStatusType = 'AwaitingAuthentication'
-    | 'Authorized'
-    | 'Completed'
-    | 'Cancelled'
-    | 'Declined'
+export type TransactionStatusType = "AwaitingAuthentication"
+    | "Authorized"
+    | "Completed"
+    | "Cancelled"
+    | "Declined"
     ;
 
 /**
@@ -170,7 +170,7 @@ export enum TransactionStatus {
      * После перехода плательщика на сайт эмитента в ожидании результатов 3-D Secure
      *
      */
-    AwaitingAuthentication = 'AwaitingAuthentication',
+    AwaitingAuthentication = "AwaitingAuthentication",
 
     /**
      * Авторизована
@@ -179,7 +179,7 @@ export enum TransactionStatus {
      *
      * Подтверждение, Отмена
      */
-    Authorized = 'Authorized',
+    Authorized = "Authorized",
 
     /**
      * Завершена
@@ -188,28 +188,28 @@ export enum TransactionStatus {
      *
      * Возврат денег
      */
-    Completed = 'Completed',
+    Completed = "Completed",
 
     /**
      * Отменена
      *
      * В случае отмены операции
      */
-    Cancelled = 'Cancelled',
+    Cancelled = "Cancelled",
 
     /**
      * Отклонена
      *
      * В случае невозможности провести операцию (нет денег на счете карты и т.п.)
      */
-    Declined = 'Declined'
+    Declined = "Declined"
 }
 
-export type RecurrentStatusType = 'Active'
-    | 'PastDue'
-    | 'Cancelled'
-    | 'Rejected'
-    | 'Expired'
+export type RecurrentStatusType = "Active"
+    | "PastDue"
+    | "Cancelled"
+    | "Rejected"
+    | "Expired"
     ;
 
 /**
@@ -224,7 +224,7 @@ export namespace RecurrentStatus {
      *
      * Отмена
      */
-    export const Active = 'Active';
+    export const Active = "Active";
 
     /**
      * Просрочена
@@ -233,28 +233,28 @@ export namespace RecurrentStatus {
      *
      * Отмена
      */
-    export const PastDue = 'PastDue';
+    export const PastDue = "PastDue";
 
     /**
      * Отменена
      *
      * В случае отмены по запросу
      */
-    export const Cancelled = 'Cancelled';
+    export const Cancelled = "Cancelled";
 
     /**
      * Отклонена
      *
      * В случае трех неудачных попыток оплаты, идущих подряд
      */
-    export const Rejected = 'Rejected';
+    export const Rejected = "Rejected";
 
     /**
      * Завершена
      *
      * В случае завершения максимального количества периодов (если были указаны)
      */
-    export const Expired = 'Expired';
+    export const Expired = "Expired";
 }
 
 /**
@@ -268,28 +268,28 @@ export enum ReceiptTypes {
      *
      * Выдается при получении средств от покупателя (клиента)
      */
-    Income = 'Income',
+    Income = "Income",
 
     /**
      * Возврат прихода
      *
      * Выдается при возврате покупателю (клиенту) средств, полученных от него
      */
-    IncomeReturn = 'IncomeReturn',
+    IncomeReturn = "IncomeReturn",
 
     /**
      * Расход
      *
      * Выдается при выдаче средств покупателю (клиенту)
      */
-    Expense = 'Expense',
+    Expense = "Expense",
 
     /**
      * Вовзрат расхода
      *
      * Выдается при получениеи средств от покупателя (клиента), выданных ему
      */
-    ExpenseReturn = 'ExpenseReturn'
+    ExpenseReturn = "ExpenseReturn"
 }
 
 /**
@@ -376,41 +376,41 @@ export enum ResponseCodes {
 /**
  * Currencies
  */
-export type ValidCurrency = 'RUB'
-    | 'EUR'
-    | 'USD'
-    | 'GBP'
-    | 'UAH'
-    | 'BYR'
-    | 'BYN'
-    | 'AZN'
-    | 'CHF'
-    | 'CZK'
-    | 'CAD'
-    | 'PLN'
-    | 'SEK'
-    | 'TRY'
-    | 'CNY'
-    | 'INR'
+export type ValidCurrency = "RUB"
+    | "EUR"
+    | "USD"
+    | "GBP"
+    | "UAH"
+    | "BYR"
+    | "BYN"
+    | "AZN"
+    | "CHF"
+    | "CZK"
+    | "CAD"
+    | "PLN"
+    | "SEK"
+    | "TRY"
+    | "CNY"
+    | "INR"
     ;
 
 export function validateCurrency(value: any) {
     switch (value) {
-        case 'RUB':
-        case 'EUR':
-        case 'USD':
-        case 'GBP':
-        case 'UAH':
-        case 'BYR':
-        case 'BYN':
-        case 'AZN':
-        case 'CHF':
-        case 'CZK':
-        case 'CAD':
-        case 'PLN':
-        case 'SEK':
-        case 'TRY':
-        case 'CNY':
+        case "RUB":
+        case "EUR":
+        case "USD":
+        case "GBP":
+        case "UAH":
+        case "BYR":
+        case "BYN":
+        case "AZN":
+        case "CHF":
+        case "CZK":
+        case "CAD":
+        case "PLN":
+        case "SEK":
+        case "TRY":
+        case "CNY":
             return true;
 
         default:
@@ -419,20 +419,20 @@ export function validateCurrency(value: any) {
 }
 
 export const CurrencyList = Object.freeze({
-    RUB: 'RUB',
-    EUR: 'EUR',
-    USD: 'USD',
-    GBP: 'GBP',
-    UAH: 'UAH',
-    BYR: 'BYR',
-    BYN: 'BYN',
-    AZN: 'AZN',
-    CHF: 'CHF',
-    CZK: 'CZK',
-    CAD: 'CAD',
-    PLN: 'PLN',
-    SEK: 'SEK',
-    TRY: 'TRY',
-    CNY: 'CNY',
-    INR: 'INR'
+    RUB: "RUB",
+    EUR: "EUR",
+    USD: "USD",
+    GBP: "GBP",
+    UAH: "UAH",
+    BYR: "BYR",
+    BYN: "BYN",
+    AZN: "AZN",
+    CHF: "CHF",
+    CZK: "CZK",
+    CAD: "CAD",
+    PLN: "PLN",
+    SEK: "SEK",
+    TRY: "TRY",
+    CNY: "CNY",
+    INR: "INR"
 });

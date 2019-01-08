@@ -1,7 +1,7 @@
 import {ReceiptTypes, TaxationSystemType, ValidCurrency, VATType} from "./constants";
 
 export interface BaseRequest {
-    CultureName?: 'ru-RU' | 'en-US' | 'lv' | 'az' | 'kk' | 'uk' | 'pl'
+    CultureName?: "ru-RU" | "en-US" | "lv" | "az" | "kk" | "uk" | "pl"
 }
 
 /**

@@ -4,11 +4,11 @@ import {options, ServiceRequestMock} from "./helpers";
 import {ResponseCodes} from "../src/Api/constants";
 import {signString} from "../src/utils";
 
-asyncTest('ServiceClient.ClientHandlers', async t => {
+asyncTest("ServiceClient.ClientHandlers", async t => {
     const service = new ClientService(options);
     const clientHandlers = service.getNotificationHandlers();
-    const validReq = new ServiceRequestMock(options.privateKey, 'key=value');
-    const invalidReq = new ServiceRequestMock('fake key', 'key=value');
+    const validReq = new ServiceRequestMock(options.privateKey, "key=value");
+    const invalidReq = new ServiceRequestMock("fake key", "key=value");
     const validator = async (req: any) => {
         return ResponseCodes.SUCCESS;
     };
@@ -18,7 +18,7 @@ asyncTest('ServiceClient.ClientHandlers', async t => {
 
         t.same(validRes, {
             response: {code: ResponseCodes.SUCCESS},
-            request: {key: 'value'}
+            request: {key: "value"}
         });
 
         t.same(
@@ -31,7 +31,7 @@ asyncTest('ServiceClient.ClientHandlers', async t => {
             ),
             {
                 response: {code: ResponseCodes.SUCCESS},
-                request: {key: 'value'}
+                request: {key: "value"}
             }
         );
 

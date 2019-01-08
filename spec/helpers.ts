@@ -8,9 +8,9 @@ import {signString} from "../src/utils";
 import {Test} from "./async-tape";
 
 export const options = {
-    endpoint: 'https://fakeapi.com',
-    publicId: 'public id',
-    privateKey: 'private key',
+    endpoint: "https://fakeapi.com",
+    publicId: "public id",
+    privateKey: "private key",
     org: {
         inn: 12345678,
         taxationSystem: TaxationSystem.GENERAL
@@ -48,14 +48,14 @@ export class ServiceRequestMock extends stream.Readable {
         super();
 
         this.headers = {
-            'content-hmac': signString(privateKey, raw)
+            "content-hmac": signString(privateKey, raw)
         };
 
-        this.method = 'POST';
+        this.method = "POST";
 
         setTimeout(() => {
-            this.emit('data', raw);
-            this.emit('end');
+            this.emit("data", raw);
+            this.emit("end");
         }, 10);
     }
 
@@ -75,7 +75,7 @@ export async function clientRequestTest(test: Test,
                                         client: ClientRequestAbstract,
                                         clientCall: () => Promise<any>,
                                         testCase: (test: Test, url: string | Request, init?: RequestInit) => void) {
-    Object.defineProperty(client, 'client', {
+    Object.defineProperty(client, "client", {
         get: () => (url: string | Request, init?: RequestInit) => {
             testCase(test, url, init);
             return {
