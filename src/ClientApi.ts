@@ -5,12 +5,9 @@ import {
     ConfirmPaymentRequest,
     CryptogramPaymentRequest,
     LinkPaymentRequest,
-    PaymentRequest,
     TokenPaymentRequest,
     VoidPaymentRequest
 } from "./Api/request";
-import {validateCurrency} from "./Api/constants";
-import {ok} from "assert";
 import {
     BaseResponse,
     PaymentFailedResponse,
@@ -25,13 +22,6 @@ import {
 import {RefundPaymentRequest} from "./index";
 
 export class ClientApi extends ClientRequestAbstract {
-    protected static async validatePaymentRequest(data: PaymentRequest) {
-        ok(typeof data === "object" && data, "Invalid payment argument");
-        ok(typeof data.Amount === "number" && data.Amount > 0, "Payment.Amount should be valid");
-        ok(validateCurrency(data.Currency), "Payment.Currency should be valid");
-        ok(data.IpAddress, "Payment.IpAddress is required");
-    }
-
     /**
      * Charge cryptogram payment
      *
@@ -39,8 +29,6 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<BaseResponse>>}
      */
     public async chargeCryptogramPayment(data: CryptogramPaymentRequest) {
-        await ClientApi.validatePaymentRequest(data);
-        ok(data.CardCryptogramPacket, "Payment.CardCryptogramPacket is required");
         return this.call<PaymentResponse>("/payments/cards/charge", data);
     }
 
@@ -51,8 +39,6 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<BaseResponse>>}
      */
     public async authorizeCryptogramPayment(data: CryptogramPaymentRequest) {
-        await ClientApi.validatePaymentRequest(data);
-        ok(data.CardCryptogramPacket, "Payment.CardCryptogramPacket is required");
         return this.call<PaymentResponse>("/payments/cards/auth", data);
     }
 
@@ -63,10 +49,6 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<BaseResponse>>}
      */
     public async chargeTokenPayment(data: TokenPaymentRequest) {
-        await ClientApi.validatePaymentRequest(data);
-        ok(data.Token, "Payment.Token is required");
-        ok(data.AccountId, "Payment.AccountId is required");
-
         return this.call<PaymentResponse>("/payments/tokens/charge", data);
     }
 
@@ -77,10 +59,6 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<BaseResponse>>}
      */
     public async authorizeTokenPayment(data: TokenPaymentRequest) {
-        await ClientApi.validatePaymentRequest(data);
-        ok(data.Token, "Payment.Token is required");
-        ok(data.AccountId, "Payment.AccountId is required");
-
         return this.call<PaymentResponse>("/payments/tokens/auth", data);
     }
 
@@ -91,9 +69,6 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<PaymentResponse>>}
      */
     public async confirm3DSPayment(data: Confirm3DSRequest) {
-        ok(data.TransactionId, "TransactionId is required");
-        ok(data.PaRes, "PaRes is required");
-
         return this.call<PaymentResponse>("/payments/cards/post3ds", data);
     }
 
@@ -104,9 +79,6 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<BaseResponse>>}
      */
     public async confirmPayment(data: ConfirmPaymentRequest) {
-        ok(data.TransactionId, "TransactionId is required");
-        ok(data.Amount && typeof data.Amount === "number", "Amount should be valid");
-
         return this.call<BaseResponse>("/payments/confirm", data);
     }
 
@@ -117,9 +89,6 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<BaseResponse>>}
      */
     public async refundPayment(data: RefundPaymentRequest) {
-        ok(data.TransactionId, "TransactionId is required");
-        ok(data.Amount && typeof data.Amount === "number", "Amount should be valid");
-
         return this.call<BaseResponse>("/payments/refund", data);
     }
 
@@ -130,9 +99,6 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<BaseResponse>>}
      */
     public async voidPayment(data: VoidPaymentRequest) {
-        ok(data.TransactionId, "TransactionId is required");
-        ok(data.Amount && typeof data.Amount === "number", "Amount should be valid");
-
         return this.call<BaseResponse>("/payments/void", data);
     }
 
@@ -143,8 +109,6 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<PaymentGetResponse>>}
      */
     public async getPayment(data: BaseRequest & { TransactionId: number }) {
-        ok(data.TransactionId, "TransactionId is required");
-
         return this.call<PaymentGetResponse>("/payments/get", data);
     }
 
@@ -155,8 +119,6 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<PaymentSuccessResponse | PaymentFailedResponse>>}
      */
     public async findPaymentByInvoiceId(data: BaseRequest & { InvoiceId: string }) {
-        ok(data.InvoiceId, "InvoiceId is required");
-
         return this.call<PaymentSuccessResponse | PaymentFailedResponse>("/payments/find", data);
     }
 
@@ -167,8 +129,6 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<PaymentHistoryResponse>>}
      */
     public async getPaymentList(data: BaseRequest & { Date: number, TimeZone?: string }) {
-        ok(data.Date, "Date is required");
-
         return this.call<PaymentHistoryResponse>("/payments/get", data);
     }
 
@@ -179,9 +139,6 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<LinkPaymentModel>>}
      */
     public async createOrder(data: LinkPaymentRequest) {
-        ok(data.Description, "Description is required");
-        ok(typeof data.Amount == "number" && data.Amount > 0, "Payment.Amount should be valid");
-        ok(validateCurrency(data.Currency), "Payment.Currency should be valid");
         return this.call("/orders/create", data);
     }
 
@@ -198,12 +155,10 @@ export class ClientApi extends ClientRequestAbstract {
     }
 
     public async getSubscription(data: BaseRequest & { Id: string }): Promise<Response<SubscriptionResponse>> {
-        ok(data.Id, "Id is required");
         return this.call<SubscriptionResponse>("/subscriptions/get", data);
     }
 
     public async getSubscriptionsList(data: BaseRequest & { accountId: string }): Promise<Response<SubscriptionsListGetResponse>> {
-        ok(data.accountId, "accountId is required");
         return this.call<SubscriptionsListGetResponse>("/subscriptions/find", data);
     }
 }

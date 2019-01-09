@@ -54,7 +54,7 @@ export class ServiceRequestMock extends stream.Readable {
         this.method = "POST";
 
         setTimeout(() => {
-            this.emit("data", raw);
+            this.emit("data", Buffer.from(raw, "utf-8"));
             this.emit("end");
         }, 10);
     }

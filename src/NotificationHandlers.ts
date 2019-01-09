@@ -107,10 +107,18 @@ export class NotificationHandlers extends ClientAbstract {
         ok(!!method, "Request method should not be empty");
 
         if (method.toUpperCase() === "POST") {
-            const chunks: string[] = [];
+            let chunksLength = 0;
+            const chunks: Buffer[] = [];
             const body = await new Promise<string>((resolve, reject) => {
-                req.on("data", (chunk: Buffer) => chunks.push(chunk.toString()));
-                req.on("end", () => resolve(chunks.join()));
+                req.on("data", (chunk: Buffer) => {
+                    chunks.push(chunk);
+                    chunksLength += chunk.length;
+                });
+                req.on("end", () => resolve(
+                    Buffer
+                        .concat(chunks, chunksLength)
+                        .toString("utf-8")
+                ));
                 req.on("error", reject);
             });
 
