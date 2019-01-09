@@ -46,11 +46,6 @@ export class NotificationHandlers extends ClientAbstract {
     }
 
     async handleRecurrentRequest(req: NotificationPayload,
-                                 validator?: NotificationHandlerValidator<ApiTypes.RecurrentNotification>) {
-        return this.handle(req, validator);
-    }
-
-    async handleSubscriptionRequest(req: NotificationPayload,
                                  validator?: NotificationHandlerValidator<ApiTypes.SubscriptionModel>) {
         return this.handle(req, validator);
     }
