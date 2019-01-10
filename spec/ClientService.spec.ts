@@ -5,7 +5,7 @@ import {ReceiptApi} from "../src/ReceiptApi";
 import {NotificationHandlers} from "../src/NotificationHandlers";
 import {options} from "./helpers";
 
-asyncTest('ServiceClient', async t => {
+asyncTest("ServiceClient", async t => {
     const service = new ClientService(options);
 
     t.equal(service.getEndpoint(), options.endpoint);
@@ -17,7 +17,7 @@ asyncTest('ServiceClient', async t => {
 
     t.ok(service.getReceiptApi() instanceof ReceiptApi);
     t.ok(ClientService.createReceiptApi(options) instanceof ReceiptApi);
-    t.equal(service.getReceiptApi().getEndpoint(), options.endpoint.concat('/kkt'));
+    t.equal(service.getReceiptApi().getEndpoint(), options.endpoint.concat("/kkt"));
 
     t.ok(service.getNotificationHandlers() instanceof NotificationHandlers);
     t.ok(ClientService.createNotificationHandlers(options) instanceof NotificationHandlers);

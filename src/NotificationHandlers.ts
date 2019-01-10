@@ -11,46 +11,60 @@ export interface NotificationHandlerValidator<TRequest> {
     (request: TRequest): Promise<ResponseCodes>;
 }
 
+export interface NotificationCustomPayload {
+    payload: object | string;
+    headers?: any;
+    signature?: string;
+}
+
+export type NotificationPayload = NotificationCustomPayload | IncomingMessage;
+
 export class NotificationHandlers extends ClientAbstract {
-    async handleCheckRequest(req: IncomingMessage,
+    async handleCheckRequest(req: NotificationPayload,
                              validator?: NotificationHandlerValidator<ApiTypes.CheckNotification>) {
         return this.handle(req, validator);
     }
 
-    async handlePayRequest(req: IncomingMessage,
+    async handlePayRequest(req: NotificationPayload,
                            validator?: NotificationHandlerValidator<ApiTypes.PayNotification>) {
         return this.handle(req, validator);
     }
 
-    async handleConfirmRequest(req: IncomingMessage,
+    async handleConfirmRequest(req: NotificationPayload,
                                validator?: NotificationHandlerValidator<ApiTypes.ConfirmNotification>) {
         return this.handle(req, validator);
     }
 
-    async handleFailRequest(req: IncomingMessage,
+    async handleFailRequest(req: NotificationPayload,
                             validator?: NotificationHandlerValidator<ApiTypes.FailNotification>) {
         return this.handle(req, validator);
     }
 
-    async handleRefundRequest(req: IncomingMessage,
+    async handleRefundRequest(req: NotificationPayload,
                               validator?: NotificationHandlerValidator<ApiTypes.RefundNotification>) {
         return this.handle(req, validator);
     }
 
-    async handleRecurrentRequest(req: IncomingMessage,
+    async handleRecurrentRequest(req: NotificationPayload,
                                  validator?: NotificationHandlerValidator<ApiTypes.SubscriptionModel>) {
         return this.handle(req, validator);
     }
 
-    async handleReceiptRequest(req: IncomingMessage,
+    async handleReceiptRequest(req: NotificationPayload,
                                validator?: NotificationHandlerValidator<ApiTypes.ReceiptNotification<any>>) {
         return this.handle(req, validator);
     }
 
-    protected async handle<TRequest, TResponse>(req: IncomingMessage,
+    protected async handle<TRequest, TResponse>(req: NotificationPayload,
                                                 validator?: NotificationHandlerValidator<TRequest>) {
         try {
-            const request = await this.parseRequest<TRequest>(req);
+            let request: TRequest;
+            if ("payload" in req) {
+                request = await this.checkPayload<TRequest>(req);
+            } else {
+                request = await this.parseRequest<TRequest>(req);
+            }
+
             if (validator) {
                 const code = await validator(request);
                 return {request, response: {code}};
@@ -62,34 +76,63 @@ export class NotificationHandlers extends ClientAbstract {
         }
     }
 
-    private async parseRequest<T extends {}>(req: IncomingMessage): Promise<T> {
-        ok('content-hmac' in req.headers, 'Request headers should contain Content-HMAC field.');
+    private async checkPayload<T extends {}>(req: NotificationCustomPayload) {
+        let signature = "";
+        if (req.headers && !req.signature) {
+            ok("content-hmac" in req.headers, "Request headers should contain Content-HMAC field.");
+            signature = req.headers["content-hmac"] as string;
+        }
 
-        const signature: string = req.headers['content-hmac'] as string;
-        const method = req.method || '';
+        if (req.signature) {
+            signature = req.signature;
+        }
+
+        const payload = typeof req.payload === "string" ? req.payload : JSON.stringify(req.payload);
+        ok(signature, "Custom payload should provide signature or header key.");
+        ok(
+            checkSignedString(this.options.privateKey, signature, payload),
+            "Invalid signature"
+        );
+
+        return req.payload as T;
+    }
+
+    private async parseRequest<T extends {}>(req: IncomingMessage): Promise<T> {
+        ok("content-hmac" in req.headers, "Request headers should contain Content-HMAC field.");
+
+        const signature: string = req.headers["content-hmac"] as string;
+        const method = req.method || "";
         const request = {} as T;
 
-        ok(!!method, 'Request method should not be empty');
+        ok(!!method, "Request method should not be empty");
 
-        if (method.toUpperCase() === 'POST') {
+        if (method.toUpperCase() === "POST") {
+            let chunksLength = 0;
+            const chunks: Buffer[] = [];
             const body = await new Promise<string>((resolve, reject) => {
-                const chunks: string[] = [];
-                req.on('data', (chunk: Buffer) => chunks.push(chunk.toString()));
-                req.on('end', () => resolve(chunks.join()));
-                req.on('error', reject);
+                req.on("data", (chunk: Buffer) => {
+                    chunks.push(chunk);
+                    chunksLength += chunk.length;
+                });
+                req.on("end", () => resolve(
+                    Buffer
+                        .concat(chunks, chunksLength)
+                        .toString("utf-8")
+                ));
+                req.on("error", reject);
             });
 
             const headers: any = req.headers || {};
 
-            ok(checkSignedString(this.options.privateKey, signature, body), 'Invalid signature');
-            if ('content-type' in headers && headers['content-type'].indexOf('json') !== -1) {
+            ok(checkSignedString(this.options.privateKey, signature, body), "Invalid signature");
+            if ("content-type" in headers && headers["content-type"].indexOf("json") !== -1) {
                 Object.assign(request, JSON.parse(body));
             } else {
                 Object.assign(request, qs.parse(body));
             }
-        } else if (method.toUpperCase() === 'GET') {
-            ok(checkSignedString(this.options.privateKey, signature, parse(req.url || '').query as string), 'Invalid signature');
-            Object.assign(request, parse(req.url || '', true).query);
+        } else if (method.toUpperCase() === "GET") {
+            ok(checkSignedString(this.options.privateKey, signature, parse(req.url || "").query as string), "Invalid signature");
+            Object.assign(request, parse(req.url || "", true).query);
         }
 
         return request;

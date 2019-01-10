@@ -93,15 +93,34 @@ export interface RefundNotification<TCustomData = {}> extends AccountRequest, Cu
     InvoiceId?: string,
 }
 
+/**
+ * Recurrent
+ *
+ * Выполняется в случае, если статус подписки на рекуррентный платеж был изменен.
+ */
+export interface RecurrentNotification extends AccountRequest {
+    Id: number,
+    Description: string,
+    Amount: number,
+    Currency: ValidCurrency,
+    RequireConfirmation: boolean,
+    StartDate: string,
+    Interval: string,
+    Period: number,
+    Status: RecurrentStatusType,
+    SuccessfulTransactionsNumber: number,
+    FailedTransactionsNumber: number,
+    MaxPeriods?: number,
+    LastTransactionDate?: string,
+    NextTransactionDate?: string
+}
 
 /**
  * Subscription
  *
  * Выполняется в случае, если статус подписки на рекуррентный платеж был изменен.
  */
-
-
-export interface SubscriptionBase extends AccountRequest{
+export interface SubscriptionBase extends AccountRequest {
     Description: string,
     Amount: number,
     Currency: ValidCurrency,
@@ -112,11 +131,11 @@ export interface SubscriptionBase extends AccountRequest{
     MaxPeriods?: number,
 }
 
-export interface SubscriptionCreateRequest extends SubscriptionBase{
+export interface SubscriptionCreateRequest extends SubscriptionBase {
     Token: string;
 }
 
-export interface SubscriptionUpdateRequest extends Partial<SubscriptionBase>{
+export interface SubscriptionUpdateRequest extends Partial<SubscriptionBase> {
     Id: string;
 }
 

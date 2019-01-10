@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 import {ClientOptions, ClientOptionsOrg} from "./ClientOptions";
 import {join} from "path";
 import {BaseResponse, Response} from "../Api/response";
@@ -7,7 +7,7 @@ export class ClientAbstract {
     protected options: ClientOptions & { endpoint: string };
 
     constructor(_options: ClientOptions) {
-        this.options = Object.assign({endpoint: 'https://api.cloudpayments.ru'}, _options);
+        this.options = Object.assign({endpoint: "https://api.cloudpayments.ru"}, _options);
     }
 
     public getPublicId() {
@@ -42,10 +42,10 @@ export class ClientRequestAbstract extends ClientAbstract {
      */
     public async ping(): Promise<Response<BaseResponse>> {
         const response = await this.client(
-            this.getEndpoint().concat(join('/test')),
+            this.getEndpoint().concat(join("/test")),
             {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({})
             }
         );
@@ -66,19 +66,19 @@ export class ClientRequestAbstract extends ClientAbstract {
             .toString("base64");
 
         const headers: any = {
-            'Content-Type': 'application/json',
-            'Authorization': `Basic ${authorization}`
+            "Content-Type": "application/json",
+            "Authorization": `Basic ${authorization}`
         };
 
         if (requestId) {
-            headers['X-Request-ID'] = requestId;
+            headers["X-Request-ID"] = requestId;
         }
 
         const response = await this.client(
-            this.getEndpoint().concat(join('/', url)),
+            this.getEndpoint().concat(join("/", url)),
             {
                 headers,
-                method: 'POST',
+                method: "POST",
                 body: data ? JSON.stringify(data) : undefined
             }
         );
@@ -88,5 +88,5 @@ export class ClientRequestAbstract extends ClientAbstract {
     }
 }
 
-export * from '../Api/constants';
-export * from '../Api/notification';
+export * from "../Api/constants";
+export * from "../Api/notification";

@@ -1,5 +1,5 @@
-import {ErrorCodes, TransactionStatus, ValidCurrency} from './constants';
-import {SubscriptionModel} from './notification';
+import {ErrorCodes, TransactionStatus, ValidCurrency} from "./constants";
+import {SubscriptionModel} from "./notification";
 
 export interface BaseResponse {
     Message: string | null,

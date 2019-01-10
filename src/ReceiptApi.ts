@@ -1,5 +1,5 @@
 import {ok} from "assert";
-import * as objectHash from 'object-hash';
+import * as objectHash from "object-hash";
 import {ClientRequestAbstract} from "./Client/ClientAbstract";
 import {validateTaxationSystem, validateVAT} from "./Api/constants";
 import {CustomerReceipt, ReceiptApiRequest, ReceiptRequest} from "./Api/request";
@@ -7,7 +7,7 @@ import {BaseResponse, Response} from "./Api/response";
 
 export class ReceiptApi extends ClientRequestAbstract {
     public getEndpoint() {
-        return this.options.endpoint.replace(/\/$/, '').concat('/kkt');
+        return this.options.endpoint.replace(/\/$/, "").concat("/kkt");
     }
 
     /**
@@ -31,15 +31,15 @@ export class ReceiptApi extends ClientRequestAbstract {
             }
         }
 
-        ok(_request.Type, 'Type is required');
-        ok(_request.Inn, 'Inn is required');
+        ok(_request.Type, "Type is required");
+        ok(_request.Inn, "Inn is required");
 
-        ok(validateTaxationSystem(_receipt.taxationSystem), 'A receipt field taxationSystem should be valid');
-        ok(_receipt.Items && _receipt.Items.length > 0, 'A receipt field Items should be filled');
+        ok(validateTaxationSystem(_receipt.taxationSystem), "A receipt field taxationSystem should be valid");
+        ok(_receipt.Items && _receipt.Items.length > 0, "A receipt field Items should be filled");
 
         ok(
             _receipt.Items.filter(x => false === validateVAT(x.vat)).length === 0,
-            'You should fill VAT with valid values'
+            "You should fill VAT with valid values"
         );
 
         const data: ReceiptApiRequest = {
@@ -47,6 +47,6 @@ export class ReceiptApi extends ClientRequestAbstract {
             CustomerReceipt: _receipt
         };
 
-        return await this.call<BaseResponse>('receipt', data, requestId || objectHash(receipt));
+        return await this.call<BaseResponse>("receipt", data, requestId || objectHash(receipt));
     }
 }
