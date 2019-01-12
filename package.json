@@ -2,14 +2,15 @@
   "name": "cloudpayments",
   "version": "2.0.0",
   "description": "CloudPayments Node.JS client API",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "rimraf test/* && tsc -p spec && tape test/spec/**.spec.js",
-    "build": "rimraf dist/* && tsc -p src",
-    "preversion": "npm test && npm run build",
+    "test": "ts-node node_modules/tape/bin/tape spec/**.spec.ts",
+    "build": "rimraf dist/* && tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
     "version": "git add -A",
-    "postversion": "git push && sh publish.sh"
+    "postversion": "git push && npm pub ./"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
@@ -41,6 +42,7 @@
     "@types/tape": "^4.2.31",
     "source-map-support": "^0.5.9",
     "tape": "^4.8.0",
+    "ts-node": "^7.0.1",
     "typescript": "^3.2.2"
   }
 }
