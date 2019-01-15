@@ -1,15 +1,16 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "sourceMap": false,
     "lib": [
       "es2016"
     ],
-    "outDir": "../dist",
+    "outDir": "./dist",
     "rootDir": "./",
     "newLine": "LF"
   },
   "exclude": [
-    "../node_modules"
+    "node_modules",
+    "spec"
   ]
 }

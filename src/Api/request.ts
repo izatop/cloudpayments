@@ -74,13 +74,11 @@ export interface ConfirmPaymentRequest extends BaseRequest {
 export interface RefundPaymentRequest extends BaseRequest {
     TransactionId: number,
     Amount: number,
-    JsonData: object
+    JsonData?: object
 }
 
 export interface VoidPaymentRequest extends BaseRequest {
     TransactionId: number,
-    Amount: number,
-    JsonData: object
 }
 
 export interface LinkPaymentRequest extends BaseRequest {
