@@ -11,6 +11,7 @@
       "es2016"
     ],
     "newLine": "LF",
+    "noEmit": true,
     "types": []
   },
   "exclude": [

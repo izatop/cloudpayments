@@ -6,11 +6,11 @@
       "es2016"
     ],
     "outDir": "./dist",
-    "rootDir": "./",
-    "newLine": "LF"
+    "rootDir": "./src",
+    "newLine": "LF",
+    "noEmit": false
   },
-  "exclude": [
-    "node_modules",
-    "spec"
+  "include": [
+    "src"
   ]
 }
