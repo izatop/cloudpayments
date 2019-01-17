@@ -42,7 +42,7 @@ export interface ReceiptApiRequest extends ReceiptRequest {
 export interface PaymentRequest extends BaseRequest {
     Amount: number,
     Currency: ValidCurrency,
-    IpAddress: string,
+    IpAddress?: string,
     Name?: string,
     InvoiceId?: string,
     Description?: string,
@@ -51,8 +51,9 @@ export interface PaymentRequest extends BaseRequest {
 }
 
 export interface CryptogramPaymentRequest extends PaymentRequest {
-    AccountId?: string,
+    IpAddress: string,
     CardCryptogramPacket: string
+    AccountId?: string,
 }
 
 export interface TokenPaymentRequest extends PaymentRequest {
