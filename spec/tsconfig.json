@@ -6,7 +6,6 @@
     "lib": [
       "es2016"
     ],
-    "outDir": "../test",
     "rootDir": "../",
     "newLine": "LF"
   },

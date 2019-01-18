@@ -1,9 +1,12 @@
 {
   "name": "cloudpayments",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "CloudPayments Node.JS client API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "ts-node node_modules/tape/bin/tape spec/**.spec.ts",
     "build": "rimraf dist/* && tsc -p tsconfig.build.json",
@@ -35,13 +38,13 @@
     "@types/qs": "^6.5.1",
     "node-fetch": "^2.3.0",
     "object-hash": "^1.2.0",
-    "qs": "^6.5.1",
-    "rimraf": "^2.6.2"
+    "qs": "^6.5.1"
   },
   "devDependencies": {
     "@types/tape": "^4.2.31",
-    "source-map-support": "^0.5.9",
-    "tape": "^4.8.0",
+    "rimraf": "^2.6.3",
+    "source-map-support": "^0.5.10",
+    "tape": "^4.9.2",
     "ts-node": "^7.0.1",
     "typescript": "^3.2.2"
   }
