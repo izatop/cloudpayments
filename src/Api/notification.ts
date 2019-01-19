@@ -1,7 +1,7 @@
 import {ReceiptTypes, RecurrentStatusType, TransactionStatus, ValidCurrency} from "./constants";
 
-export interface CustomDataNotification<TCustomData> {
-    Data: TCustomData;
+export interface CustomDataNotification {
+    Data?: string;
 }
 
 export interface AccountRequest {
@@ -9,7 +9,7 @@ export interface AccountRequest {
     Email?: string
 }
 
-export interface TransactionNotification<TCustomData> extends AccountRequest, CustomDataNotification <TCustomData> {
+export interface TransactionNotification extends AccountRequest, CustomDataNotification {
     TransactionId: number,
     Amount: number,
     Currency: ValidCurrency,
@@ -39,7 +39,7 @@ export interface TransactionNotification<TCustomData> extends AccountRequest, Cu
  * Служит для контроля прохождения платежа: система отправляет запрос на адрес сайта ТСП с
  * информацией об оплате, а сайт должен подтвердить или отклонить возможность принять платеж.
  */
-export interface CheckNotification<TCustomData = {}> extends TransactionNotification<TCustomData> {
+export interface CheckNotification extends TransactionNotification {
     Status: TransactionStatus
 }
 
@@ -49,7 +49,7 @@ export interface CheckNotification<TCustomData = {}> extends TransactionNotifica
  * Служит для информирования о проведенном платеже: система отправляет запрос
  * на адрес ТСП с информацией об оплате, а сайт должен зафиксировать факт платежа.
  */
-export interface PayNotification<TCustomData = {}> extends TransactionNotification<TCustomData> {
+export interface PayNotification extends TransactionNotification {
     Status: TransactionStatus.Authorized | TransactionStatus.Completed,
     Token?: string
 }
@@ -60,7 +60,7 @@ export interface PayNotification<TCustomData = {}> extends TransactionNotificati
  * Служит для информирования о проведенном платеже: система отправляет запрос
  * на адрес ТСП с информацией об оплате, а сайт должен зафиксировать факт платежа.
  */
-export interface ConfirmNotification<TCustomData = {}> extends TransactionNotification<TCustomData> {
+export interface ConfirmNotification extends TransactionNotification {
     Status: TransactionStatus.Completed,
     Token?: string
 }
@@ -74,7 +74,7 @@ export interface ConfirmNotification<TCustomData = {}> extends TransactionNotifi
  * Стоит учитывать, что факт отказа в оплате не является конечным — пользователь
  * может оплатить со второго раза.
  */
-export interface FailNotification<TCustomData = {}> extends TransactionNotification<TCustomData> {
+export interface FailNotification extends TransactionNotification {
     Reason: string,
     ReasonCode: number
 }
@@ -85,7 +85,7 @@ export interface FailNotification<TCustomData = {}> extends TransactionNotificat
  * Выполняется в случае, если платеж был возвращен (полностью или частично)
  * по вашей инициативе через API или личный кабинет.
  */
-export interface RefundNotification<TCustomData = {}> extends AccountRequest, CustomDataNotification<TCustomData> {
+export interface RefundNotification extends AccountRequest, CustomDataNotification {
     TransactionId: number,
     PaymentTransactionId: number,
     Amount: number,
