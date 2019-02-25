@@ -69,13 +69,13 @@ export interface Confirm3DSRequest extends BaseRequest {
 export interface ConfirmPaymentRequest extends BaseRequest {
     TransactionId: number,
     Amount: number,
-    JsonData?: object
+    JsonData?: string
 }
 
 export interface RefundPaymentRequest extends BaseRequest {
     TransactionId: number,
     Amount: number,
-    JsonData?: object
+    JsonData?: string
 }
 
 export interface VoidPaymentRequest extends BaseRequest {
@@ -85,7 +85,7 @@ export interface VoidPaymentRequest extends BaseRequest {
 export interface LinkPaymentRequest extends BaseRequest {
     Amount: number;
     Currency: ValidCurrency;
-    JsonData: object;
+    JsonData?: string;
     Description: string;
     email?: string;
     phone?: string;
