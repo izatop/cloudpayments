@@ -69,7 +69,7 @@ export interface Confirm3DSRequest extends BaseRequest {
 export interface ConfirmPaymentRequest extends BaseRequest {
     TransactionId: number,
     Amount: number,
-    JsonData: object
+    JsonData?: object
 }
 
 export interface RefundPaymentRequest extends BaseRequest {
