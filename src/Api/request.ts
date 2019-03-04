@@ -42,7 +42,7 @@ export interface ReceiptApiRequest extends ReceiptRequest {
 export interface PaymentRequest extends BaseRequest {
     Amount: number,
     Currency: ValidCurrency,
-    IpAddress: string,
+    IpAddress?: string,
     Name?: string,
     InvoiceId?: string,
     Description?: string,
@@ -51,8 +51,9 @@ export interface PaymentRequest extends BaseRequest {
 }
 
 export interface CryptogramPaymentRequest extends PaymentRequest {
-    AccountId?: string,
+    IpAddress: string,
     CardCryptogramPacket: string
+    AccountId?: string,
 }
 
 export interface TokenPaymentRequest extends PaymentRequest {
@@ -68,13 +69,13 @@ export interface Confirm3DSRequest extends BaseRequest {
 export interface ConfirmPaymentRequest extends BaseRequest {
     TransactionId: number,
     Amount: number,
-    JsonData: object
+    JsonData?: string
 }
 
 export interface RefundPaymentRequest extends BaseRequest {
     TransactionId: number,
     Amount: number,
-    JsonData?: object
+    JsonData?: string
 }
 
 export interface VoidPaymentRequest extends BaseRequest {
@@ -84,7 +85,7 @@ export interface VoidPaymentRequest extends BaseRequest {
 export interface LinkPaymentRequest extends BaseRequest {
     Amount: number;
     Currency: ValidCurrency;
-    JsonData: object;
+    JsonData?: string;
     Description: string;
     email?: string;
     phone?: string;
