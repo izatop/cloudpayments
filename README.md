@@ -69,7 +69,7 @@ const client = new ClientService({/* options */});
 | voidPayment | Отмена оплаты | https://cloudpayments.ru/Docs/Api#void |
 | getPayment | Просмотр информации об операции | https://cloudpayments.ru/Docs/Api#get |
 | findPaymentByInvoiceId | Проверка статуса платежа | https://cloudpayments.ru/Docs/Api#find |
-| getPaymentList | Выгрузка списка транзакций | https://cloudpayments.ru/Docs/Api#list |
+| getPaymentsList | Выгрузка списка транзакций | https://cloudpayments.ru/Docs/Api#list |
  
 
 ## ReceiptApi
