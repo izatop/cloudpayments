@@ -50,7 +50,6 @@ const client = new ClientService({/* options */});
 | `privateKey` | `string` | Ваш приватный ключ |
 | `publicId` | `string` | Ваш публичный ключ |
 | `org.taxationSystem` | `TaxationSystem` | Система налогооблажения |
-| `org.vat` | `VAT` | НДС |
 | `org.inn` | `number` | ИНН |
 
 ## ClientApi
@@ -70,6 +69,12 @@ const client = new ClientService({/* options */});
 | getPayment | Просмотр информации об операции | https://developers.cloudpayments.ru/#prosmotr-tranzaktsii |
 | findPaymentByInvoiceId | Проверка статуса платежа | https://developers.cloudpayments.ru/#proverka-statusa-platezha |
 | getPaymentsList | Выгрузка списка транзакций | https://developers.cloudpayments.ru/#vygruzka-spiska-tranzaktsiy |
+| createOrder | Создание счета для отправки по почте | https://developers.cloudpayments.ru/#sozdanie-scheta-dlya-otpravki-po-pochte |
+| createSubscription | Создание подписки на рекуррентные платежи | https://developers.cloudpayments.ru/#sozdanie-podpiski-na-rekurrentnye-platezhi |
+| updateSubscription | Изменение подписки на рекуррентные платежи | https://developers.cloudpayments.ru/#izmenenie-podpiski-na-rekurrentnye-platezhi |
+| cancelSubscription | Отмена подписки на рекуррентные платежи | https://developers.cloudpayments.ru/#izmenenie-podpiski-na-rekurrentnye-platezhi |
+| getSubscription | Запрос информации о подписке | https://developers.cloudpayments.ru/#zapros-informatsii-o-podpiske |
+| getSubscriptionsList | Поиск подписок | https://developers.cloudpayments.ru/#poisk-podpisok |
  
 
 ## ReceiptApi
