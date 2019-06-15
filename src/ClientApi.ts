@@ -129,7 +129,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<PaymentHistoryResponse>>}
      */
     public async getPaymentList(data: BaseRequest & { Date: number, TimeZone?: string }) {
-        return this.call<PaymentHistoryResponse>("/payments/get", data);
+        return this.call<PaymentHistoryResponse>("/payments/list", data);
     }
 
     /**
