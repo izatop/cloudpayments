@@ -1,7 +1,6 @@
 import {asyncTest} from "./async-tape";
-import {ClientService} from "../src/ClientService";
+import {ClientService, ResponseCodes} from "../src";
 import {options, ServiceRequestMock} from "./helpers";
-import {ResponseCodes} from "../src/Api/constants";
 import {signString} from "../src/utils";
 
 asyncTest("ServiceClient.ClientHandlers", async t => {
@@ -14,7 +13,7 @@ asyncTest("ServiceClient.ClientHandlers", async t => {
     };
 
     try {
-        const validRes = await clientHandlers.handleCheckRequest(validReq, validator);
+        const validRes = await clientHandlers.handleCheckRequest(validReq as any, validator);
 
         t.same(validRes, {
             response: {code: ResponseCodes.SUCCESS},
@@ -35,8 +34,7 @@ asyncTest("ServiceClient.ClientHandlers", async t => {
             }
         );
 
-        t.shouldFail(() => clientHandlers.handleCheckRequest(invalidReq, validator));
-
+        t.shouldFail(() => clientHandlers.handleCheckRequest(invalidReq as any, validator));
     } catch (error) {
         t.fail(error);
     }

@@ -1,7 +1,7 @@
 {
   "name": "cloudpayments",
-  "version": "2.1.3",
-  "description": "CloudPayments Node.JS client API",
+  "version": "3.0.0",
+  "description": "CloudPayments API for Node.js with typings",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -23,7 +23,11 @@
     "url": "git+https://github.com/izatop/cloudpayments.git"
   },
   "keywords": [
-    "cloudpayments api typescript es6"
+    "payments",
+    "cloudpayments",
+    "typescript",
+    "es6",
+    "api"
   ],
   "author": "Artur F. Bier <izatop@gmail.com>",
   "license": "MIT",
@@ -32,20 +36,20 @@
   },
   "homepage": "https://github.com/izatop/cloudpayments#readme",
   "dependencies": {
-    "@types/node": "^10.12.18",
-    "@types/node-fetch": "^2.1.4",
-    "@types/object-hash": "^1.2.0",
-    "@types/qs": "^6.5.1",
-    "node-fetch": "^2.3.0",
+    "@types/node": "^12.0.8",
+    "@types/node-fetch": "^2.3.7",
+    "@types/object-hash": "^1.3.0",
+    "@types/qs": "^6.5.3",
+    "node-fetch": "^2.6.0",
     "object-hash": "^1.2.0",
-    "qs": "^6.5.1"
+    "qs": "^6.7.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.31",
     "rimraf": "^2.6.3",
-    "source-map-support": "^0.5.10",
-    "tape": "^4.9.2",
-    "ts-node": "^7.0.1",
-    "typescript": "^3.2.2"
+    "source-map-support": "^0.5.12",
+    "tape": "^4.10.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.2"
   }
 }

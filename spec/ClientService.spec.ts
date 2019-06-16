@@ -1,8 +1,5 @@
 import {asyncTest} from "./async-tape";
-import {ClientService} from "../src/ClientService";
-import {ClientApi} from "../src/ClientApi";
-import {ReceiptApi} from "../src/ReceiptApi";
-import {NotificationHandlers} from "../src/NotificationHandlers";
+import {ClientApi, ClientService, NotificationHandlers, ReceiptApi} from "../src";
 import {options} from "./helpers";
 
 asyncTest("ServiceClient", async t => {
