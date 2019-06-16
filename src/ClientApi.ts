@@ -125,11 +125,11 @@ export class ClientApi extends ClientRequestAbstract {
     /**
      * Get a filtered payment list
      *
-     * @param {{Date: number, TimeZone: string}} data
+     * @param {{Date: string | Date, TimeZone: string}} data
      * @returns {Promise<Response<PaymentHistoryResponse>>}
      */
-    public async getPaymentList(data: BaseRequest & { Date: number, TimeZone?: string }) {
-        return this.call<PaymentHistoryResponse>("/payments/get", data);
+    public async getPaymentsList(data: BaseRequest & { Date: string | Date, TimeZone?: string }) {
+        return this.call<PaymentHistoryResponse>("/payments/list", data);
     }
 
     /**

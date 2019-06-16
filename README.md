@@ -1,7 +1,7 @@
 # CloudPayments
 
 Библиотека для работы с API и обработки уведомлений от платежного
-сервиса [CloudPayments](https://cloudpayments.ru/Docs/Api).
+сервиса [CloudPayments](https://developers.cloudpayments.ru/#api).
 
 Все примеры приведены по стандарту es7. Версия поддерживаемой
 платформы Node.js 6 и выше.
@@ -33,9 +33,9 @@ const client = new ClientService({/* options */});
 
 | Method | Options | Return | Description |
 |---|---|---|---|
-| `getClientApi` |  | `ClientApi` | Возвращает экземпляр класса `ClientApi` для работы со стандартным [API](https://cloudpayments.ru/Docs/Api) |
-| `getReceiptApi` | | `ReceiptApi` | Возвращает экземпляр класса `ReceiptApi` для работы с [API кассы](https://cloudpayments.ru/docs/api/kassa) |
-| `getNotificationHandlers` | | `NotificationHandlers` | Возвращает экземпляр класса `ClientHandlers` для обработки [уведомлений](https://cloudpayments.ru/Docs/Notifications) |
+| `getClientApi` |  | `ClientApi` | Возвращает экземпляр класса `ClientApi` для работы со стандартным [API](https://developers.cloudpayments.ru/#api) |
+| `getReceiptApi` | | `ReceiptApi` | Возвращает экземпляр класса `ReceiptApi` для работы с [API кассы](https://developers.cloudkassir.ru/#api-kassy) |
+| `getNotificationHandlers` | | `NotificationHandlers` | Возвращает экземпляр класса `ClientHandlers` для обработки [уведомлений](https://developers.cloudpayments.ru/#uvedomleniya) |
 | `createClientApi` | `ClientOptions` | `ClientApi` | Создает отдельный экземпляр класса `ClientApi` |
 | `createReceiptApi` | `ClientOptions` | `ReceiptApi` | Создает отдельный экземпляр класса `ReceiptApi` |
 | `createNotificationHandlers` | `ClientOptions` | `NotificationHandlers` | Создает отдельный экземпляр класса `NotificationHandlers` |
@@ -50,7 +50,6 @@ const client = new ClientService({/* options */});
 | `privateKey` | `string` | Ваш приватный ключ |
 | `publicId` | `string` | Ваш публичный ключ |
 | `org.taxationSystem` | `TaxationSystem` | Система налогооблажения |
-| `org.vat` | `VAT` | НДС |
 | `org.inn` | `number` | ИНН |
 
 ## ClientApi
@@ -59,17 +58,23 @@ const client = new ClientService({/* options */});
 
 | Метод | Описание | Документация |
 |-------|----------|--------------|
-| chargeCryptogramPayment | Оплата по криптограмме | https://cloudpayments.ru/Docs/Api#payWithCrypto |
-| authorizeCryptogramPayment | Оплата по криптограмме (преавторизация) | https://cloudpayments.ru/Docs/Api#payWithCrypto |
-| chargeTokenPayment | Оплата по токену | https://cloudpayments.ru/Docs/Api#payWithToken |
-| authorizeTokenPayment | Оплата по токену (преавторизация) | https://cloudpayments.ru/Docs/Api#payWithToken |
-| confirm3DSPayment | Обработка 3-D Secure | https://cloudpayments.ru/Docs/Api#3ds |
-| confirmPayment | Подтверждение оплаты | https://cloudpayments.ru/Docs/Api#confirm |
-| refundPayment | Возврат денег | https://cloudpayments.ru/Docs/Api#refund |
-| voidPayment | Отмена оплаты | https://cloudpayments.ru/Docs/Api#void |
-| getPayment | Просмотр информации об операции | https://cloudpayments.ru/Docs/Api#get |
-| findPaymentByInvoiceId | Проверка статуса платежа | https://cloudpayments.ru/Docs/Api#find |
-| getPaymentList | Выгрузка списка транзакций | https://cloudpayments.ru/Docs/Api#list |
+| chargeCryptogramPayment | Оплата по криптограмме | https://developers.cloudpayments.ru/#oplata-po-kriptogramme |
+| authorizeCryptogramPayment | Оплата по криптограмме (преавторизация) | https://developers.cloudpayments.ru/#oplata-po-kriptogramme |
+| chargeTokenPayment | Оплата по токену | https://developers.cloudpayments.ru/#oplata-po-tokenu-rekarring |
+| authorizeTokenPayment | Оплата по токену (преавторизация) | https://developers.cloudpayments.ru/#oplata-po-tokenu-rekarring |
+| confirm3DSPayment | Обработка 3-D Secure | https://developers.cloudpayments.ru/#obrabotka-3-d-secure |
+| confirmPayment | Подтверждение оплаты | https://developers.cloudpayments.ru/#podtverzhdenie-oplaty |
+| refundPayment | Возврат денег | https://developers.cloudpayments.ru/#vozvrat-deneg |
+| voidPayment | Отмена оплаты | https://developers.cloudpayments.ru/#otmena-oplaty |
+| getPayment | Просмотр информации об операции | https://developers.cloudpayments.ru/#prosmotr-tranzaktsii |
+| findPaymentByInvoiceId | Проверка статуса платежа | https://developers.cloudpayments.ru/#proverka-statusa-platezha |
+| getPaymentsList | Выгрузка списка транзакций | https://developers.cloudpayments.ru/#vygruzka-spiska-tranzaktsiy |
+| createOrder | Создание счета для отправки по почте | https://developers.cloudpayments.ru/#sozdanie-scheta-dlya-otpravki-po-pochte |
+| createSubscription | Создание подписки на рекуррентные платежи | https://developers.cloudpayments.ru/#sozdanie-podpiski-na-rekurrentnye-platezhi |
+| updateSubscription | Изменение подписки на рекуррентные платежи | https://developers.cloudpayments.ru/#izmenenie-podpiski-na-rekurrentnye-platezhi |
+| cancelSubscription | Отмена подписки на рекуррентные платежи | https://developers.cloudpayments.ru/#izmenenie-podpiski-na-rekurrentnye-platezhi |
+| getSubscription | Запрос информации о подписке | https://developers.cloudpayments.ru/#zapros-informatsii-o-podpiske |
+| getSubscriptionsList | Поиск подписок | https://developers.cloudpayments.ru/#poisk-podpisok |
  
 
 ## ReceiptApi
@@ -139,28 +144,28 @@ const server = createServer(async (req, res) => {
 
 | Method | Arguments | Return | Description |
 |---|---|---|---|
-| `createIncomeReceipt` | `ReceiptTypes`, `Receipt` | `Response<{}>` | Отправляет запрос на [создание чека](https://cloudpayments.ru/docs/api/kassa#receipt) |
+| `createReceipt` | `ReceiptTypes`, `Receipt` | `Response<{}>` | Отправляет запрос на [создание чека](https://developers.cloudkassir.ru/#formirovanie-kassovogo-cheka) |
 
 #### Receipt
 
-Смотрите [Receipt](src/ReceiptApi/Receipt.d.ts)
+Смотрите [Receipt](src/ReceiptApi.ts)
 
 ## Handlers
 
 В библиотеку `cloudpayments` встроен механизм обработки 
-уведомлений о платежах (смотрите [документацию](https://cloudpayments.ru/Docs/Notifications)). 
+уведомлений о платежах (смотрите [документацию](https://developers.cloudpayments.ru/#uvedomleniya)). 
 
 Список доступных методов для обработки уведомлений:
 
 | Метод | Параметры запроса | Ссылка на описание |
 |---|---|---|
-| `handleCheckRequest` | [CheckNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#check |
-| `handlePayRequest` | [PayNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#pay |
-| `handleFailRequest` | [FailNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#fail |
-| `handleRecurrentRequest` | [RecurrentNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#recurrent |
-| `handleRefundRequest` | [RefundNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#refund |
-| `handleReceiptRequest` | [ReceiptNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#receipt |
-| `handleConfirmRequest` | [ConfirmNotification](src/Api/notifications.d.ts) | https://cloudpayments.ru/Docs/Notifications#confirm |
+| `handleCheckRequest` | [CheckNotification](src/Api/notification.ts) | https://developers.cloudpayments.ru/#check |
+| `handlePayRequest` | [PayNotification](src/Api/notification.ts) | https://developers.cloudpayments.ru/#pay |
+| `handleFailRequest` | [FailNotification](src/Api/notification.ts) | https://developers.cloudpayments.ru/#fail |
+| `handleRecurrentRequest` | [RecurrentNotification](src/Api/notification.ts) | https://developers.cloudpayments.ru/#recurrent |
+| `handleRefundRequest` | [RefundNotification](src/Api/notification.ts) | https://developers.cloudpayments.ru/#refund |
+| `handleReceiptRequest` | [ReceiptNotification](src/Api/notification.ts) | https://developers.cloudpayments.ru/#receipt |
+| `handleConfirmRequest` | [ConfirmNotification](src/Api/notification.ts) | https://developers.cloudpayments.ru/#confirm |
 
 Пример использования:
 
