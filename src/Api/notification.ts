@@ -18,6 +18,8 @@ export interface TransactionNotification extends AccountRequest, CustomDataNotif
     CardLastFour: string,
     CardType: string,
     CardExpDate: string,
+    CardProduct: string,
+    CardCategory: string,
     TestMode: '1' | '0',
     InvoiceId?: string,
     SubscriptionId?: string,
