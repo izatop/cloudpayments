@@ -10,15 +10,15 @@ export interface AccountRequest {
 }
 
 export interface TransactionNotification extends AccountRequest, CustomDataNotification {
-    TransactionId: number,
-    Amount: number,
+    TransactionId: string,
+    Amount: string,
     Currency: ValidCurrency,
     DateTime: string,
     CardFirstSix: string,
     CardLastFour: string,
     CardType: string,
     CardExpDate: string,
-    TestMode: 1 | 0,
+    TestMode: '1' | '0',
     InvoiceId?: string,
     SubscriptionId?: string,
     Name?: string,
