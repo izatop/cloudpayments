@@ -90,3 +90,25 @@ export interface LinkPaymentRequest extends BaseRequest {
     email?: string;
     phone?: string;
 }
+
+/**
+ * Payouts
+ */
+export interface PayoutRequest extends BaseRequest {
+    Amount: number,
+    Currency: ValidCurrency,
+    AccountId: string,
+    Description?: string,
+    Email?: string,
+    JsonData?: string,
+    InvoiceId?: string,
+}
+
+export interface CryptogramPayoutRequest extends PayoutRequest {
+    Name: string,
+    CardCryptogramPacket: string
+}
+
+export interface TokenPayoutRequest extends PayoutRequest {
+    Token: string
+}

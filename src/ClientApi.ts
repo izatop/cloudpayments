@@ -6,7 +6,9 @@ import {
     CryptogramPaymentRequest,
     LinkPaymentRequest,
     TokenPaymentRequest,
-    VoidPaymentRequest
+    VoidPaymentRequest,
+    CryptogramPayoutRequest,
+    TokenPayoutRequest
 } from "./Api/request";
 import {
     BaseResponse,
@@ -17,7 +19,8 @@ import {
     PaymentSuccessResponse,
     Response,
     SubscriptionResponse,
-    SubscriptionsListGetResponse
+    SubscriptionsListGetResponse,
+    PayoutResponse
 } from "./Api/response";
 import {RefundPaymentRequest} from "./index";
 
@@ -170,5 +173,25 @@ export class ClientApi extends ClientRequestAbstract {
 
     public async getSubscriptionsList(data: BaseRequest & { accountId: string }): Promise<Response<SubscriptionsListGetResponse>> {
         return this.call<SubscriptionsListGetResponse>("/subscriptions/find", data);
+    }
+
+    /**
+     * Charge Cryptogram payout
+     *
+     * @param {CryptogramPayoutRequest} data
+     * @returns {Promise<Response<BaseResponse>>}
+     */
+    public async chargeCryptogramPayout(data: CryptogramPayoutRequest) {
+        return this.call<PayoutResponse>("/payments/cards/topup", data);
+    }
+
+    /**
+     * Charge token payment
+     *
+     * @param {TokenPayoutRequest} data
+     * @returns {Promise<Response<BaseResponse>>}
+     */
+    public async chargeTokenPayout(data: TokenPayoutRequest) {
+        return this.call<PayoutResponse>("/payments/token/topup ", data);
     }
 }
