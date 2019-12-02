@@ -4,11 +4,11 @@ import {
     Confirm3DSRequest,
     ConfirmPaymentRequest,
     CryptogramPaymentRequest,
+    CryptogramPayoutRequest,
     LinkPaymentRequest,
     TokenPaymentRequest,
-    VoidPaymentRequest,
-    CryptogramPayoutRequest,
-    TokenPayoutRequest
+    TokenPayoutRequest,
+    VoidPaymentRequest
 } from "./Api/request";
 import {
     BaseResponse,
@@ -17,10 +17,10 @@ import {
     PaymentHistoryResponse,
     PaymentResponse,
     PaymentSuccessResponse,
+    PayoutResponse,
     Response,
     SubscriptionResponse,
-    SubscriptionsListGetResponse,
-    PayoutResponse
+    SubscriptionsListGetResponse
 } from "./Api/response";
 import {RefundPaymentRequest} from "./index";
 
