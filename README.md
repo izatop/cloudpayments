@@ -75,6 +75,8 @@ const client = new ClientService({/* options */});
 | cancelSubscription | Отмена подписки на рекуррентные платежи | https://developers.cloudpayments.ru/#izmenenie-podpiski-na-rekurrentnye-platezhi |
 | getSubscription | Запрос информации о подписке | https://developers.cloudpayments.ru/#zapros-informatsii-o-podpiske |
 | getSubscriptionsList | Поиск подписок | https://developers.cloudpayments.ru/#poisk-podpisok |
+| chargeCryptogramPayout | Выплата по криптограмме | https://developers.cloudpayments.ru/#vyplata-po-kriptogramme |
+| chargeTokenPayout | Выплата по токену | https://developers.cloudpayments.ru/#vyplata-po-tokenu |
  
 
 ## ReceiptApi
@@ -107,23 +109,26 @@ const server = createServer(async (req, res) => {
         
         // Отправляем запрос на создание чека
         const response = await receiptApi.createReceipt(
-            ReceiptTypes.Income,
-            {
+            { 
+                Type: ReceiptTypes.Income,
                 invoiceId: request.InvoiceId,
                 accountId: request.AccountId,
+            },
+            {
                 // если система налогооблажения не указана, 
                 // берется из настроек ClientOptions
                 taxationSystem: TaxationSystem.GENERAL,
                 inn: 123456789,
-                notify: {email: 'mail@example.com', phone: '+7123456789'},
-                records: [
+                email: 'mail@example.com',
+                phone: '+7123456789',
+                Items: [
                     {
                         label: 'Наименование товара или сервиса',
                         quantity: 2,
                         price: 1200,
                         amount: 2400,
                         vat: VAT.VAT18,
-                        ean13: '1234456363'
+                        ean13: '1234456363',
                     }
                 ]
             }
