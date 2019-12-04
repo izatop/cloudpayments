@@ -69,7 +69,7 @@ export interface PaymentSuccessModel extends PaymentModel {
 
 export interface PaymentFailedResponse extends BaseResponse {
     Message: string,
-    Success: false,
+    Success: boolean,
     Model: PaymentModel
 }
 
@@ -80,13 +80,13 @@ export interface Payment3DSModel {
 }
 
 export interface Payment3DSResponse extends BaseResponse {
-    Success: false,
+    Success: boolean,
     Message: null,
     Model: Payment3DSModel
 }
 
 export interface PaymentSuccessResponse extends BaseResponse {
-    Success: true,
+    Success: boolean,
     Message: null,
     Model: PaymentSuccessModel
 }
@@ -104,13 +104,13 @@ export type PaymentGetResponse = {
 }
 
 export type PaymentHistoryResponse = {
-    Success: true,
+    Success: boolean,
     Message: never,
     Model: HistoryPaymentModel[]
 }
 
 export type LinkPaymentModel = {
-    Success: true;
+    Success: boolean;
     Message: never;
     Model: HistoryPaymentModel[];
 }
@@ -163,7 +163,7 @@ export interface PayoutModel {
     PayoutDateIso?: string,
     PayoutAmount?: number,
     Rrn?: string,
-    OriginalTransactionId?: null,
+    OriginalTransactionId?: number | null,
     CultureName?: "ru-RU" | "en-US" | "lv" | "az" | "kk" | "uk" | "pl",
     Type?: number,
     Refunded?: boolean,
@@ -181,14 +181,14 @@ export interface PayoutSuccessModel extends PayoutModel {
 }
 
 export interface PayoutSuccessResponse extends BaseResponse {
-    Success: true,
-    Message: null,
+    Success: boolean,
+    Message: string | null,
     Model: PayoutSuccessModel
 }
 
 export interface PayoutFailedResponse extends BaseResponse {
     Message: string,
-    Success: false,
+    Success: boolean,
     Model: PayoutModel
 }
 

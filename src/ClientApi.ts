@@ -186,7 +186,7 @@ export class ClientApi extends ClientRequestAbstract {
     }
 
     /**
-     * Charge token payment
+     * Charge token payout
      *
      * @param {TokenPayoutRequest} data
      * @returns {Promise<Response<BaseResponse>>}
