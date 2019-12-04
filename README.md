@@ -1,10 +1,10 @@
 # CloudPayments
 
-Библиотека для работы с API и обработки уведомлений от платежного
-сервиса [CloudPayments](https://developers.cloudpayments.ru/#api).
+Библиотека для работы с API и обработки уведомлений от платежного сервиса
+[CloudPayments](https://developers.cloudpayments.ru/#api).
 
-Все примеры приведены по стандарту es7. Версия поддерживаемой
-платформы Node.js 6 и выше.
+Проект написан на языке TypeScript и включает описание всех доступных интерфейсов.
+Все примеры приведены по стандарту es7. Версия поддерживаемой платформы Node.js 6 и выше.
 
 ## Install
 
@@ -26,8 +26,8 @@ const client = new ClientService({/* options */});
 
 ### ClientService
 
-Общий интерфейс для доступа к API библиотеки, принимает единственный аргумент
-`ClientOptions`.
+Общий [интерфейс](src/ClientService.ts) для доступа к API библиотеки,
+принимает единственный [аргумент](src/Client/ClientOptions.ts) `ClientOptions`.
 
 #### Methods
 
@@ -210,3 +210,6 @@ const server = createServer(async (req, res) => {
 |---|---|---|
 | `Success` | `boolean` | Успех операции |
 | `Message` | `string` | Сообщение |
+
+# License
+MIT
