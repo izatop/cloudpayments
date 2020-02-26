@@ -52,7 +52,7 @@ export class ClientApi extends ClientRequestAbstract {
      * Charge token payment
      *
      * @param {TokenPaymentRequest} data
-     * @returns {}Promise<PaymentWith3DSClientResponse<PaymentResponse>>}
+     * @returns {Promise<PaymentWith3DSClientResponse<PaymentResponse>>}
      */
     public async chargeTokenPayment(data: TokenPaymentRequest) {
         return new PaymentWith3DSClientResponse<PaymentResponse>(
