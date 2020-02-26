@@ -6,23 +6,6 @@ export interface BaseResponse {
     Success: boolean
 }
 
-export class Response<T extends BaseResponse> {
-    constructor(protected response: T) {
-    }
-
-    getResponse() {
-        return this.response;
-    }
-
-    isSuccess() {
-        return this.response.Success;
-    }
-
-    getMessage() {
-        return this.response.Message;
-    }
-}
-
 export interface PaymentModel {
     TransactionId: number,
     Amount: number,
@@ -70,7 +53,7 @@ export interface PaymentSuccessModel extends PaymentModel {
 export interface PaymentFailedResponse extends BaseResponse {
     Message: string,
     Success: boolean,
-    Model: PaymentModel
+    Model: PaymentFailedModel
 }
 
 export interface Payment3DSModel {
@@ -91,6 +74,7 @@ export interface PaymentSuccessResponse extends BaseResponse {
     Model: PaymentSuccessModel
 }
 
+export type PaymentFailedModel = PaymentModel;
 export type PaymentResponse = PaymentSuccessResponse
     | PaymentFailedResponse
     | Payment3DSResponse;

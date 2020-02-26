@@ -3,13 +3,10 @@
   "compilerOptions": {
     "declaration": false,
     "sourceMap": false,
-    "lib": [
-      "es2016"
-    ],
     "rootDir": "../",
     "newLine": "LF"
   },
-  "exclude": [
-    "node_modules"
+  "include": [
+    "src"
   ]
 }

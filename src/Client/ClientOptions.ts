@@ -1,4 +1,4 @@
-import {TaxationSystemType} from "../Api/constants";
+import {TaxationSystemType} from "../Api";
 
 export interface ClientOptions {
     publicId: string,

@@ -1,7 +1,8 @@
 import fetch from "node-fetch";
 import {ClientOptions, ClientOptionsOrg} from "./ClientOptions";
 import {join} from "path";
-import {BaseResponse, Response} from "../Api/response";
+import {BaseResponse} from "../Api";
+import {ClientResponse} from "./ClientResponse";
 
 export class ClientAbstract {
     protected options: ClientOptions & { endpoint: string };
@@ -33,14 +34,14 @@ export class ClientRequestAbstract extends ClientAbstract {
      *
      * @returns {(url: (string | Request), init?: RequestInit) => Promise<Response>}
      */
-    protected get client() {
+    public get client() {
         return fetch;
     }
 
     /**
      *
      */
-    public async ping(): Promise<Response<BaseResponse>> {
+    public async ping(): Promise<ClientResponse<BaseResponse>> {
         const response = await this.client(
             this.getEndpoint().concat(join("/test")),
             {
@@ -50,7 +51,7 @@ export class ClientRequestAbstract extends ClientAbstract {
             }
         );
 
-        return new Response(await response.json());
+        return new ClientResponse(await response.json());
     }
 
     /**
@@ -59,9 +60,9 @@ export class ClientRequestAbstract extends ClientAbstract {
      * @param {string} url
      * @param {Object} data
      * @param {string} requestId
-     * @returns {Promise<Response<R extends BaseResponse>>}
+     * @returns {Promise<ClientResponse<BaseResponse>>}
      */
-    protected async call<R extends BaseResponse = BaseResponse>(url: string, data?: object, requestId?: string): Promise<Response<R>> {
+    protected async call<R extends BaseResponse>(url: string, data?: object, requestId?: string) {
         const authorization = Buffer.from(`${this.options.publicId}:${this.options.privateKey}`, "utf-8")
             .toString("base64");
 
@@ -83,10 +84,6 @@ export class ClientRequestAbstract extends ClientAbstract {
             }
         );
 
-        const result = await response.json();
-        return new Response(result);
+        return await response.json() as R;
     }
 }
-
-export * from "../Api/constants";
-export * from "../Api/notification";

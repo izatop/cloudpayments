@@ -1,78 +1,87 @@
-import {ClientRequestAbstract, SubscriptionCreateRequest, SubscriptionUpdateRequest} from "./Client/ClientAbstract";
+import {
+    ClientRequestAbstract,
+    ClientResponse,
+    PaymentClientResponse,
+    PaymentWith3DSClientResponse,
+    PayoutClientResponse
+} from "./Client";
 import {
     BaseRequest,
+    BaseResponse,
     Confirm3DSRequest,
     ConfirmPaymentRequest,
     CryptogramPaymentRequest,
     CryptogramPayoutRequest,
     LinkPaymentRequest,
-    TokenPaymentRequest,
-    TokenPayoutRequest,
-    VoidPaymentRequest
-} from "./Api/request";
-import {
-    BaseResponse,
     PaymentFailedResponse,
     PaymentGetResponse,
     PaymentHistoryResponse,
     PaymentResponse,
     PaymentSuccessResponse,
     PayoutResponse,
-    Response,
+    RefundPaymentRequest,
+    SubscriptionCreateRequest,
     SubscriptionResponse,
-    SubscriptionsListGetResponse
-} from "./Api/response";
-import {RefundPaymentRequest} from "./index";
+    SubscriptionsListGetResponse,
+    SubscriptionUpdateRequest,
+    TokenPaymentRequest,
+    TokenPayoutRequest,
+    VoidPaymentRequest
+} from "./Api";
 
 export class ClientApi extends ClientRequestAbstract {
-    /**
-     * Charge cryptogram payment
-     *
-     * @param {CryptogramPaymentRequest} data
-     * @returns {Promise<Response<BaseResponse>>}
-     */
     public async chargeCryptogramPayment(data: CryptogramPaymentRequest) {
-        return this.call<PaymentResponse>("/payments/cards/charge", data);
+        return new PaymentWith3DSClientResponse<PaymentResponse>(
+            await this.call<PaymentResponse>("/payments/cards/charge", data),
+        );
     }
 
     /**
      * Authorize cryptogram payment
      *
      * @param {CryptogramPaymentRequest} data
-     * @returns {Promise<Response<BaseResponse>>}
+     * @returns {Promise<PaymentWith3DSClientResponse<PaymentResponse>>}
      */
     public async authorizeCryptogramPayment(data: CryptogramPaymentRequest) {
-        return this.call<PaymentResponse>("/payments/cards/auth", data);
+        return new PaymentWith3DSClientResponse<PaymentResponse>(
+            await this.call<PaymentResponse>("/payments/cards/auth", data),
+        );
     }
 
     /**
      * Charge token payment
      *
      * @param {TokenPaymentRequest} data
-     * @returns {Promise<Response<BaseResponse>>}
+     * @returns {}Promise<PaymentWith3DSClientResponse<PaymentResponse>>}
      */
     public async chargeTokenPayment(data: TokenPaymentRequest) {
-        return this.call<PaymentResponse>("/payments/tokens/charge", data);
+        return new PaymentWith3DSClientResponse<PaymentResponse>(
+            await this.call<PaymentResponse>("/payments/tokens/charge", data),
+        );
     }
 
     /**
      * Authorize token payment
      *
      * @param {TokenPaymentRequest} data
-     * @returns {Promise<Response<BaseResponse>>}
+     * @returns Promise<PaymentWith3DSClientResponse<PaymentResponse>>
      */
     public async authorizeTokenPayment(data: TokenPaymentRequest) {
-        return this.call<PaymentResponse>("/payments/tokens/auth", data);
+        return new PaymentWith3DSClientResponse<PaymentResponse>(
+            await this.call<PaymentResponse>("/payments/tokens/auth", data),
+        );
     }
 
     /**
      * Confirm a 3DS payment
      *
      * @param {Confirm3DSRequest} data
-     * @returns {Promise<Response<PaymentResponse>>}
+     * @returns Promise<PaymentWith3DSClientResponse<PaymentResponse>>
      */
     public async confirm3DSPayment(data: Confirm3DSRequest) {
-        return this.call<PaymentResponse>("/payments/cards/post3ds", data);
+        return new PaymentWith3DSClientResponse<PaymentResponse>(
+            await this.call<PaymentResponse>("/payments/cards/post3ds", data),
+        );
     }
 
     /**
@@ -82,7 +91,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<BaseResponse>>}
      */
     public async confirmPayment(data: ConfirmPaymentRequest) {
-        return this.call<BaseResponse>("/payments/confirm", data);
+        return new ClientResponse(await this.call<BaseResponse>("/payments/confirm", data));
     }
 
     /**
@@ -92,7 +101,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<BaseResponse>>}
      */
     public async refundPayment(data: RefundPaymentRequest) {
-        return this.call<BaseResponse>("/payments/refund", data);
+        return new ClientResponse(await this.call<BaseResponse>("/payments/refund", data));
     }
 
     /**
@@ -102,7 +111,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<BaseResponse>>}
      */
     public async voidPayment(data: VoidPaymentRequest) {
-        return this.call<BaseResponse>("/payments/void", data);
+        return new ClientResponse(await this.call<BaseResponse>("/payments/void", data));
     }
 
     /**
@@ -112,17 +121,19 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<PaymentGetResponse>>}
      */
     public async getPayment(data: BaseRequest & { TransactionId: number }) {
-        return this.call<PaymentGetResponse>("/payments/get", data);
+        return new ClientResponse(await this.call<PaymentGetResponse>("/payments/get", data));
     }
 
     /**
      * Find a payment by invoice id
      *
      * @param {{InvoiceId: string}} data
-     * @returns {Promise<Response<PaymentSuccessResponse | PaymentFailedResponse>>}
+     * @returns Promise<PaymentClientResponse<PaymentSuccessResponse | PaymentFailedResponse>>
      */
     public async findPaymentByInvoiceId(data: BaseRequest & { InvoiceId: string }) {
-        return this.call<PaymentSuccessResponse | PaymentFailedResponse>("/payments/find", data);
+        return new PaymentClientResponse<PaymentSuccessResponse | PaymentFailedResponse>(
+            await this.call<PaymentSuccessResponse | PaymentFailedResponse>("/payments/find", data),
+        );
     }
 
     /**
@@ -132,7 +143,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<PaymentHistoryResponse>>}
      */
     public async getPaymentList(data: BaseRequest & { Date: string | Date, TimeZone?: string }) {
-        return this.call<PaymentHistoryResponse>("/payments/list", data);
+        return new ClientResponse(await this.call<PaymentHistoryResponse>("/payments/list", data));
     }
 
     /**
@@ -142,7 +153,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<PaymentHistoryResponse>>}
      */
     public async getPaymentsList(data: BaseRequest & { Date: string | Date, TimeZone?: string }) {
-        return this.call<PaymentHistoryResponse>("/payments/list", data);
+        return new ClientResponse(await this.call<PaymentHistoryResponse>("/payments/list", data));
     }
 
     /**
@@ -152,46 +163,70 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<LinkPaymentModel>>}
      */
     public async createOrder(data: LinkPaymentRequest) {
-        return this.call("/orders/create", data);
-    }
-
-    public async createSubscription(data: BaseRequest & SubscriptionCreateRequest): Promise<Response<SubscriptionResponse>> {
-        return this.call<SubscriptionResponse>("/subscriptions/create", data);
-    }
-
-    public async updateSubscription(data: BaseRequest & SubscriptionUpdateRequest): Promise<Response<SubscriptionResponse>> {
-        return this.call<SubscriptionResponse>("/subscriptions/update", data);
-    }
-
-    public async cancelSubscription(data: BaseRequest & SubscriptionUpdateRequest): Promise<Response<BaseResponse>> {
-        return this.call<BaseResponse>("/subscriptions/cancel", data);
-    }
-
-    public async getSubscription(data: BaseRequest & { Id: string }): Promise<Response<SubscriptionResponse>> {
-        return this.call<SubscriptionResponse>("/subscriptions/get", data);
-    }
-
-    public async getSubscriptionsList(data: BaseRequest & { accountId: string }): Promise<Response<SubscriptionsListGetResponse>> {
-        return this.call<SubscriptionsListGetResponse>("/subscriptions/find", data);
+        return new ClientResponse(await this.call<BaseResponse>("/orders/create", data));
     }
 
     /**
-     * Charge Cryptogram payout
+     * Create Subscription
+     * @param data
+     */
+    public async createSubscription(data: BaseRequest & SubscriptionCreateRequest) {
+        return new ClientResponse(await this.call<SubscriptionResponse>("/subscriptions/create", data));
+    }
+
+    /**
+     * Update Subscription
+     * @param data
+     */
+    public async updateSubscription(data: BaseRequest & SubscriptionUpdateRequest) {
+        return new ClientResponse(await this.call<SubscriptionResponse>("/subscriptions/update", data));
+    }
+
+    /**
+     * Cancel Subscription
+     * @param data
+     */
+    public async cancelSubscription(data: BaseRequest & SubscriptionUpdateRequest) {
+        return new ClientResponse(await this.call<BaseResponse>("/subscriptions/cancel", data));
+    }
+
+    /**
+     * Get Subscription
+     * @param data
+     */
+    public async getSubscription(data: BaseRequest & { Id: string }) {
+        return new ClientResponse(await this.call<SubscriptionResponse>("/subscriptions/get", data));
+    }
+
+    /**
+     * Get Subscriptions List
+     * @param data
+     */
+    public async getSubscriptionsList(data: BaseRequest & { accountId: string }) {
+        return new ClientResponse(await this.call<SubscriptionsListGetResponse>("/subscriptions/find", data));
+    }
+
+    /**
+     * Charge Cryptogram Payout
      *
      * @param {CryptogramPayoutRequest} data
-     * @returns {Promise<Response<BaseResponse>>}
+     * @returns Promise<PayoutClientResponse<PayoutResponse>>
      */
     public async chargeCryptogramPayout(data: CryptogramPayoutRequest) {
-        return this.call<PayoutResponse>("/payments/cards/topup", data);
+        return new PayoutClientResponse<PayoutResponse>(
+            await this.call<PayoutResponse>("/payments/cards/topup", data),
+        );
     }
 
     /**
      * Charge token payout
      *
      * @param {TokenPayoutRequest} data
-     * @returns {Promise<Response<BaseResponse>>}
+     * @returns Promise<PayoutClientResponse<PayoutResponse>>
      */
     public async chargeTokenPayout(data: TokenPayoutRequest) {
-        return this.call<PayoutResponse>("/payments/token/topup ", data);
+        return new PayoutClientResponse<PayoutResponse>(
+            await this.call<PayoutResponse>("/payments/token/topup ", data),
+        );
     }
 }

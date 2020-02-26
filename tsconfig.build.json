@@ -1,10 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "sourceMap": false,
-    "lib": [
-      "es2016"
-    ],
+    "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
     "newLine": "LF",

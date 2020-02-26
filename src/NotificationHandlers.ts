@@ -1,11 +1,11 @@
-import {ClientAbstract} from "./Client/ClientAbstract";
+import {ClientAbstract} from "./Client";
 import {IncomingMessage} from "http";
 import * as qs from "qs";
 import {checkSignedString} from "./utils";
 import * as ApiTypes from "./Api/notification";
 import {parse} from "url";
 import {ok} from "assert";
-import {ResponseCodes} from "./Api/constants";
+import {ResponseCodes} from "./Api";
 
 export interface NotificationHandlerValidator<TRequest> {
     (request: TRequest): Promise<ResponseCodes>;

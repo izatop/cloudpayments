@@ -1,20 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "ES2018",
     "module": "commonjs",
+    "strict": true,
     "noEmitOnError": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "alwaysStrict": false,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
     "declaration": true,
     "sourceMap": true,
-    "lib": [
-      "es2016"
-    ],
     "newLine": "LF",
-    "noEmit": true,
-    "types": []
+    "noEmit": true
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "include": []
 }

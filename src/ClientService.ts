@@ -1,7 +1,6 @@
-import {ClientAbstract} from "./Client/ClientAbstract";
+import {ClientAbstract, ClientOptions} from "./Client";
 import {ClientApi} from "./ClientApi";
 import {ReceiptApi} from "./ReceiptApi";
-import {ClientOptions} from "./Client/ClientOptions";
 import {NotificationHandlers} from "./NotificationHandlers";
 
 export class ClientService extends ClientAbstract {
