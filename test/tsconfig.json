@@ -1,12 +1,12 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "declaration": false,
-    "sourceMap": false,
-    "rootDir": "../",
-    "newLine": "LF"
-  },
-  "include": [
-    "src"
-  ]
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "declaration": false,
+        "sourceMap": false,
+        "rootDir": "../",
+        "newLine": "LF"
+    },
+    "include": [
+        "src"
+    ]
 }

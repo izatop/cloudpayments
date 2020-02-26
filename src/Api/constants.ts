@@ -216,6 +216,7 @@ export type RecurrentStatusType = "Active"
  * Статусы подписок (рекуррент)
  * В таблице ниже представлены статусы подписок, условия применения и возможные действия.
  */
+// tslint:disable-next-line:no-namespace
 export namespace RecurrentStatus {
     /**
      * Подписка активна

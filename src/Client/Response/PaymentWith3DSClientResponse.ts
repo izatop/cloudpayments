@@ -6,6 +6,6 @@ export class PaymentWith3DSClientResponse<T extends PaymentResponse> extends Pay
 
     public isPayment3DSResponse(): this is PaymentWith3DSClientResponse<Payment3DSResponse> {
         const {Model} = this.getResponse();
-        return this.isSuccess() && this.has(["TransactionId", "PaReq", "AcsUrl"], Model);
+        return !this.isSuccess() && this.has(["TransactionId", "PaReq", "AcsUrl"], Model);
     }
 }

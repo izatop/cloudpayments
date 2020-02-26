@@ -29,8 +29,10 @@ export class ServiceRequestMock extends stream.Readable {
     }
 
     public destroy(error?: Error): void {
+        return;
     }
 
     public _read(size: number): void {
+        return;
     }
 }

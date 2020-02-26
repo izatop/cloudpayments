@@ -7,9 +7,7 @@ import {parse} from "url";
 import {ok} from "assert";
 import {ResponseCodes} from "./Api";
 
-export interface NotificationHandlerValidator<TRequest> {
-    (request: TRequest): Promise<ResponseCodes>;
-}
+export type NotificationHandlerValidator<TRequest> = (request: TRequest) => Promise<ResponseCodes>;
 
 export interface NotificationCustomPayload {
     payload: object | string;
@@ -58,12 +56,9 @@ export class NotificationHandlers extends ClientAbstract {
     protected async handle<TRequest, TResponse>(req: NotificationPayload,
                                                 validator?: NotificationHandlerValidator<TRequest>) {
         try {
-            let request: TRequest;
-            if ("payload" in req) {
-                request = await this.checkPayload<TRequest>(req);
-            } else {
-                request = await this.parseRequest<TRequest>(req);
-            }
+            const request: TRequest = "payload" in req
+                ? await this.checkPayload<TRequest>(req)
+                : await this.parseRequest<TRequest>(req);
 
             if (validator) {
                 const code = await validator(request);
@@ -101,12 +96,11 @@ export class NotificationHandlers extends ClientAbstract {
         ok("content-hmac" in req.headers, "Request headers should contain Content-HMAC field.");
 
         const signature: string = req.headers["content-hmac"] as string;
-        const method = req.method || "";
-        const request = {} as T;
+        const method = (req.method || "").toUpperCase();
 
-        ok(!!method, "Request method should not be empty");
+        ok(["GET", "POST"].includes(method), "Request method should be GET or POST");
 
-        if (method.toUpperCase() === "POST") {
+        if (method === "POST") {
             let chunksLength = 0;
             const chunks: Buffer[] = [];
             const body = await new Promise<string>((resolve, reject) => {
@@ -126,15 +120,21 @@ export class NotificationHandlers extends ClientAbstract {
 
             ok(checkSignedString(this.options.privateKey, signature, body), "Invalid signature");
             if ("content-type" in headers && headers["content-type"].indexOf("json") !== -1) {
-                Object.assign(request, JSON.parse(body));
+                return JSON.parse(body);
             } else {
-                Object.assign(request, qs.parse(body));
+                return qs.parse(body);
             }
-        } else if (method.toUpperCase() === "GET") {
-            ok(checkSignedString(this.options.privateKey, signature, parse(req.url || "").query as string), "Invalid signature");
-            Object.assign(request, parse(req.url || "", true).query);
         }
 
-        return request;
+        ok(
+            checkSignedString(
+                this.options.privateKey,
+                signature,
+                parse(req.url || "").query || ""
+            ),
+            "Invalid signature"
+        );
+
+        return parse(req.url || "", true).query as any;
     }
 }

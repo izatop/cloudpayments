@@ -63,7 +63,7 @@ export interface Payment3DSModel {
 }
 
 export interface Payment3DSResponse extends BaseResponse {
-    Success: boolean,
+    Success: false,
     Message: null,
     Model: Payment3DSModel
 }

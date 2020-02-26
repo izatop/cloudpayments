@@ -2,7 +2,9 @@ import {
     Payment3DSResponse,
     PaymentClientResponse,
     PaymentSuccessResponse,
-    PaymentWith3DSClientResponse, PayoutClientResponse, PayoutSuccessResponse
+    PaymentWith3DSClientResponse,
+    PayoutClientResponse,
+    PayoutSuccessResponse
 } from "../../src";
 import {createResponse} from "./lib/functions";
 
