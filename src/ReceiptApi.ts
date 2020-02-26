@@ -1,6 +1,6 @@
 import {ok} from "assert";
 import * as objectHash from "object-hash";
-import {ClientRequestAbstract} from "./Client";
+import {ClientRequestAbstract, ClientResponse} from "./Client";
 import {
     BaseResponse,
     CustomerReceipt,
@@ -52,6 +52,8 @@ export class ReceiptApi extends ClientRequestAbstract {
             CustomerReceipt: _receipt
         };
 
-        return await this.call<BaseResponse>("receipt", data, requestId || objectHash(receipt));
+        return new ClientResponse(
+            await this.call<BaseResponse>("receipt", data, requestId || objectHash(receipt))
+        );
     }
 }
