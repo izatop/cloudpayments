@@ -2,7 +2,7 @@ import {
     Payment3DSResponse,
     PaymentClientResponse,
     PaymentSuccessResponse,
-    PaymentWith3DSClientResponse
+    PaymentWith3DSClientResponse, PayoutClientResponse, PayoutSuccessResponse
 } from "../../src";
 import {createResponse} from "./lib/functions";
 
@@ -20,4 +20,12 @@ test("Payment with 3DS Response", () => {
     expect(response.isPayment3DSResponse()).toBe(true);
     expect(response.getResponse()).toEqual(dataSuccess);
     expect(response.getResponse().Model.AcsUrl).toBe(dataSuccess.Model.AcsUrl);
+});
+
+test("Payout Response", () => {
+    const dataSuccess = createResponse<PayoutSuccessResponse>({TransactionId: 1, AuthCode: "1"});
+    const response = new PayoutClientResponse(dataSuccess);
+    expect(response.isPayoutSuccessResponse()).toBe(true);
+    expect(response.getResponse()).toEqual(dataSuccess);
+    expect(response.getResponse().Model.TransactionId).toBe(dataSuccess.Model.TransactionId);
 });
