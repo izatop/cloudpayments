@@ -20,7 +20,7 @@ export class ClientService extends ClientAbstract {
     }
 
     public static createReceiptApi(options: ClientOptions) {
-        return new ReceiptApi(options)
+        return new ReceiptApi(options);
     }
 
     public static createNotificationHandlers(options: ClientOptions) {

@@ -1,5 +1,5 @@
 import {ClientAbstract} from "./Client";
-import {IncomingMessage} from "http";
+import {IncomingHttpHeaders, IncomingMessage} from "http";
 import * as qs from "qs";
 import {checkSignedString} from "./utils";
 import * as ApiTypes from "./Api/notification";
@@ -11,54 +11,69 @@ export type NotificationHandlerValidator<TRequest> = (request: TRequest) => Prom
 
 export interface NotificationCustomPayload {
     payload: object | string;
-    headers?: any;
+    headers?: { [key: string]: string };
     signature?: string;
 }
 
 export type NotificationPayload = NotificationCustomPayload | IncomingMessage;
 
 export class NotificationHandlers extends ClientAbstract {
-    async handleCheckRequest(req: NotificationPayload,
-                             validator?: NotificationHandlerValidator<ApiTypes.CheckNotification>) {
+    async handleCheckRequest(
+        req: NotificationPayload,
+        validator?: NotificationHandlerValidator<ApiTypes.CheckNotification>,
+    ) {
         return this.handle(req, validator);
     }
 
-    async handlePayRequest(req: NotificationPayload,
-                           validator?: NotificationHandlerValidator<ApiTypes.PayNotification>) {
+    async handlePayRequest(
+        req: NotificationPayload,
+        validator?: NotificationHandlerValidator<ApiTypes.PayNotification>,
+    ) {
         return this.handle(req, validator);
     }
 
-    async handleConfirmRequest(req: NotificationPayload,
-                               validator?: NotificationHandlerValidator<ApiTypes.ConfirmNotification>) {
+    async handleConfirmRequest(
+        req: NotificationPayload,
+        validator?: NotificationHandlerValidator<ApiTypes.ConfirmNotification>,
+    ) {
         return this.handle(req, validator);
     }
 
-    async handleFailRequest(req: NotificationPayload,
-                            validator?: NotificationHandlerValidator<ApiTypes.FailNotification>) {
+    async handleFailRequest(
+        req: NotificationPayload,
+        validator?: NotificationHandlerValidator<ApiTypes.FailNotification>,
+    ) {
         return this.handle(req, validator);
     }
 
-    async handleRefundRequest(req: NotificationPayload,
-                              validator?: NotificationHandlerValidator<ApiTypes.RefundNotification>) {
+    async handleRefundRequest(
+        req: NotificationPayload,
+        validator?: NotificationHandlerValidator<ApiTypes.RefundNotification>,
+    ) {
         return this.handle(req, validator);
     }
 
-    async handleRecurrentRequest(req: NotificationPayload,
-                                 validator?: NotificationHandlerValidator<ApiTypes.SubscriptionModel>) {
+    async handleRecurrentRequest(
+        req: NotificationPayload,
+        validator?: NotificationHandlerValidator<ApiTypes.SubscriptionModel>,
+    ) {
         return this.handle(req, validator);
     }
 
-    async handleReceiptRequest(req: NotificationPayload,
-                               validator?: NotificationHandlerValidator<ApiTypes.ReceiptNotification<any>>) {
+    async handleReceiptRequest(
+        req: NotificationPayload,
+        validator?: NotificationHandlerValidator<ApiTypes.ReceiptNotification<any>>,
+    ) {
         return this.handle(req, validator);
     }
 
-    protected async handle<TRequest, TResponse>(req: NotificationPayload,
-                                                validator?: NotificationHandlerValidator<TRequest>) {
+    protected async handle<TRequest, TResponse>(
+        req: NotificationPayload,
+        validator?: NotificationHandlerValidator<TRequest>,
+    ) {
         try {
-            const request: TRequest = "payload" in req
-                ? await this.checkPayload<TRequest>(req)
-                : await this.parseRequest<TRequest>(req);
+            const request: TRequest =
+                "payload" in req ? await this.checkPayload<TRequest>(req) : await this.parseRequest<TRequest>(req);
 
             if (validator) {
                 const code = await validator(request);
@@ -84,10 +99,7 @@ export class NotificationHandlers extends ClientAbstract {
 
         const payload = typeof req.payload === "string" ? req.payload : JSON.stringify(req.payload);
         ok(signature, "Custom payload should provide signature or header key.");
-        ok(
-            checkSignedString(this.options.privateKey, signature, payload),
-            "Invalid signature"
-        );
+        ok(checkSignedString(this.options.privateKey, signature, payload), "Invalid signature");
 
         return req.payload as T;
     }
@@ -108,18 +120,14 @@ export class NotificationHandlers extends ClientAbstract {
                     chunks.push(chunk);
                     chunksLength += chunk.length;
                 });
-                req.on("end", () => resolve(
-                    Buffer
-                        .concat(chunks, chunksLength)
-                        .toString("utf-8")
-                ));
+                req.on("end", () => resolve(Buffer.concat(chunks, chunksLength).toString("utf-8")));
                 req.on("error", reject);
             });
 
-            const headers: any = req.headers || {};
+            const headers: { [key: string]: string } | IncomingHttpHeaders = req.headers || {};
 
             ok(checkSignedString(this.options.privateKey, signature, body), "Invalid signature");
-            if ("content-type" in headers && headers["content-type"].indexOf("json") !== -1) {
+            if (typeof headers["content-type"] === "string" && headers["content-type"].indexOf("json") !== -1) {
                 return JSON.parse(body);
             } else {
                 return qs.parse(body);
@@ -127,14 +135,10 @@ export class NotificationHandlers extends ClientAbstract {
         }
 
         ok(
-            checkSignedString(
-                this.options.privateKey,
-                signature,
-                parse(req.url || "").query || ""
-            ),
-            "Invalid signature"
+            checkSignedString(this.options.privateKey, signature, parse(req.url || "").query || ""),
+            "Invalid signature",
         );
 
-        return parse(req.url || "", true).query as any;
+        return parse(req.url || "", true).query as T;
     }
 }

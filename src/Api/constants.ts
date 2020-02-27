@@ -149,15 +149,10 @@ export const ErrorCodesTranscript = {
     [ErrorCodes.UnableToProcess]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
     [ErrorCodes.AuthenticationFailed]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
     [ErrorCodes.AuthenticationUnavailable]: "Свяжитесь с вашим банком или воспользуйтесь другой картой",
-    [ErrorCodes.AntiFraud]: "Воспользуйтесь другой картой"
+    [ErrorCodes.AntiFraud]: "Воспользуйтесь другой картой",
 };
 
-export type TransactionStatusType = "AwaitingAuthentication"
-    | "Authorized"
-    | "Completed"
-    | "Cancelled"
-    | "Declined"
-    ;
+export type TransactionStatusType = "AwaitingAuthentication" | "Authorized" | "Completed" | "Cancelled" | "Declined";
 
 /**
  * Статусы операций
@@ -205,19 +200,13 @@ export enum TransactionStatus {
     Declined = "Declined"
 }
 
-export type RecurrentStatusType = "Active"
-    | "PastDue"
-    | "Cancelled"
-    | "Rejected"
-    | "Expired"
-    ;
+export type RecurrentStatusType = "Active" | "PastDue" | "Cancelled" | "Rejected" | "Expired";
 
 /**
  * Статусы подписок (рекуррент)
  * В таблице ниже представлены статусы подписок, условия применения и возможные действия.
  */
-// tslint:disable-next-line:no-namespace
-export namespace RecurrentStatus {
+export enum RecurrentStatus {
     /**
      * Подписка активна
      *
@@ -225,7 +214,7 @@ export namespace RecurrentStatus {
      *
      * Отмена
      */
-    export const Active = "Active";
+    Active = "Active",
 
     /**
      * Просрочена
@@ -234,34 +223,35 @@ export namespace RecurrentStatus {
      *
      * Отмена
      */
-    export const PastDue = "PastDue";
+    PastDue = "PastDue",
 
     /**
      * Отменена
      *
      * В случае отмены по запросу
      */
-    export const Cancelled = "Cancelled";
+    Cancelled = "Cancelled",
 
     /**
      * Отклонена
      *
      * В случае трех неудачных попыток оплаты, идущих подряд
      */
-    export const Rejected = "Rejected";
+    Rejected = "Rejected",
 
     /**
      * Завершена
      *
      * В случае завершения максимального количества периодов (если были указаны)
      */
-    export const Expired = "Expired";
+    Expired = "Expired",
 }
 
 /**
  * Типы онлайн-чеков
  *
- * В таблице ниже представлены типы чеков и соответствующие им признаки расчета, которые используются для выдачи кассовых чеков.
+ * В таблице ниже представлены типы чеков и соответствующие им признаки расчета, которые используются для выдачи
+ * кассовых чеков.
  */
 export enum ReceiptTypes {
     /**
@@ -300,12 +290,12 @@ export enum ReceiptTypes {
  * которые используются при формировании кассовых чеков.
  */
 export enum TaxationSystem {
-    GENERAL = 0,	// Общая система налогообложения
-    SIMPLIFIED_INCOME = 1,	// Упрощенная система налогообложения (Доход)
-    SIMPLIFIED_INCOME_CONSUMPTION = 2,	// Упрощенная система налогообложения (Доход минус Расход)
-    UNIFIED_IMPUTED_INCOME = 3,	// Единый налог на вмененный доход
-    UNIFIED_AGRICULTURAL = 4,	// Единый сельскохозяйственный налог
-    PATENT = 5,	// Патентная система налогообложения
+    GENERAL = 0, // Общая система налогообложения
+    SIMPLIFIED_INCOME = 1, // Упрощенная система налогообложения (Доход)
+    SIMPLIFIED_INCOME_CONSUMPTION = 2, // Упрощенная система налогообложения (Доход минус Расход)
+    UNIFIED_IMPUTED_INCOME = 3, // Единый налог на вмененный доход
+    UNIFIED_AGRICULTURAL = 4, // Единый сельскохозяйственный налог
+    PATENT = 5 // Патентная система налогообложения
 }
 
 export type TaxationSystemType = TaxationSystem;
@@ -336,7 +326,7 @@ export enum VAT {
     VAT110 = 110,
     VAT118 = 118,
     VAT20 = 20,
-    VAT120 = 120,
+    VAT120 = 120
 }
 
 export type VATType = null | VAT;
@@ -377,7 +367,8 @@ export enum ResponseCodes {
 /**
  * Currencies
  */
-export type ValidCurrency = "RUB"
+export type ValidCurrency =
+    | "RUB"
     | "EUR"
     | "USD"
     | "GBP"
@@ -392,32 +383,7 @@ export type ValidCurrency = "RUB"
     | "SEK"
     | "TRY"
     | "CNY"
-    | "INR"
-    ;
-
-export function validateCurrency(value: any) {
-    switch (value) {
-        case "RUB":
-        case "EUR":
-        case "USD":
-        case "GBP":
-        case "UAH":
-        case "BYR":
-        case "BYN":
-        case "AZN":
-        case "CHF":
-        case "CZK":
-        case "CAD":
-        case "PLN":
-        case "SEK":
-        case "TRY":
-        case "CNY":
-            return true;
-
-        default:
-            return false;
-    }
-}
+    | "INR";
 
 export const CurrencyList = Object.freeze({
     RUB: "RUB",
@@ -435,5 +401,7 @@ export const CurrencyList = Object.freeze({
     SEK: "SEK",
     TRY: "TRY",
     CNY: "CNY",
-    INR: "INR"
+    INR: "INR",
 });
+
+export const validateCurrency = (value: string): boolean => Reflect.has(CurrencyList, value);

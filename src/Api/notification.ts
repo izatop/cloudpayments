@@ -5,31 +5,31 @@ export interface CustomDataNotification {
 }
 
 export interface AccountRequest {
-    AccountId?: string,
-    Email?: string
+    AccountId?: string;
+    Email?: string;
 }
 
 export interface TransactionNotification extends AccountRequest, CustomDataNotification {
-    TransactionId: number,
-    Amount: number,
-    Currency: ValidCurrency,
-    DateTime: string,
-    CardFirstSix: string,
-    CardLastFour: string,
-    CardType: string,
-    CardExpDate: string,
-    TestMode: 1 | 0,
-    InvoiceId?: string,
-    SubscriptionId?: string,
-    Name?: string,
-    IpAddress?: string,
-    IpCountry?: string,
-    IpCity?: string,
-    IpRegion?: string,
-    IpDistrict?: string,
-    Issuer?: string,
-    IssuerBankCountry?: string,
-    Description?: string
+    TransactionId: number;
+    Amount: number;
+    Currency: ValidCurrency;
+    DateTime: string;
+    CardFirstSix: string;
+    CardLastFour: string;
+    CardType: string;
+    CardExpDate: string;
+    TestMode: 1 | 0;
+    InvoiceId?: string;
+    SubscriptionId?: string;
+    Name?: string;
+    IpAddress?: string;
+    IpCountry?: string;
+    IpCity?: string;
+    IpRegion?: string;
+    IpDistrict?: string;
+    Issuer?: string;
+    IssuerBankCountry?: string;
+    Description?: string;
 }
 
 /**
@@ -40,7 +40,7 @@ export interface TransactionNotification extends AccountRequest, CustomDataNotif
  * информацией об оплате, а сайт должен подтвердить или отклонить возможность принять платеж.
  */
 export interface CheckNotification extends TransactionNotification {
-    Status: TransactionStatus
+    Status: TransactionStatus;
 }
 
 /**
@@ -50,8 +50,8 @@ export interface CheckNotification extends TransactionNotification {
  * на адрес ТСП с информацией об оплате, а сайт должен зафиксировать факт платежа.
  */
 export interface PayNotification extends TransactionNotification {
-    Status: TransactionStatus.Authorized | TransactionStatus.Completed,
-    Token?: string
+    Status: TransactionStatus.Authorized | TransactionStatus.Completed;
+    Token?: string;
 }
 
 /**
@@ -61,8 +61,8 @@ export interface PayNotification extends TransactionNotification {
  * на адрес ТСП с информацией об оплате, а сайт должен зафиксировать факт платежа.
  */
 export interface ConfirmNotification extends TransactionNotification {
-    Status: TransactionStatus.Completed,
-    Token?: string
+    Status: TransactionStatus.Completed;
+    Token?: string;
 }
 
 /**
@@ -75,8 +75,8 @@ export interface ConfirmNotification extends TransactionNotification {
  * может оплатить со второго раза.
  */
 export interface FailNotification extends TransactionNotification {
-    Reason: string,
-    ReasonCode: number
+    Reason: string;
+    ReasonCode: number;
 }
 
 /**
@@ -86,11 +86,11 @@ export interface FailNotification extends TransactionNotification {
  * по вашей инициативе через API или личный кабинет.
  */
 export interface RefundNotification extends AccountRequest, CustomDataNotification {
-    TransactionId: number,
-    PaymentTransactionId: number,
-    Amount: number,
-    DateTime: string,
-    InvoiceId?: string,
+    TransactionId: number;
+    PaymentTransactionId: number;
+    Amount: number;
+    DateTime: string;
+    InvoiceId?: string;
 }
 
 /**
@@ -99,20 +99,20 @@ export interface RefundNotification extends AccountRequest, CustomDataNotificati
  * Выполняется в случае, если статус подписки на рекуррентный платеж был изменен.
  */
 export interface RecurrentNotification extends AccountRequest {
-    Id: number,
-    Description: string,
-    Amount: number,
-    Currency: ValidCurrency,
-    RequireConfirmation: boolean,
-    StartDate: string,
-    Interval: string,
-    Period: number,
-    Status: RecurrentStatusType,
-    SuccessfulTransactionsNumber: number,
-    FailedTransactionsNumber: number,
-    MaxPeriods?: number,
-    LastTransactionDate?: string,
-    NextTransactionDate?: string
+    Id: number;
+    Description: string;
+    Amount: number;
+    Currency: ValidCurrency;
+    RequireConfirmation: boolean;
+    StartDate: string;
+    Interval: string;
+    Period: number;
+    Status: RecurrentStatusType;
+    SuccessfulTransactionsNumber: number;
+    FailedTransactionsNumber: number;
+    MaxPeriods?: number;
+    LastTransactionDate?: string;
+    NextTransactionDate?: string;
 }
 
 /**
@@ -121,14 +121,14 @@ export interface RecurrentNotification extends AccountRequest {
  * Выполняется в случае, если статус подписки на рекуррентный платеж был изменен.
  */
 export interface SubscriptionBase extends AccountRequest {
-    Description: string,
-    Amount: number,
-    Currency: ValidCurrency,
-    RequireConfirmation: boolean,
-    StartDate: string,
-    Interval: string,
-    Period: number,
-    MaxPeriods?: number,
+    Description: string;
+    Amount: number;
+    Currency: ValidCurrency;
+    RequireConfirmation: boolean;
+    StartDate: string;
+    Interval: string;
+    Period: number;
+    MaxPeriods?: number;
 }
 
 export interface SubscriptionCreateRequest extends SubscriptionBase {
@@ -140,18 +140,18 @@ export interface SubscriptionUpdateRequest extends Partial<SubscriptionBase> {
 }
 
 export interface SubscriptionModel extends SubscriptionBase {
-    Id: string,
-    CurrencyCode: number,
-    StartDateIso: string,
-    IntervalCode: number,
-    StatusCode: number,
-    Status: RecurrentStatusType,
-    SuccessfulTransactionsNumber: number,
-    FailedTransactionsNumber: number,
-    LastTransactionDate?: string,
-    LastTransactionDateIso?: string,
-    NextTransactionDate?: string
-    NextTransactionDateIso?: string
+    Id: string;
+    CurrencyCode: number;
+    StartDateIso: string;
+    IntervalCode: number;
+    StatusCode: number;
+    Status: RecurrentStatusType;
+    SuccessfulTransactionsNumber: number;
+    FailedTransactionsNumber: number;
+    LastTransactionDate?: string;
+    LastTransactionDateIso?: string;
+    NextTransactionDate?: string;
+    NextTransactionDateIso?: string;
 }
 
 /**
@@ -162,20 +162,20 @@ export interface SubscriptionModel extends SubscriptionBase {
  * запрос на адрес ТСП с информацией о чеке, а сайт должен зафиксировать информацию.
  */
 export interface ReceiptNotification<TReceipt> {
-    DocumentNumber: number,
-    SessionNumber: number,
-    FiscalSign: string,
-    DeviceNumber: number,
-    RegNumber: string,
-    Inn: number,
-    Type: ReceiptTypes,
-    Ofd: string,
-    Url: string,
-    QrCodeUrl: string,
-    Amount: number,
-    DateTime: string,
-    Receipt: TReceipt,
-    TransactionId?: number,
-    InvoiceId?: string,
-    AccountId?: string
+    DocumentNumber: number;
+    SessionNumber: number;
+    FiscalSign: string;
+    DeviceNumber: number;
+    RegNumber: string;
+    Inn: number;
+    Type: ReceiptTypes;
+    Ofd: string;
+    Url: string;
+    QrCodeUrl: string;
+    Amount: number;
+    DateTime: string;
+    Receipt: TReceipt;
+    TransactionId?: number;
+    InvoiceId?: string;
+    AccountId?: string;
 }

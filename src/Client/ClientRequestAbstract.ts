@@ -10,7 +10,7 @@ export class ClientRequestAbstract extends ClientAbstract {
      *
      * @returns {(url: (string | Request), init?: RequestInit) => Promise<Response>}
      */
-    public get client() {
+    public get client(): typeof fetch {
         return fetch;
     }
 
@@ -18,14 +18,11 @@ export class ClientRequestAbstract extends ClientAbstract {
      *
      */
     public async ping(): Promise<ClientResponse<BaseResponse>> {
-        const response = await this.client(
-            this.getEndpoint().concat(join("/test")),
-            {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({})
-            }
-        );
+        const response = await this.client(this.getEndpoint().concat(join("/test")), {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({}),
+        });
 
         return new ClientResponse(await response.json());
     }
@@ -38,28 +35,26 @@ export class ClientRequestAbstract extends ClientAbstract {
      * @param {string} requestId
      * @returns {Promise<ClientResponse<BaseResponse>>}
      */
-    protected async call<R extends BaseResponse>(url: string, data?: object, requestId?: string) {
-        const authorization = Buffer.from(`${this.options.publicId}:${this.options.privateKey}`, "utf-8")
-            .toString("base64");
+    protected async call<R extends BaseResponse>(url: string, data?: object, requestId?: string): Promise<R> {
+        const authorization = Buffer.from(`${this.options.publicId}:${this.options.privateKey}`, "utf-8").toString(
+            "base64",
+        );
 
-        const headers: any = {
+        const headers: { [key: string]: string } = {
             "Content-Type": "application/json",
-            "Authorization": `Basic ${authorization}`
+            Authorization: `Basic ${authorization}`,
         };
 
         if (requestId) {
             headers["X-Request-ID"] = requestId;
         }
 
-        const response = await this.client(
-            this.getEndpoint().concat(join("/", url)),
-            {
-                headers,
-                method: "POST",
-                body: data ? JSON.stringify(data) : undefined
-            }
-        );
+        const response = await this.client(this.getEndpoint().concat(join("/", url)), {
+            headers,
+            method: "POST",
+            body: data ? JSON.stringify(data) : undefined,
+        });
 
-        return await response.json() as R;
+        return await response.json();
     }
 }

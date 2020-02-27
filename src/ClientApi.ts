@@ -3,7 +3,7 @@ import {
     ClientResponse,
     PaymentClientResponse,
     PaymentWith3DSClientResponse,
-    PayoutClientResponse
+    PayoutClientResponse,
 } from "./Client";
 import {
     BaseRequest,
@@ -26,7 +26,7 @@ import {
     SubscriptionUpdateRequest,
     TokenPaymentRequest,
     TokenPayoutRequest,
-    VoidPaymentRequest
+    VoidPaymentRequest,
 } from "./Api";
 
 export class ClientApi extends ClientRequestAbstract {
@@ -142,7 +142,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @param {{Date: string | Date, TimeZone: string}} data
      * @returns {Promise<Response<PaymentHistoryResponse>>}
      */
-    public async getPaymentList(data: BaseRequest & { Date: string | Date, TimeZone?: string }) {
+    public async getPaymentList(data: BaseRequest & { Date: string | Date; TimeZone?: string }) {
         return new ClientResponse(await this.call<PaymentHistoryResponse>("/payments/list", data));
     }
 
@@ -152,7 +152,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @param {{Date: string | Date, TimeZone: string}} data
      * @returns {Promise<Response<PaymentHistoryResponse>>}
      */
-    public async getPaymentsList(data: BaseRequest & { Date: string | Date, TimeZone?: string }) {
+    public async getPaymentsList(data: BaseRequest & { Date: string | Date; TimeZone?: string }) {
         return new ClientResponse(await this.call<PaymentHistoryResponse>("/payments/list", data));
     }
 
@@ -213,9 +213,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns Promise<PayoutClientResponse<PayoutResponse>>
      */
     public async chargeCryptogramPayout(data: CryptogramPayoutRequest) {
-        return new PayoutClientResponse<PayoutResponse>(
-            await this.call<PayoutResponse>("/payments/cards/topup", data),
-        );
+        return new PayoutClientResponse<PayoutResponse>(await this.call<PayoutResponse>("/payments/cards/topup", data));
     }
 
     /**

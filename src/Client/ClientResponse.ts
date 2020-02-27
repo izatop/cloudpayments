@@ -7,25 +7,25 @@ export class ClientResponse<T extends BaseResponse> {
         this.response = response;
     }
 
-    public getResponse() {
+    public getResponse(): T {
         return this.response;
     }
 
-    public isSuccess() {
+    public isSuccess(): boolean {
         return this.response.Success;
     }
 
-    public getMessage() {
+    public getMessage(): string | null {
         return this.response.Message;
     }
 
-    protected has(key: string | string[], object: object | null) {
+    protected has(key: string | string[], object: object | null): boolean {
         if (typeof object !== "object" || object === null) {
             return false;
         }
 
         if (Array.isArray(key)) {
-            return key.every((k) => Reflect.has(object, k));
+            return key.every(k => Reflect.has(object, k));
         }
 
         return Reflect.has(object, key);

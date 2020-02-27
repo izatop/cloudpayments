@@ -7,7 +7,7 @@ import {
     ReceiptApiRequest,
     ReceiptRequest,
     validateTaxationSystem,
-    validateVAT
+    validateVAT,
 } from "./Api";
 
 export class ReceiptApi extends ClientRequestAbstract {
@@ -42,18 +42,13 @@ export class ReceiptApi extends ClientRequestAbstract {
         ok(validateTaxationSystem(_receipt.taxationSystem), "A receipt field taxationSystem should be valid");
         ok(_receipt.Items && _receipt.Items.length > 0, "A receipt field Items should be filled");
 
-        ok(
-            _receipt.Items.filter(x => !validateVAT(x.vat)).length === 0,
-            "You should fill VAT with valid values"
-        );
+        ok(_receipt.Items.filter(x => !validateVAT(x.vat)).length === 0, "You should fill VAT with valid values");
 
         const data: ReceiptApiRequest = {
             ..._request,
-            CustomerReceipt: _receipt
+            CustomerReceipt: _receipt,
         };
 
-        return new ClientResponse(
-            await this.call<BaseResponse>("receipt", data, requestId || objectHash(receipt))
-        );
+        return new ClientResponse(await this.call<BaseResponse>("receipt", data, requestId || objectHash(receipt)));
     }
 }

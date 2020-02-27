@@ -4,10 +4,13 @@ export class ClientAbstract {
     protected options: ClientOptions & { endpoint: string };
 
     constructor(_options: ClientOptions) {
-        this.options = {endpoint: "https://api.cloudpayments.ru", ..._options};
+        this.options = {
+            endpoint: "https://api.cloudpayments.ru",
+            ..._options,
+        };
     }
 
-    public getPublicId() {
+    public getPublicId(): string {
         return this.options.publicId;
     }
 

@@ -11,7 +11,7 @@ export class ServiceRequestMock extends stream.Readable {
     constructor(privateKey: string, raw: string) {
         super();
         this.headers = {
-            "content-hmac": signString(privateKey, raw)
+            "content-hmac": signString(privateKey, raw),
         };
 
         this.method = "POST";
@@ -20,7 +20,9 @@ export class ServiceRequestMock extends stream.Readable {
     }
 
     public static create(privateKey: string, raw: string) {
-        return new this(privateKey, raw) as any as IncomingMessage & { writeRequest(): void };
+        return (new this(privateKey, raw) as any) as IncomingMessage & {
+            writeRequest(): void;
+        };
     }
 
     public writeRequest() {
@@ -28,11 +30,11 @@ export class ServiceRequestMock extends stream.Readable {
         this.emit("end");
     }
 
-    public destroy(error?: Error): void {
+    public destroy(): void {
         return;
     }
 
-    public _read(size: number): void {
+    public _read(): void {
         return;
     }
 }

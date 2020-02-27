@@ -6,7 +6,6 @@ export const options = {
     privateKey: "private key",
     org: {
         inn: 12345678,
-        taxationSystem: TaxationSystem.GENERAL
-    }
+        taxationSystem: TaxationSystem.GENERAL,
+    },
 };
-

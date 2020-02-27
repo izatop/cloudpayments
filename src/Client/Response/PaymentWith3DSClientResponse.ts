@@ -2,7 +2,8 @@ import {Payment3DSResponse, PaymentResponse, PaymentSuccessResponse} from "../..
 import {PaymentClientResponse} from "./PaymentClientResponse";
 
 export class PaymentWith3DSClientResponse<T extends PaymentResponse> extends PaymentClientResponse<T> {
-    declare public readonly isPaymentSuccessResponse: () => this is PaymentWith3DSClientResponse<PaymentSuccessResponse>;
+    public declare readonly isPaymentSuccessResponse: () =>
+        this is PaymentWith3DSClientResponse<PaymentSuccessResponse>;
 
     public isPayment3DSResponse(): this is PaymentWith3DSClientResponse<Payment3DSResponse> {
         const {Model} = this.getResponse();

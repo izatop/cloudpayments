@@ -4,12 +4,15 @@ import {
     PaymentSuccessResponse,
     PaymentWith3DSClientResponse,
     PayoutClientResponse,
-    PayoutSuccessResponse
+    PayoutSuccessResponse,
 } from "../../src";
 import {createResponse} from "./lib/functions";
 
 test("Payment Response", () => {
-    const dataPaymentSuccess = createResponse<PaymentSuccessResponse>({TransactionId: 1, AuthCode: "1"});
+    const dataPaymentSuccess = createResponse<PaymentSuccessResponse>({
+        TransactionId: 1,
+        AuthCode: "1",
+    });
     const response = new PaymentClientResponse(dataPaymentSuccess);
     expect(response.isPaymentSuccessResponse()).toBe(true);
     expect(response.getResponse()).toEqual(dataPaymentSuccess);
@@ -17,7 +20,15 @@ test("Payment Response", () => {
 });
 
 test("Payment with 3DS Response", () => {
-    const dataSuccess = createResponse<Payment3DSResponse>({TransactionId: 1, PaReq: "PaReq", AcsUrl: "AcsUrl"});
+    const dataSuccess = createResponse<Payment3DSResponse>(
+        {
+            TransactionId: 1,
+            PaReq: "PaReq",
+            AcsUrl: "AcsUrl",
+        },
+        false,
+    );
+
     const response = new PaymentWith3DSClientResponse(dataSuccess);
     expect(response.isPayment3DSResponse()).toBe(true);
     expect(response.getResponse()).toEqual(dataSuccess);
@@ -25,7 +36,11 @@ test("Payment with 3DS Response", () => {
 });
 
 test("Payout Response", () => {
-    const dataSuccess = createResponse<PayoutSuccessResponse>({TransactionId: 1, AuthCode: "1"});
+    const dataSuccess = createResponse<PayoutSuccessResponse>({
+        TransactionId: 1,
+        AuthCode: "1",
+    });
+
     const response = new PayoutClientResponse(dataSuccess);
     expect(response.isPayoutSuccessResponse()).toBe(true);
     expect(response.getResponse()).toEqual(dataSuccess);
