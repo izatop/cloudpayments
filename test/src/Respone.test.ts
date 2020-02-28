@@ -1,6 +1,7 @@
 import {
     Payment3DSResponse,
-    PaymentClientResponse, PaymentFailedResponse,
+    PaymentClientResponse,
+    PaymentFailedResponse,
     PaymentSuccessResponse,
     PaymentWith3DSClientResponse,
     PayoutClientResponse,
