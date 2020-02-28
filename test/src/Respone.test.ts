@@ -1,6 +1,6 @@
 import {
     Payment3DSResponse,
-    PaymentClientResponse,
+    PaymentClientResponse, PaymentFailedResponse,
     PaymentSuccessResponse,
     PaymentWith3DSClientResponse,
     PayoutClientResponse,
@@ -45,4 +45,12 @@ test("Payout Response", () => {
     expect(response.isPayoutSuccessResponse()).toBe(true);
     expect(response.getResponse()).toEqual(dataSuccess);
     expect(response.getResponse().Model.TransactionId).toBe(dataSuccess.Model.TransactionId);
+});
+
+test("Payment Fail", () => {
+    const data = createResponse<PaymentFailedResponse>({Reason: "Error"}, false);
+    const response = new PaymentWith3DSClientResponse(data);
+
+    expect(response.isSuccess()).toBe(false);
+    expect(response.getResponse().Model.Reason).toBe("Error");
 });

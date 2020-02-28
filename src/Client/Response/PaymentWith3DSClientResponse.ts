@@ -1,7 +1,8 @@
-import {Payment3DSResponse, PaymentResponse, PaymentSuccessResponse} from "../../Api";
+import {Payment3DSResponse, PaymentSuccessResponse, PaymentWith3DSResponse} from "../../Api";
 import {PaymentClientResponse} from "./PaymentClientResponse";
 
-export class PaymentWith3DSClientResponse<T extends PaymentResponse> extends PaymentClientResponse<T> {
+export class PaymentWith3DSClientResponse<T extends PaymentWith3DSResponse>
+    extends PaymentClientResponse<T> {
     public declare readonly isPaymentSuccessResponse: () =>
         this is PaymentWith3DSClientResponse<PaymentSuccessResponse>;
 

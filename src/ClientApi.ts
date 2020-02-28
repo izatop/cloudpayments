@@ -13,11 +13,10 @@ import {
     CryptogramPaymentRequest,
     CryptogramPayoutRequest,
     LinkPaymentRequest,
-    PaymentFailedResponse,
     PaymentGetResponse,
     PaymentHistoryResponse,
     PaymentResponse,
-    PaymentSuccessResponse,
+    PaymentWith3DSResponse,
     PayoutResponse,
     RefundPaymentRequest,
     SubscriptionCreateRequest,
@@ -30,9 +29,15 @@ import {
 } from "./Api";
 
 export class ClientApi extends ClientRequestAbstract {
+    /**
+     * Charge cryptogram payment
+     *
+     * @param {CryptogramPaymentRequest} data
+     * @returns {Promise<PaymentWith3DSClientResponse<PaymentWith3DSResponse>>}
+     */
     public async chargeCryptogramPayment(data: CryptogramPaymentRequest) {
-        return new PaymentWith3DSClientResponse<PaymentResponse>(
-            await this.call<PaymentResponse>("/payments/cards/charge", data),
+        return new PaymentWith3DSClientResponse(
+            await this.call<PaymentWith3DSResponse>("/payments/cards/charge", data),
         );
     }
 
@@ -40,11 +45,11 @@ export class ClientApi extends ClientRequestAbstract {
      * Authorize cryptogram payment
      *
      * @param {CryptogramPaymentRequest} data
-     * @returns {Promise<PaymentWith3DSClientResponse<PaymentResponse>>}
+     * @returns {Promise<PaymentWith3DSClientResponse<PaymentWith3DSResponse>>}
      */
     public async authorizeCryptogramPayment(data: CryptogramPaymentRequest) {
-        return new PaymentWith3DSClientResponse<PaymentResponse>(
-            await this.call<PaymentResponse>("/payments/cards/auth", data),
+        return new PaymentWith3DSClientResponse(
+            await this.call<PaymentWith3DSResponse>("/payments/cards/auth", data),
         );
     }
 
@@ -52,10 +57,10 @@ export class ClientApi extends ClientRequestAbstract {
      * Charge token payment
      *
      * @param {TokenPaymentRequest} data
-     * @returns {Promise<PaymentWith3DSClientResponse<PaymentResponse>>}
+     * @returns {Promise<PaymentClientResponse<PaymentResponse>>}
      */
     public async chargeTokenPayment(data: TokenPaymentRequest) {
-        return new PaymentWith3DSClientResponse<PaymentResponse>(
+        return new PaymentClientResponse(
             await this.call<PaymentResponse>("/payments/tokens/charge", data),
         );
     }
@@ -64,10 +69,10 @@ export class ClientApi extends ClientRequestAbstract {
      * Authorize token payment
      *
      * @param {TokenPaymentRequest} data
-     * @returns Promise<PaymentWith3DSClientResponse<PaymentResponse>>
+     * @returns Promise<PaymentClientResponse<PaymentResponse>>
      */
     public async authorizeTokenPayment(data: TokenPaymentRequest) {
-        return new PaymentWith3DSClientResponse<PaymentResponse>(
+        return new PaymentClientResponse<PaymentResponse>(
             await this.call<PaymentResponse>("/payments/tokens/auth", data),
         );
     }
@@ -76,10 +81,10 @@ export class ClientApi extends ClientRequestAbstract {
      * Confirm a 3DS payment
      *
      * @param {Confirm3DSRequest} data
-     * @returns Promise<PaymentWith3DSClientResponse<PaymentResponse>>
+     * @returns Promise<PaymentClientResponse<PaymentResponse>>
      */
     public async confirm3DSPayment(data: Confirm3DSRequest) {
-        return new PaymentWith3DSClientResponse<PaymentResponse>(
+        return new PaymentClientResponse<PaymentResponse>(
             await this.call<PaymentResponse>("/payments/cards/post3ds", data),
         );
     }
@@ -128,11 +133,11 @@ export class ClientApi extends ClientRequestAbstract {
      * Find a payment by invoice id
      *
      * @param {{InvoiceId: string}} data
-     * @returns Promise<PaymentClientResponse<PaymentSuccessResponse | PaymentFailedResponse>>
+     * @returns Promise<PaymentClientResponse<PaymentResponse>>
      */
     public async findPaymentByInvoiceId(data: BaseRequest & { InvoiceId: string }) {
-        return new PaymentClientResponse<PaymentSuccessResponse | PaymentFailedResponse>(
-            await this.call<PaymentSuccessResponse | PaymentFailedResponse>("/payments/find", data),
+        return new PaymentClientResponse<PaymentResponse>(
+            await this.call<PaymentResponse>("/payments/find", data),
         );
     }
 

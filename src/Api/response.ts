@@ -50,12 +50,6 @@ export interface PaymentSuccessModel extends PaymentModel {
     Token: string;
 }
 
-export interface PaymentFailedResponse extends BaseResponse {
-    Message: string;
-    Success: boolean;
-    Model: PaymentFailedModel;
-}
-
 export interface Payment3DSModel {
     TransactionId: number;
     PaReq: string;
@@ -69,13 +63,19 @@ export interface Payment3DSResponse extends BaseResponse {
 }
 
 export interface PaymentSuccessResponse extends BaseResponse {
-    Success: boolean;
+    Success: true;
     Message: null;
     Model: PaymentSuccessModel;
 }
 
-export type PaymentFailedModel = PaymentModel;
-export type PaymentResponse = PaymentSuccessResponse | PaymentFailedResponse | Payment3DSResponse;
+export interface PaymentFailedResponse extends BaseResponse {
+    Message: string;
+    Success: false;
+    Model: PaymentModel;
+}
+
+export type PaymentResponse = PaymentFailedResponse | PaymentSuccessResponse;
+export type PaymentWith3DSResponse = PaymentFailedResponse | PaymentSuccessResponse | Payment3DSResponse;
 
 export type HistoryPaymentModel = PaymentModel | PaymentSuccessModel;
 
