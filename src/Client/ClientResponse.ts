@@ -19,7 +19,7 @@ export class ClientResponse<T extends BaseResponse> {
         return this.response.Message;
     }
 
-    protected has(key: string | string[], object: object | null): boolean {
+    protected static has(key: string | string[], object: object | null): boolean {
         if (typeof object !== "object" || object === null) {
             return false;
         }

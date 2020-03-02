@@ -82,7 +82,7 @@ export type HistoryPaymentModel = PaymentModel | PaymentSuccessModel;
 export type PaymentGetResponse = {
     Success: boolean;
     Message: null;
-    Model: HistoryPaymentModel[];
+    Model: HistoryPaymentModel;
 };
 
 export type PaymentHistoryResponse = {

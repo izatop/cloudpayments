@@ -2,6 +2,7 @@ import {
     ClientRequestAbstract,
     ClientResponse,
     PaymentClientResponse,
+    PaymentHistoryClientResponse,
     PaymentWith3DSClientResponse,
     PayoutClientResponse,
 } from "./Client";
@@ -148,7 +149,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<PaymentHistoryResponse>>}
      */
     public async getPaymentList(data: BaseRequest & { Date: string | Date; TimeZone?: string }) {
-        return new ClientResponse(await this.call<PaymentHistoryResponse>("/payments/list", data));
+        return new PaymentHistoryClientResponse(await this.call<PaymentHistoryResponse>("/payments/list", data));
     }
 
     /**
@@ -158,7 +159,7 @@ export class ClientApi extends ClientRequestAbstract {
      * @returns {Promise<Response<PaymentHistoryResponse>>}
      */
     public async getPaymentsList(data: BaseRequest & { Date: string | Date; TimeZone?: string }) {
-        return new ClientResponse(await this.call<PaymentHistoryResponse>("/payments/list", data));
+        return new PaymentHistoryClientResponse(await this.call<PaymentHistoryResponse>("/payments/list", data));
     }
 
     /**
