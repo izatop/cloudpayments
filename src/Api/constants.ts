@@ -359,7 +359,8 @@ export function validateVAT(value: any) {
 export enum ResponseCodes {
     SUCCESS = 0,
     UNKNOWN_INVOICE_ID = 10,
-    INVALID_AMOUNT = 11,
+    INVALID_ACCOUNT_ID = 11,
+    INVALID_AMOUNT = 12,
     REJECTED = 13,
     EXPIRED = 20
 }

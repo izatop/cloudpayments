@@ -10,7 +10,7 @@ import {ResponseCodes} from "./Api";
 export type NotificationHandlerValidator<TRequest> = (request: TRequest) => Promise<ResponseCodes>;
 
 export interface NotificationCustomPayload {
-    payload: object | string;
+    payload: Record<string, any> | string;
     headers?: { [key: string]: string };
     signature?: string;
 }
@@ -18,49 +18,49 @@ export interface NotificationCustomPayload {
 export type NotificationPayload = NotificationCustomPayload | IncomingMessage;
 
 export class NotificationHandlers extends ClientAbstract {
-    async handleCheckRequest(
+    public async handleCheckRequest(
         req: NotificationPayload,
         validator?: NotificationHandlerValidator<ApiTypes.CheckNotification>,
     ) {
         return this.handle(req, validator);
     }
 
-    async handlePayRequest(
+    public async handlePayRequest(
         req: NotificationPayload,
         validator?: NotificationHandlerValidator<ApiTypes.PayNotification>,
     ) {
         return this.handle(req, validator);
     }
 
-    async handleConfirmRequest(
+    public async handleConfirmRequest(
         req: NotificationPayload,
         validator?: NotificationHandlerValidator<ApiTypes.ConfirmNotification>,
     ) {
         return this.handle(req, validator);
     }
 
-    async handleFailRequest(
+    public async handleFailRequest(
         req: NotificationPayload,
         validator?: NotificationHandlerValidator<ApiTypes.FailNotification>,
     ) {
         return this.handle(req, validator);
     }
 
-    async handleRefundRequest(
+    public async handleRefundRequest(
         req: NotificationPayload,
         validator?: NotificationHandlerValidator<ApiTypes.RefundNotification>,
     ) {
         return this.handle(req, validator);
     }
 
-    async handleRecurrentRequest(
+    public async handleRecurrentRequest(
         req: NotificationPayload,
         validator?: NotificationHandlerValidator<ApiTypes.SubscriptionModel>,
     ) {
         return this.handle(req, validator);
     }
 
-    async handleReceiptRequest(
+    public async handleReceiptRequest(
         req: NotificationPayload,
         validator?: NotificationHandlerValidator<ApiTypes.ReceiptNotification<any>>,
     ) {
@@ -104,7 +104,7 @@ export class NotificationHandlers extends ClientAbstract {
         return req.payload as T;
     }
 
-    private async parseRequest<T extends {}>(req: IncomingMessage): Promise<T> {
+    private async parseRequest<T extends Record<string, any>>(req: IncomingMessage): Promise<T> {
         ok("content-hmac" in req.headers, "Request headers should contain Content-HMAC field.");
 
         const signature: string = req.headers["content-hmac"] as string;
@@ -130,7 +130,7 @@ export class NotificationHandlers extends ClientAbstract {
             if (typeof headers["content-type"] === "string" && headers["content-type"].indexOf("json") !== -1) {
                 return JSON.parse(body);
             } else {
-                return qs.parse(body);
+                return qs.parse(body) as T;
             }
         }
 
