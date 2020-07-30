@@ -1,6 +1,6 @@
 {
     "name": "cloudpayments",
-    "version": "4.1.1",
+    "version": "5.0.1",
     "description": "CloudPayments API for Node.js with typings",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
