@@ -67,7 +67,7 @@ export class NotificationHandlers extends ClientAbstract {
         return this.handle(req, validator);
     }
 
-    protected async handle<TRequest, TResponse>(
+    protected async handle<TRequest>(
         req: NotificationPayload,
         validator?: NotificationHandlerValidator<TRequest>,
     ) {
