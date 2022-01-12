@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "ES2018",
+        "module": "commonjs",
+        "strict": true,
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "alwaysStrict": false,
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
+        "newLine": "LF"
+    }
+}
