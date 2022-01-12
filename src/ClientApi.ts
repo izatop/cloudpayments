@@ -230,7 +230,7 @@ export class ClientApi extends ClientRequestAbstract {
      */
     public async chargeTokenPayout(data: TokenPayoutRequest) {
         return new PayoutClientResponse<PayoutResponse>(
-            await this.call<PayoutResponse>("/payments/token/topup ", data),
+            await this.call<PayoutResponse>("/payments/token/topup", data),
         );
     }
 }
