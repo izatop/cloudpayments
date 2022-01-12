@@ -24,7 +24,7 @@ export class ClientRequestAbstract extends ClientAbstract {
             body: JSON.stringify({}),
         });
 
-        return new ClientResponse(await response.json());
+        return new ClientResponse(await response.json() as BaseResponse);
     }
 
     /**
@@ -55,6 +55,6 @@ export class ClientRequestAbstract extends ClientAbstract {
             body: data ? JSON.stringify(data) : undefined,
         });
 
-        return await response.json();
+        return await response.json() as R;
     }
 }

@@ -1,19 +1,13 @@
 {
+    "extends": "./tsconfig.base.json",
     "compilerOptions": {
-        "target": "ES2018",
-        "module": "commonjs",
-        "strict": true,
-        "noEmitOnError": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "strictPropertyInitialization": true,
-        "alwaysStrict": false,
-        "strictBindCallApply": true,
-        "strictFunctionTypes": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "incremental": true,
         "declaration": true,
         "sourceMap": true,
-        "newLine": "LF",
-        "noEmit": true
     },
-    "include": []
+    "include": [
+        "src"
+    ]
 }

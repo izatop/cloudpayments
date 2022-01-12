@@ -3,9 +3,9 @@ import {IncomingHttpHeaders, IncomingMessage} from "http";
 import {signString} from "../../../src/utils";
 
 export class ServiceRequestMock extends stream.Readable {
-    headers: IncomingHttpHeaders = {};
-    method?: string;
-    url?: string;
+    public readonly headers: IncomingHttpHeaders = {};
+    public readonly method?: string;
+    public readonly url?: string;
     protected readonly raw: string;
 
     constructor(privateKey: string, raw: string) {
@@ -30,8 +30,8 @@ export class ServiceRequestMock extends stream.Readable {
         this.emit("end");
     }
 
-    public destroy(): void {
-        return;
+    public destroy(): this {
+        return this;
     }
 
     public _read(): void {
