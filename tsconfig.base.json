@@ -10,6 +10,7 @@
         "alwaysStrict": false,
         "strictBindCallApply": true,
         "strictFunctionTypes": true,
+        "skipLibCheck": true,
         "newLine": "LF"
     }
 }

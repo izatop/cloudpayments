@@ -4,5 +4,9 @@
         "declaration": false,
         "sourceMap": false,
         "noEmit": true
-    }
+    },
+    "include": [
+        "src",
+        "../src"
+    ]
 }

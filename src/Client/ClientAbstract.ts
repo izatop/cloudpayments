@@ -1,7 +1,7 @@
 import {ClientOptions, ClientOptionsOrg} from "./ClientOptions";
 
 export class ClientAbstract {
-    protected options: ClientOptions & { endpoint: string };
+    protected options: ClientOptions & {endpoint: string};
 
     constructor(_options: ClientOptions) {
         this.options = {

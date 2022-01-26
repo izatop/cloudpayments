@@ -1,6 +1,6 @@
 import {Payment3DSResponse, PaymentSuccessResponse, PaymentWith3DSResponse} from "../../Api";
-import {PaymentClientResponse} from "./PaymentClientResponse";
 import {ClientResponse} from "../ClientResponse";
+import {PaymentClientResponse} from "./PaymentClientResponse";
 
 export class PaymentWith3DSClientResponse<T extends PaymentWith3DSResponse>
     extends PaymentClientResponse<T> {

@@ -49,6 +49,8 @@ export class ReceiptApi extends ClientRequestAbstract {
             CustomerReceipt: _receipt,
         };
 
-        return new ClientResponse(await this.call<BaseResponse>("receipt", data, requestId || objectHash(receipt)));
+        const options = {data, requestId: requestId || objectHash(receipt)};
+
+        return new ClientResponse(await this.call<BaseResponse>("receipt", options));
     }
 }

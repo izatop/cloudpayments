@@ -1,6 +1,6 @@
 import {ClientService, ResponseCodes} from "../../src";
-import {options} from "./lib/options";
 import {signString} from "../../src/utils";
+import {options} from "./lib/options";
 import {ServiceRequestMock} from "./lib/ServiceRequestMock";
 
 test("Notification Handlers", async () => {

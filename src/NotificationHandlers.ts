@@ -1,17 +1,17 @@
-import {ClientAbstract} from "./Client";
 import {IncomingHttpHeaders, IncomingMessage} from "http";
-import * as qs from "qs";
-import {checkSignedString} from "./utils";
-import * as ApiTypes from "./Api/notification";
 import {parse} from "url";
 import {ok} from "assert";
+import * as qs from "qs";
+import {ClientAbstract} from "./Client";
+import {checkSignedString} from "./utils";
+import * as ApiTypes from "./Api/notification";
 import {ResponseCodes} from "./Api";
 
 export type NotificationHandlerValidator<TRequest> = (request: TRequest) => Promise<ResponseCodes>;
 
 export interface NotificationCustomPayload {
     payload: Record<string, any> | string;
-    headers?: { [key: string]: string };
+    headers?: {[key: string]: string};
     signature?: string;
 }
 
@@ -71,22 +71,19 @@ export class NotificationHandlers extends ClientAbstract {
         req: NotificationPayload,
         validator?: NotificationHandlerValidator<TRequest>,
     ) {
-        try {
-            const request: TRequest =
-                "payload" in req ? await this.checkPayload<TRequest>(req) : await this.parseRequest<TRequest>(req);
+        const request = "payload" in req
+            ? await this.checkPayload<TRequest>(req)
+            : await this.parseRequest<TRequest>(req);
 
-            if (validator) {
-                const code = await validator(request);
-                return {request, response: {code}};
-            }
-
-            return {request, response: {}};
-        } catch (error) {
-            throw error;
+        if (validator) {
+            const code = await validator(request);
+            return {request, response: {code}};
         }
+
+        return {request, response: {}};
     }
 
-    private async checkPayload<T extends {}>(req: NotificationCustomPayload) {
+    private async checkPayload<T extends Record<any, any>>(req: NotificationCustomPayload) {
         let signature = "";
         if (req.headers && !req.signature) {
             ok("content-hmac" in req.headers, "Request headers should contain Content-HMAC field.");
@@ -124,7 +121,7 @@ export class NotificationHandlers extends ClientAbstract {
                 req.on("error", reject);
             });
 
-            const headers: { [key: string]: string } | IncomingHttpHeaders = req.headers || {};
+            const headers: {[key: string]: string} | IncomingHttpHeaders = req.headers || {};
 
             ok(checkSignedString(this.options.privateKey, signature, body), "Invalid signature");
             if (typeof headers["content-type"] === "string" && headers["content-type"].indexOf("json") !== -1) {
